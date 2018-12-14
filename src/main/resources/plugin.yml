@@ -1,0 +1,7 @@
+name: El_Psy_Congroo
+version: ${project.version}
+build: ${project.buildNumber}
+authors: [cakoyo,cbm1014]
+depend: [ProtocolLib]
+main: cat.melon.El_Psy_Congroo.Init
+
