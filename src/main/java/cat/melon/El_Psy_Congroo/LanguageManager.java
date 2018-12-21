@@ -18,15 +18,8 @@ public class LanguageManager {
         return "";
     }
 
-    public String getLang(String langPath, Object placeHolder0) {
+    public String getLang(String langPath, Object... placeHolders) {
         return "";
     }
 
-    public String getLang(String langPath, Object placeHolder0, Object placeHolder1) {
-        return "";
-    }
-
-    public String getLang(String langPath, Object placeHolder0, Object placeHolder1, Object placeHolder2) {
-        return "";
-    }
 }
