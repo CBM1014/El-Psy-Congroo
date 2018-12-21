@@ -16,7 +16,7 @@ public class Init extends JavaPlugin {
     public void onEnable(){
         Long timestart = System.currentTimeMillis();
         config = this.getConfig();
-        languageManager = new LanguageManager(this.config.getString("language"));
+        languageManager = new LanguageManager(this, this.config.getString("language"));
         //setup plugin
         this.getLogger().info(languageManager.getLang("plugin.load.completed",(System.currentTimeMillis()-timestart)/1000));
     }
