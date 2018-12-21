@@ -1,0 +1,6 @@
+# Sotr's stuff
+.classpath
+.project
+.settings/
+target/
+/bin/
