@@ -43,6 +43,16 @@ public class SeasonManager {
 
     private void setSeason(Season season) {
         //unfinished
+        switch (season) {
+            case SPRING:
+                break;
+            case SUMMER:
+                break;
+            case AUTUMN:
+                break;
+            case WINTER:
+                break;
+        }
     }
 
     public Init getInstance() {

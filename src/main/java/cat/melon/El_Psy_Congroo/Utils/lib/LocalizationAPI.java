@@ -27,13 +27,6 @@ public class LocalizationAPI {
     }
 
     public static String localizeAt(String where, LocaleData desired, LocaleData bedrock) {
-        /*
-         * TODO
-         * Load en_US.yml first
-         * If Language file include all the language path, return true.
-         * If Language file include a part of language path(incomplete language file), completing the missing path in English.
-         * If Language file is not Yaml File, make a backup file such as filename.yml.bk, then create a new file named filename.yml, fill this file with default language file.
-         * */
         String localizedText = desired.source.getString(where);
         if (localizedText != null)
             return localizedText;
@@ -53,9 +46,6 @@ public class LocalizationAPI {
     }
 
     public static LocaleData localizeDataFrom(Plugin from, String locale, @Nullable Function<File, LocaleData> injector) {
-        /*
-         * no check. apply immediately.
-         * */
         // place files
         from.saveResource("lang/" + locale + ".yml", false); // inside jar -> lang/`lang`.yml
         File languageFile = new File(from.getDataFolder(), locale + ".yml");
