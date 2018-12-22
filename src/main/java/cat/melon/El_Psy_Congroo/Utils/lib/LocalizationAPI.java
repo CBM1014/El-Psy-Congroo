@@ -9,7 +9,7 @@ import javax.annotation.Nullable;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
-public class LocaleAPI {
+public class LocalizationAPI {
     public static class LocaleData implements Serializable {
         private static final long serialVersionUID = 1L;
 
