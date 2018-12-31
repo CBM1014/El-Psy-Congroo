@@ -44,7 +44,7 @@ public class CommandFactory implements Listener {
         String message = evt.getMessage();
         while (!((command = CommandFactory.commands.get(message)) instanceof Command)) {
             String substring = StringUtils.substringBeforeLast(message, " ");
-            if ((message = substring).isEmpty())
+            if (substring.equals(message) | (message = substring).isEmpty())
                 return;
         }
         
@@ -60,7 +60,7 @@ public class CommandFactory implements Listener {
         String message = evt.getCommand();
         while (!((command = CommandFactory.commands.get(message)) instanceof Command)) {
             String substring = StringUtils.substringBeforeLast(message, " ");
-            if ((message = substring).isEmpty())
+            if (substring.equals(message) | (message = substring).isEmpty())
                 return;
         }
         
@@ -76,7 +76,7 @@ public class CommandFactory implements Listener {
         String message = evt.getCommand();
         while (!((command = CommandFactory.commands.get(message)) instanceof Command)) {
             String substring = StringUtils.substringBeforeLast(message, " ");
-            if ((message = substring).isEmpty())
+            if (substring.equals(message) | (message = substring).isEmpty())
                 return;
         }
         
