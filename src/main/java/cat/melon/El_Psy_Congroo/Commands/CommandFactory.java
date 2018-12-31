@@ -13,6 +13,7 @@ import org.bukkit.event.server.ServerCommandEvent;
 import org.bukkit.plugin.Plugin;
 
 public class CommandFactory implements Listener {
+	// Happy new year @ 2019 command the world
     public final static Map<String, Command> commands = new org.spigotmc.CaseInsensitiveMap<Command>();
     
     public static void registry(Plugin plugin) {
