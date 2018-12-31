@@ -26,6 +26,12 @@
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
+
+        <repository>
+            <id>akarin-repo</id>
+            <url>https://raw.githubusercontent.com/Akarin-project/akarin-repo/master/repository</url>
+        </repository>
+
     </repositories>
 
     <dependencies>
@@ -51,8 +57,33 @@
         <dependency>
             <groupId>com.github.tr7zw</groupId>
             <artifactId>Item-NBT-API</artifactId>
-            <version>master-SNAPSHOT</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.20</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.8.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>moe.kira.personal</groupId>
+            <artifactId>personalapi</artifactId>
+            <version>1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>net.sf.trove4j</groupId>
+            <artifactId>trove4j</artifactId>
+            <version>3.0.1</version>
+        </dependency>
+
     </dependencies>
 
     <properties>

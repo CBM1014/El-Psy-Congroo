@@ -3,4 +3,5 @@
 .project
 .settings/
 target/
+depends/
 /bin/
