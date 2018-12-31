@@ -9,6 +9,8 @@ import javax.annotation.Nullable;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
+import moe.kira.personal.PersonalAPI;
+
 public class LocalizationAPI {
     public static class LocaleData implements Serializable {
         private static final long serialVersionUID = 1L;

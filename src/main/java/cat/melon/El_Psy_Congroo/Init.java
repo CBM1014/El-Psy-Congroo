@@ -3,6 +3,8 @@ package cat.melon.El_Psy_Congroo;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import cat.melon.El_Psy_Congroo.Commands.CommandFactory;
+
 public class Init extends JavaPlugin {
     private int status = 0;
     LanguageManager languageManager;
@@ -16,6 +18,8 @@ public class Init extends JavaPlugin {
         languageManager = new LanguageManager(this, this.config.getString("language"));
         //setup plugin
         this.getLogger().info(languageManager.getLang("plugin.load.completed", (System.currentTimeMillis() - timestart) / 1000));
+        
+        CommandFactory.registry(this);
     }
 
     public FileConfiguration getBukkitFileConfiguration() {
