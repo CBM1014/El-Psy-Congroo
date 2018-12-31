@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public class NewItemManager {
+    //Happy New Year 2019!!!!!!!!!!!!!!!!!
     Map<String, NewItem> newItemMap = new HashMap<>();
     Init instance;
 
