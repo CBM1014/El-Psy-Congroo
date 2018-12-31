@@ -3,22 +3,29 @@ package cat.melon.El_Psy_Congroo;
 import cat.melon.El_Psy_Congroo.Utils.NewItem;
 import cat.melon.El_Psy_Congroo.Utils.NewItems.GreenApple;
 import org.bukkit.Bukkit;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class NewItemManager {
-    List<NewItem> newItemList;
+    Map<String, NewItem> newItemMap = new HashMap<>();
     Init instance;
 
-    public NewItemManager(Init instance){
+    public NewItemManager(Init instance) {
         this.instance = instance;
-      newItemList.add(new GreenApple(instance));
-      registerEventListeners();
+
+        this.registerNewItems(new GreenApple(instance));
+
     }
 
-    private void registerEventListeners(){
-        for(NewItem x:newItemList){
-            Bukkit.getPluginManager().registerEvents(x,instance);
+    private void registerNewItems(NewItem item) {
+        newItemMap.put(item.getNamePath(), item);
+    }
+
+    private void registerNewItems(NewItem... items) {
+        for (NewItem x : items) {
+            newItemMap.put(x.getNamePath(), x);
         }
     }
-
 }
