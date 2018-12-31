@@ -57,6 +57,7 @@
         <dependency>
             <groupId>com.github.tr7zw</groupId>
             <artifactId>Item-NBT-API</artifactId>
+            <version>master-SNAPSHOT</version>
         </dependency>
 
         <dependency>
