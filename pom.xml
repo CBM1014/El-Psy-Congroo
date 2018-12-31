@@ -21,6 +21,11 @@
             <id>dmulloy2-repo</id>
             <url>http://repo.dmulloy2.net/nexus/repository/public/</url>
         </repository>
+
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -41,6 +46,12 @@
             <artifactId>paper-api</artifactId>
             <version>1.13.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.tr7zw</groupId>
+            <artifactId>Item-NBT-API</artifactId>
+            <version>master-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
