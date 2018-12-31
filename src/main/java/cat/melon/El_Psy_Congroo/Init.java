@@ -1,11 +1,7 @@
 package cat.melon.El_Psy_Congroo;
 
-import cat.melon.El_Psy_Congroo.Utils.SubtitleManager;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.Map;
 
 public class Init extends JavaPlugin {
     private int status = 0;

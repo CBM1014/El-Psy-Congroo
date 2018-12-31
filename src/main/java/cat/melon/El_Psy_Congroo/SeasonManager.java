@@ -1,4 +1,4 @@
-package cat.melon.El_Psy_Congroo.Utils;
+package cat.melon.El_Psy_Congroo;
 
 import cat.melon.El_Psy_Congroo.Init;
 import cat.melon.El_Psy_Congroo.ScheduledTasks.StatusWatchdog;

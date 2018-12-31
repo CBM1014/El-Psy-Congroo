@@ -1,6 +1,6 @@
 package cat.melon.El_Psy_Congroo.ScheduledTasks;
 
-import cat.melon.El_Psy_Congroo.Utils.SeasonManager;
+import cat.melon.El_Psy_Congroo.SeasonManager;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class WorldTickTimer extends BukkitRunnable {

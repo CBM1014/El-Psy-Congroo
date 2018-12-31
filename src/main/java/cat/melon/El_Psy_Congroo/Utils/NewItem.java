@@ -10,16 +10,16 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
-public class NewItem implements Listener {
+public abstract class NewItem implements Listener {
     private Material type;
     private short damage;
-    private String displayName;
+    private String namePath;
     private List<String> lore;
 
-    public NewItem(Init instance, Material type, String displayname, short damage, List<String> lore) {
+    public NewItem(Init instance, Material type, String namePath, short damage, List<String> lore) {
         this.type = type;
         this.damage = damage;
-        this.displayName = displayname;
+        this.namePath = namePath;
         this.lore = lore;
         Bukkit.getServer().getPluginManager().registerEvents(this, instance);
     }
@@ -36,6 +36,10 @@ public class NewItem implements Listener {
         return tmpni.getItem();
     }
 
+    public ItemStack getItem(){
+        return this.getItem(1);
+    }
+
     public Material getType() {
         return type;
     }
@@ -44,8 +48,8 @@ public class NewItem implements Listener {
         return damage;
     }
 
-    public String getDisplayName() {
-        return displayName;
+    public String getNamePath() {
+        return namePath;
     }
 
     public List<String> getLore() {
