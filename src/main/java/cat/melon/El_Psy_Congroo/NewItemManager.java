@@ -2,10 +2,8 @@ package cat.melon.El_Psy_Congroo;
 
 import cat.melon.El_Psy_Congroo.Utils.NewItem;
 import cat.melon.El_Psy_Congroo.Utils.NewItems.GreenApple;
-import org.bukkit.Bukkit;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class NewItemManager {
@@ -15,18 +13,34 @@ public class NewItemManager {
 
     public NewItemManager(Init instance) {
         this.instance = instance;
+        try {
 
-        this.registerNewItems(new GreenApple(instance));
+            this.registerNewItems(new GreenApple(instance));
+
+        } catch (DuplicateRegisterListenerException e) {
+            e.printStackTrace();
+        }
 
     }
 
-    private void registerNewItems(NewItem item) {
-        newItemMap.put(item.getNamePath(), item);
+    private void registerNewItems(NewItem item) throws DuplicateRegisterListenerException {
+        if (item.registerEventListeners()) {
+            newItemMap.put(item.getNamePath(), item);
+        } else {
+            throw new DuplicateRegisterListenerException("This item has been registered its EventListener.");
+        }
+
     }
 
     private void registerNewItems(NewItem... items) {
         for (NewItem x : items) {
             newItemMap.put(x.getNamePath(), x);
+        }
+    }
+
+    class DuplicateRegisterListenerException extends Exception {
+        public DuplicateRegisterListenerException(String msg) {
+            super(msg);
         }
     }
 }

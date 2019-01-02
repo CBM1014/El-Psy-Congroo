@@ -15,13 +15,15 @@ public abstract class NewItem implements Listener {
     private short damage;
     private String namePath;
     private List<String> lore;
+    private boolean isRegistered = false;
+    private Init instance;
 
     public NewItem(Init instance, Material type, String namePath, short damage, List<String> lore) {
+        this.instance = instance;
         this.type = type;
         this.damage = damage;
         this.namePath = namePath;
         this.lore = lore;
-        Bukkit.getServer().getPluginManager().registerEvents(this, instance);
     }
 
     public ItemStack getItem(int amount) {
@@ -54,5 +56,16 @@ public abstract class NewItem implements Listener {
 
     public List<String> getLore() {
         return lore;
+    }
+
+    public boolean registerEventListeners(){
+        if(!isRegistered){
+            Bukkit.getServer().getPluginManager().registerEvents(this, instance);
+            isRegistered = true;
+            return true;
+        }else{
+            return false;
+        }
+
     }
 }
