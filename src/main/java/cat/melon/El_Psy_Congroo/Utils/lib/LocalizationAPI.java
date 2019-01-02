@@ -2,6 +2,7 @@ package cat.melon.El_Psy_Congroo.Utils.lib;
 
 import java.io.File;
 import java.io.Serializable;
+import java.util.Map;
 import java.util.function.Function;
 
 import javax.annotation.Nullable;
@@ -9,9 +10,11 @@ import javax.annotation.Nullable;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
-import moe.kira.personal.PersonalAPI;
+import com.google.common.collect.Maps;
 
 public class LocalizationAPI {
+    private static final Map<String, YamlConfiguration> caches = Maps.newHashMap();
+    
     public static class LocaleData implements Serializable {
         private static final long serialVersionUID = 1L;
 
@@ -19,10 +22,24 @@ public class LocalizationAPI {
         public final transient YamlConfiguration source;
 
         public LocaleData(String locale, File sourceFile) {
-            this(locale, YamlConfiguration.loadConfiguration(sourceFile));
+            this.locale = locale;
+            YamlConfiguration yaml = caches.get(locale);
+            if (yaml == null)
+                // Potential issue: a empty config will be returned if the given locale do not exist
+                caches.put(locale, (yaml = YamlConfiguration.loadConfiguration(sourceFile)));
+            this.source = yaml;
+        }
+        
+        public LocaleData(String locale, String bedrock) {
+            this.locale = locale;
+            YamlConfiguration yaml = caches.get(locale);
+            if (yaml == null)
+                // Potential issue: is that bedrock exist?
+                caches.put(locale, (yaml = caches.get(bedrock)));
+            this.source = yaml;
         }
 
-        public LocaleData(String locale, YamlConfiguration source) {
+        private LocaleData(String locale, YamlConfiguration source) {
             this.locale = locale;
             this.source = source;
         }
