@@ -32,9 +32,13 @@ public class NewItemManager {
 
     }
 
-    private void registerNewItems(NewItem... items) {
+    private void registerNewItems(NewItem... items) throws DuplicateRegisterListenerException {
         for (NewItem x : items) {
-            newItemMap.put(x.getNamePath(), x);
+            if (x.registerEventListeners()) {
+                newItemMap.put(x.getNamePath(), x);
+            } else {
+                throw new DuplicateRegisterListenerException("This item has been registered its EventListener.");
+            }
         }
     }
 
