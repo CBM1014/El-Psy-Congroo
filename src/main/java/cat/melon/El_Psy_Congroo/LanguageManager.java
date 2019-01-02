@@ -1,56 +1,46 @@
 package cat.melon.El_Psy_Congroo;
 
+import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.plugin.java.JavaPlugin;
-
+import org.bukkit.plugin.Plugin;
 import cat.melon.El_Psy_Congroo.Utils.lib.LocalizationAPI;
-import cat.melon.El_Psy_Congroo.Utils.lib.LocalizationAPI.LocaleData;
 import cat.melon.El_Psy_Congroo.Utils.lib.LocalizationAPI.Opcodes;
-import moe.kira.personal.PersonalAPI;
 
 public class LanguageManager {
-    private static final String DEFAULT_LOCALE = "en_US";
-    private LocalizationAPI.LocaleData defaultLang;
-    private LocalizationAPI.LocaleData lang;
-    FileConfiguration languageconfig;
+    private static final String BEDROCK_LOCALE = "en_UK";
+    private String defaultLang;
+    private LocalizationAPI langManager;
 
-    public LanguageManager(JavaPlugin plugin, String languageLocation) {
-        FileConfiguration config = plugin.getConfig();
-
-        // Setup default language
-        this.defaultLang = LocalizationAPI.localizeDataFrom(plugin, DEFAULT_LOCALE);
-
-        // Apply desired language
-        String desiredLanguage = config.getString(languageLocation);
-        this.lang = LocalizationAPI.localizeDataFrom(plugin, desiredLanguage, file -> {
+    public LanguageManager(Plugin plugin, String defaultLang) {
+        langManager = new LocalizationAPI(plugin, (desired, file) -> {
             if (file.exists())
                 return Opcodes.CONTINUE;
 
-            Bukkit.getLogger().warning("Language " + desiredLanguage + " is not supported, use default " + DEFAULT_LOCALE);
-            return LocalizationAPI.localizeDataFrom(plugin, DEFAULT_LOCALE);
+            Bukkit.getLogger().warning("Language " + desired + " is not supported, use default " + BEDROCK_LOCALE);
+            return langManager.initaliseOrAcquireLanguageData(BEDROCK_LOCALE);
         });
-
+        this.defaultLang = defaultLang;
+    }
+    
+    public String getLang(String languagePath, Object... placeHolders) {
+        return getLang(languagePath, defaultLang, placeHolders);
     }
 
     //return texts with placeholders
-    public String getLang(String languagePath, Object... placeHolders) {
-        String str = LocalizationAPI.localizeAt(languagePath, lang, defaultLang);
+    public String getLang(String languagePath, String lang, Object... placeHolders) {
+        String translated = langManager.localizeAt(languagePath, lang);
         for (int i = 0; i < placeHolders.length; i++) {
-            str.replaceAll("\\{" + i + "\\}", placeHolders[i].toString());
+            translated = StringUtils.replace(translated, "\\{" + i + "\\}", placeHolders[i].toString());
         }
-        return str;
+        return translated;
     }
 
-    //if no placeholders in texts, using this method to skip the placeholder loop
     public String getLang(String languagePath) {
-        return LocalizationAPI.localizeAt(languagePath, lang, defaultLang);
+        return getLang(languagePath, defaultLang);
     }
     
-    public String getLang(String languagePath, String player) {
-        String localeName = PersonalAPI.of(player).getString("el_psy_congroo.locale", DEFAULT_LOCALE);
-        LocaleData data = new LocaleData(localeName, DEFAULT_LOCALE);
-        return LocalizationAPI.localizeAt(languagePath, data, defaultLang);
+    //if no placeholders in texts, using this method to skip the placeholder loop
+    public String getLang(String languagePath, String lang) {
+        return langManager.localizeAt(languagePath, lang);
     }
-
 }
