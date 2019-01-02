@@ -5,7 +5,9 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import cat.melon.El_Psy_Congroo.Utils.lib.LocalizationAPI;
+import cat.melon.El_Psy_Congroo.Utils.lib.LocalizationAPI.LocaleData;
 import cat.melon.El_Psy_Congroo.Utils.lib.LocalizationAPI.Opcodes;
+import moe.kira.personal.PersonalAPI;
 
 public class LanguageManager {
     private static final String DEFAULT_LOCALE = "en_US";
@@ -43,6 +45,12 @@ public class LanguageManager {
     //if no placeholders in texts, using this method to skip the placeholder loop
     public String getLang(String languagePath) {
         return LocalizationAPI.localizeAt(languagePath, lang, defaultLang);
+    }
+    
+    public String getLang(String languagePath, String player) {
+        String localeName = PersonalAPI.of(player).getString("el_psy_congroo.locale", DEFAULT_LOCALE);
+        LocaleData data = new LocaleData(localeName, DEFAULT_LOCALE);
+        return LocalizationAPI.localizeAt(languagePath, data, defaultLang);
     }
 
 }
