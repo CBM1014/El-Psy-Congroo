@@ -2,6 +2,7 @@ package cat.melon.El_Psy_Congroo.Commands;
 
 import java.util.Map;
 
+import cat.melon.El_Psy_Congroo.Utils.CaseInsensitiveMap;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
@@ -14,7 +15,7 @@ import org.bukkit.plugin.Plugin;
 
 public class CommandFactory implements Listener {
 	// Happy new year @ 2019 command the world
-    public final static Map<String, Command> commands = new org.spigotmc.CaseInsensitiveMap<Command>();
+    public final static Map<String, Command> commands = new CaseInsensitiveMap<Command>();
     
     public static void registry(Plugin plugin) {
         put("/locale", new CommandLocale());
