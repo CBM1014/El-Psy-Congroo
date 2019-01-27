@@ -50,16 +50,17 @@ public class LocalizationAPI {
     @Deprecated
     private YamlConfiguration initaliseLanguage(String locale) {
         // place required file from jar
-        sourcePlugin.saveResource("lang/" + locale + ".yml", false); // inside jar -> lang/`lang`.yml
-        File placedFile = new File(sourcePlugin.getDataFolder(), locale + ".yml");
+        File mayPlacedFile = new File(sourcePlugin.getDataFolder(), "lang" + File.separator + locale + ".yml");
+        if (!mayPlacedFile.exists())
+            sourcePlugin.saveResource("lang" + File.separator + locale + ".yml", false); // inside jar -> lang/`lang`.yml
 
         // accept consumer
         if (initaliseInjector != null) {
-            YamlConfiguration injected = initaliseInjector.apply(locale, placedFile);
+            YamlConfiguration injected = initaliseInjector.apply(locale, mayPlacedFile);
             if (injected != Opcodes.CONTINUE)
                 return injected;
         }
 
-        return YamlConfiguration.loadConfiguration(placedFile);
+        return YamlConfiguration.loadConfiguration(mayPlacedFile);
     }
 }

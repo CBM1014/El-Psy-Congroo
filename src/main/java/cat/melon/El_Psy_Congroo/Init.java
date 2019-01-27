@@ -20,6 +20,7 @@ public class Init extends JavaPlugin {
         this.getLogger().info(languageManager.getLang("plugin.load.completed", (System.currentTimeMillis() - timestart) / 1000));
         
         CommandFactory.registry(this);
+        new NewItemManager(this);
     }
 
     public FileConfiguration getBukkitFileConfiguration() {

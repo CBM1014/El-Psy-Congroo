@@ -6,6 +6,9 @@ import cat.melon.El_Psy_Congroo.Utils.NewItems.GreenApple;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bukkit.Bukkit;
+import org.bukkit.event.Listener;
+
 public class NewItemManager {
     //Happy New Year 2019!!!!!!!!!!!!!!!!!
     Map<String, NewItem> newItemMap = new HashMap<>();
@@ -14,8 +17,9 @@ public class NewItemManager {
     public NewItemManager(Init instance) {
         this.instance = instance;
         try {
-
-            this.registerNewItems(new GreenApple(instance));
+            Listener greenApple = new GreenApple(instance);
+            Bukkit.getPluginManager().registerEvents(greenApple, instance);
+            this.registerNewItems();
 
         } catch (DuplicateRegisterListenerException e) {
             e.printStackTrace();

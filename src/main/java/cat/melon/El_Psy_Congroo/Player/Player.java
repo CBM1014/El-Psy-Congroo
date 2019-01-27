@@ -44,4 +44,8 @@ public class Player {
     public Picture getPicture() {
         return snapshot;
     }
+    
+    public int getTemperature() {
+        return 0;
+    }
 }

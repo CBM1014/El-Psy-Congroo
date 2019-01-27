@@ -3,7 +3,6 @@ package cat.melon.El_Psy_Congroo;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import cat.melon.El_Psy_Congroo.Utils.lib.LocalizationAPI;
 import cat.melon.El_Psy_Congroo.Utils.lib.LocalizationAPI.Opcodes;
