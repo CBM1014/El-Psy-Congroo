@@ -4,41 +4,61 @@ import cat.melon.El_Psy_Congroo.Init;
 import de.tr7zw.itemnbtapi.NBTItem;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public abstract class NewItem implements Listener {
+    private boolean basic = true;
     private Material type;
-    private short damage;
+    private int modelNumber;
     private String namePath;
     private List<String> lore;
+    Map<Enchantment, Integer> enchantments;
+    ItemFlag[] itemFlags;
+
     private boolean isRegistered = false;
     private Init instance;
 
-    public NewItem(Init instance, Material type, String namePath, short damage, List<String> lore) {
+    public  NewItem(Init instance, Material type, String namePath, int modelNumber){
         this.instance = instance;
         this.type = type;
-        this.damage = damage;
+        this.modelNumber = modelNumber;
         this.namePath = namePath;
-        this.lore = lore;
+    }
+
+    public NewItem(Init instance, Material type, String namePath, int modelNumber, List<String> lore, Map<Enchantment, Integer> enchantments, ItemFlag... itemFlags) {
+        basic = false;
+        this.instance = instance;
+        this.type = type;
+        this.modelNumber = modelNumber;
+        this.namePath = namePath;
+        this.lore = lore!=null ? lore : new ArrayList<>();
+        this.enchantments = enchantments != null ? enchantments : new HashMap<>();
+        this.itemFlags = itemFlags != null ? itemFlags : new ItemFlag[0];
     }
 
     public ItemStack getItem(int amount) {
-        ItemStack tmpis = new ItemStack(type, amount, damage);
-        tmpis.setLore(lore);
-        tmpis.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ATTRIBUTES);
-        tmpis.getItemMeta().setUnbreakable(true);
-        tmpis.getItemMeta().setDisplayName("");
+        ItemStack tmpis = new ItemStack(type, amount);
+        if(!basic){
+            tmpis.setLore(lore);
+            tmpis.addEnchantments(enchantments);
+            tmpis.addItemFlags(itemFlags);
+        }
         //TODO set item name here
         NBTItem tmpni = new NBTItem(tmpis);
+        tmpni.setInteger("CustomModelData", modelNumber);
         tmpni.setBoolean("ElNewItem", true);
         return tmpni.getItem();
     }
 
-    public ItemStack getItem(){
+    public ItemStack getItem() {
         return this.getItem(1);
     }
 
@@ -46,8 +66,8 @@ public abstract class NewItem implements Listener {
         return type;
     }
 
-    public short getDamage() {
-        return damage;
+    public int getModelNumber() {
+        return modelNumber;
     }
 
     public String getNamePath() {
@@ -58,12 +78,12 @@ public abstract class NewItem implements Listener {
         return lore;
     }
 
-    public boolean registerEventListeners(){
-        if(!isRegistered){
+    public boolean registerEventListeners() {
+        if (!isRegistered) {
             Bukkit.getServer().getPluginManager().registerEvents(this, instance);
             isRegistered = true;
             return true;
-        }else{
+        } else {
             return false;
         }
 
