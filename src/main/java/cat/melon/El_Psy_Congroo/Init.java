@@ -1,5 +1,6 @@
 package cat.melon.El_Psy_Congroo;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -9,6 +10,7 @@ public class Init extends JavaPlugin {
     private int status = 0;
     LanguageManager languageManager;
     FileConfiguration config;
+    NewItemManager newItemManager;
     SubtitleManager subtitleManager = new SubtitleManager();
 
     @Override
@@ -20,7 +22,8 @@ public class Init extends JavaPlugin {
         this.getLogger().info(languageManager.getLang("plugin.load.completed", (System.currentTimeMillis() - timestart) / 1000));
         
         CommandFactory.registry(this);
-        new NewItemManager(this);
+        newItemManager = new NewItemManager(this);
+        Bukkit.getServer().getPluginManager().registerEvents(newItemManager,this);
     }
 
     public FileConfiguration getBukkitFileConfiguration() {

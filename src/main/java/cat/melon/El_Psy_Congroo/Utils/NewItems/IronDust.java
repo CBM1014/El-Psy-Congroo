@@ -18,13 +18,14 @@ import java.util.Random;
 public class IronDust extends NewItem {
     final ItemStack item = this.getItem();
     Random random = new Random();
+
     public IronDust(Init instance) {
         super(instance, Material.GUNPOWDER, "item.iron_dust", 2);
     }
 
     @Override
-    public void onRegister(){
-        FurnaceRecipe furnaceRecipe = new FurnaceRecipe(new NamespacedKey(this.getInstance(),"iron_dust"),new ItemStack(Material.IRON_NUGGET),Material.GUNPOWDER,0.7F,220);
+    public void onRegister() {
+        FurnaceRecipe furnaceRecipe = new FurnaceRecipe(new NamespacedKey(this.getInstance(), "iron_dust"), new ItemStack(Material.IRON_NUGGET), Material.GUNPOWDER, 0.7F, 220);
         Bukkit.addRecipe(furnaceRecipe);
     }
 
@@ -34,37 +35,39 @@ public class IronDust extends NewItem {
             event.setDropItems(false);
         }
         int amount = 0;
-        switch (event.getPlayer().getInventory().getItemInMainHand().getType()){
-            case WOODEN_AXE:
+        switch (event.getPlayer().getInventory().getItemInMainHand().getType()) {
+            case WOODEN_PICKAXE:
                 amount = random.nextInt(1);
-            case STONE_AXE:
-                amount = 1+random.nextInt(1);
-            case IRON_AXE:
-                amount = 1+random.nextInt(2);
-            case DIAMOND_AXE:
-                amount = 2+random.nextInt(1);
+            case STONE_PICKAXE:
+                amount = 1 + random.nextInt(1);
+            case IRON_PICKAXE:
+                amount = 1 + random.nextInt(2);
+            case DIAMOND_PICKAXE:
+                amount = 2 + random.nextInt(1);
         }
+
+        if (amount == 0)
+            return;
+
         event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), this.getItem(amount));
     }
 
     @EventHandler
-    private void furnaceCanceller(FurnaceSmeltEvent event)
-    {
-        if(event.getSource() != null)
-            if(event.getSource().getType() == item.getType())
-                if(!event.getSource().isSimilar(item))
+    private void furnaceCanceller(FurnaceSmeltEvent event) {
+        if (event.getSource() != null)
+            if (event.getSource().getType() == item.getType())
+                if (!event.getSource().isSimilar(item))
                     event.setCancelled(true);
     }
 
     @EventHandler
-    private void furnaceCanceller(FurnaceBurnEvent event)
-    {
+    private void furnaceCanceller(FurnaceBurnEvent event) {
         Furnace furnace = (Furnace) event.getBlock().getState();
-        if(furnace != null)
-            if(furnace.getInventory() != null)
-                if(furnace.getInventory().getSmelting() != null)
-                    if(furnace.getInventory().getSmelting().getType() == item.getType())
-                        if(!furnace.getInventory().getSmelting().isSimilar(item))
+        if (furnace != null)
+            if (furnace.getInventory() != null)
+                if (furnace.getInventory().getSmelting() != null)
+                    if (furnace.getInventory().getSmelting().getType() == item.getType())
+                        if (!furnace.getInventory().getSmelting().isSimilar(item))
                             event.setCancelled(true);
     }
 }

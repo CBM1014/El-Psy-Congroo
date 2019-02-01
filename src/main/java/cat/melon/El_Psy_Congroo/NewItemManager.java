@@ -6,6 +6,7 @@ import cat.melon.El_Psy_Congroo.Utils.NewItems.GreenApple;
 import java.util.HashMap;
 import java.util.Map;
 
+import cat.melon.El_Psy_Congroo.Utils.NewItems.IronDust;
 import de.tr7zw.itemnbtapi.NBTItem;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
@@ -22,10 +23,7 @@ public class NewItemManager implements Listener{
     public NewItemManager(Init instance) {
         this.instance = instance;
         try {
-            Listener greenApple = new GreenApple(instance);
-            Bukkit.getPluginManager().registerEvents(greenApple, instance);
-            this.registerNewItems();
-
+            this.registerNewItems(new GreenApple(instance),new IronDust(instance));
         } catch (DuplicateRegisterListenerException e) {
             e.printStackTrace();
         }
@@ -35,6 +33,7 @@ public class NewItemManager implements Listener{
     private void registerNewItems(NewItem item) throws DuplicateRegisterListenerException {
         if (item.register()) {
             newItemMap.put(item.getNamePath(), item);
+            instance.getLogger().info("Custom item "+ item.getNamePath()+" loaded.");
         } else {
             throw new DuplicateRegisterListenerException("This item has been registered its EventListener.");
         }
@@ -45,6 +44,7 @@ public class NewItemManager implements Listener{
         for (NewItem x : items) {
             if (x.register()) {
                 newItemMap.put(x.getNamePath(), x);
+                instance.getLogger().info("Custom item "+ x.getNamePath()+" loaded.");
             } else {
                 throw new DuplicateRegisterListenerException("This item has been registered its EventListener.");
             }
