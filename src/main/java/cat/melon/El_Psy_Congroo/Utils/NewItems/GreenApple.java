@@ -18,7 +18,7 @@ public class GreenApple extends NewItem implements Listener {
     Random random = new Random();
 
     public GreenApple(Init instance) {
-        super(instance, Material.APPLE, "ElNewItem.green_apple", 1);
+        super(instance, Material.APPLE, "item.green_apple", 1);
     }
 
     @EventHandler

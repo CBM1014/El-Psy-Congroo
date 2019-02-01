@@ -6,10 +6,15 @@ import cat.melon.El_Psy_Congroo.Utils.NewItems.GreenApple;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.tr7zw.itemnbtapi.NBTItem;
 import org.bukkit.Bukkit;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.CraftItemEvent;
+import org.bukkit.inventory.ItemStack;
 
-public class NewItemManager {
+public class NewItemManager implements Listener{
     //Happy New Year 2019!!!!!!!!!!!!!!!!!
     Map<String, NewItem> newItemMap = new HashMap<>();
     Init instance;
@@ -28,7 +33,7 @@ public class NewItemManager {
     }
 
     private void registerNewItems(NewItem item) throws DuplicateRegisterListenerException {
-        if (item.registerEventListeners()) {
+        if (item.register()) {
             newItemMap.put(item.getNamePath(), item);
         } else {
             throw new DuplicateRegisterListenerException("This item has been registered its EventListener.");
@@ -38,10 +43,20 @@ public class NewItemManager {
 
     private void registerNewItems(NewItem... items) throws DuplicateRegisterListenerException {
         for (NewItem x : items) {
-            if (x.registerEventListeners()) {
+            if (x.register()) {
                 newItemMap.put(x.getNamePath(), x);
             } else {
                 throw new DuplicateRegisterListenerException("This item has been registered its EventListener.");
+            }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.LOW)
+    public void onCraft(CraftItemEvent event){
+        for(ItemStack x:event.getInventory().getMatrix()){
+            NBTItem tmpni = new NBTItem(x);
+            if(tmpni.getString("agendaItem")!=null){
+                event.setCancelled(true);
             }
         }
     }

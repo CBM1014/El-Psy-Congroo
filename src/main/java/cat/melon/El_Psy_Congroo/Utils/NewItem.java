@@ -26,7 +26,7 @@ public abstract class NewItem implements Listener {
     private boolean isRegistered = false;
     private Init instance;
 
-    public  NewItem(Init instance, Material type, String namePath, int modelNumber){
+    public NewItem(Init instance, Material type, String namePath, int modelNumber){
         this.instance = instance;
         this.type = type;
         this.modelNumber = modelNumber;
@@ -54,7 +54,7 @@ public abstract class NewItem implements Listener {
         //TODO set item name here
         NBTItem tmpni = new NBTItem(tmpis);
         tmpni.setInteger("CustomModelData", modelNumber);
-        tmpni.setBoolean("ElNewItem", true);
+        tmpni.setString("agendaItem", namePath);
         return tmpni.getItem();
     }
 
@@ -78,8 +78,13 @@ public abstract class NewItem implements Listener {
         return lore;
     }
 
-    public boolean registerEventListeners() {
+    public Init getInstance(){
+        return instance;
+    }
+
+    public boolean register() {
         if (!isRegistered) {
+            this.onRegister();
             Bukkit.getServer().getPluginManager().registerEvents(this, instance);
             isRegistered = true;
             return true;
@@ -88,4 +93,6 @@ public abstract class NewItem implements Listener {
         }
 
     }
+
+    public void onRegister(){}
 }
