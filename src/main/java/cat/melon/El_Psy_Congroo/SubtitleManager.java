@@ -1,7 +1,7 @@
-package cat.melon.El_Psy_Congroo;
+package cat.melon.el_psy_congroo;
 
-import cat.melon.El_Psy_Congroo.Player.Player;
-import cat.melon.El_Psy_Congroo.Utils.lib.Subtitles;
+import cat.melon.el_psy_congroo.player.Player;
+import cat.melon.el_psy_congroo.utils.lib.Subtitles;
 
 public class SubtitleManager {
     private StringBuilder sb = new StringBuilder();

@@ -1,7 +1,7 @@
-package cat.melon.El_Psy_Congroo;
+package cat.melon.el_psy_congroo;
 
-import cat.melon.El_Psy_Congroo.Player.Player;
-import cat.melon.El_Psy_Congroo.ScheduledTasks.EnviromentCamera;
+import cat.melon.el_psy_congroo.player.Player;
+import cat.melon.el_psy_congroo.scheduledtasks.EnviromentCamera;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

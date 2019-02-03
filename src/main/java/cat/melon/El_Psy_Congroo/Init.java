@@ -1,11 +1,11 @@
-package cat.melon.El_Psy_Congroo;
+package cat.melon.el_psy_congroo;
 
-import cat.melon.El_Psy_Congroo.EventListeners.Plus1s;
+import cat.melon.el_psy_congroo.eventlisteners.Plus1s;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import cat.melon.El_Psy_Congroo.Commands.CommandFactory;
+import cat.melon.el_psy_congroo.commands.CommandFactory;
 
 public class Init extends JavaPlugin {
     private int status = 0;

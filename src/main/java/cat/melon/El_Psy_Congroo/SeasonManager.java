@@ -1,9 +1,8 @@
-package cat.melon.El_Psy_Congroo;
+package cat.melon.el_psy_congroo;
 
-import cat.melon.El_Psy_Congroo.Init;
-import cat.melon.El_Psy_Congroo.ScheduledTasks.StatusWatchdog;
-import cat.melon.El_Psy_Congroo.ScheduledTasks.WorldTickTimer;
-import cat.melon.El_Psy_Congroo.Utils.lib.Season;
+import cat.melon.el_psy_congroo.scheduledtasks.StatusWatchdog;
+import cat.melon.el_psy_congroo.scheduledtasks.WorldTickTimer;
+import cat.melon.el_psy_congroo.utils.lib.Season;
 import org.bukkit.scheduler.BukkitTask;
 
 public class SeasonManager {

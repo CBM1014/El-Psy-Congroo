@@ -1,11 +1,11 @@
-package cat.melon.El_Psy_Congroo;
+package cat.melon.el_psy_congroo;
 
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
-import cat.melon.El_Psy_Congroo.Utils.lib.LocalizationAPI;
-import cat.melon.El_Psy_Congroo.Utils.lib.LocalizationAPI.Opcodes;
+import cat.melon.el_psy_congroo.utils.lib.LocalizationAPI;
+import cat.melon.el_psy_congroo.utils.lib.LocalizationAPI.Opcodes;
 import moe.kira.personal.PersonalAPI;
 
 public class LanguageManager {

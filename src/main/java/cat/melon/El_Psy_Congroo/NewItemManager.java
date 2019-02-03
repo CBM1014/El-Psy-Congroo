@@ -1,15 +1,14 @@
-package cat.melon.El_Psy_Congroo;
+package cat.melon.el_psy_congroo;
 
-import cat.melon.El_Psy_Congroo.Utils.NewItem;
-import cat.melon.El_Psy_Congroo.Utils.NewItems.GoldDust;
-import cat.melon.El_Psy_Congroo.Utils.NewItems.GreenApple;
+import cat.melon.el_psy_congroo.utils.NewItem;
+import cat.melon.el_psy_congroo.utils.newitems.GoldDust;
+import cat.melon.el_psy_congroo.utils.newitems.GreenApple;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import cat.melon.El_Psy_Congroo.Utils.NewItems.IronDust;
+import cat.melon.el_psy_congroo.utils.newitems.IronDust;
 import de.tr7zw.itemnbtapi.NBTItem;
-import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
