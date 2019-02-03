@@ -8,8 +8,9 @@ import java.util.UUID;
 
 public class Player {
     private org.bukkit.entity.Player player;
-    private Map<Status, Double> playerStatus = new HashMap();
+    private Map<Status, Double> playerStatus = new HashMap<>();
     private Picture snapshot = new Picture(this);
+    private boolean plus1sMode = false;
 
     public Player(org.bukkit.entity.Player player) {
         this.player = player;
@@ -25,6 +26,14 @@ public class Player {
 
     public Location getLocation(){
         return player.getLocation();
+    }
+
+    public void setPlus1sMode(boolean plus1sMode) {
+        this.plus1sMode = plus1sMode;
+    }
+
+    public boolean isPlus1sMode(){
+        return plus1sMode;
     }
 
     @Override

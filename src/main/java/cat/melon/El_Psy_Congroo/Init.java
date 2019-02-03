@@ -1,5 +1,6 @@
 package cat.melon.El_Psy_Congroo;
 
+import cat.melon.El_Psy_Congroo.EventListeners.Plus1s;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -8,25 +9,36 @@ import cat.melon.El_Psy_Congroo.Commands.CommandFactory;
 
 public class Init extends JavaPlugin {
     private int status = 0;
-    LanguageManager languageManager;
-    FileConfiguration config;
-    NewItemManager newItemManager;
-    SubtitleManager subtitleManager = new SubtitleManager();
+    private LanguageManager languageManager;
+    private FileConfiguration config;
+    private NewItemManager newItemManager;
+    private StatusManager statusManager;
+    private SubtitleManager subtitleManager = new SubtitleManager();
 
     @Override
     public void onEnable() {
-        Long timestart = System.currentTimeMillis();
+        long timestart = System.currentTimeMillis();
         config = this.getConfig();
         languageManager = new LanguageManager(this, this.config.getString("language"));
+        statusManager = new StatusManager(this);
         //setup plugin
         this.getLogger().info(languageManager.getLang("plugin.load.completed", (System.currentTimeMillis() - timestart) / 1000));
         
         CommandFactory.registry(this);
         newItemManager = new NewItemManager(this);
         Bukkit.getServer().getPluginManager().registerEvents(newItemManager,this);
+        Bukkit.getServer().getPluginManager().registerEvents(statusManager,this);
+        Bukkit.getServer().getPluginManager().registerEvents(new Plus1s(this),this);
     }
 
-    public FileConfiguration getBukkitFileConfiguration() {
+    public SubtitleManager getSubtitleManager() {
+        return subtitleManager;
+    }
+    public StatusManager getStatusManager(){
+        return statusManager;
+    }
+
+    protected FileConfiguration getBukkitFileConfiguration() {
         return config;
     }
 
