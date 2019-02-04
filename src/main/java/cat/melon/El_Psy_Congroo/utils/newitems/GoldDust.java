@@ -13,11 +13,11 @@ import org.bukkit.event.inventory.FurnaceSmeltEvent;
 import org.bukkit.inventory.FurnaceRecipe;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class GoldDust extends NewItem {
     final ItemStack item = this.getItem();
-    Random random = new Random();
+    ThreadLocalRandom random = ThreadLocalRandom.current();
 
     public GoldDust(Init instance) {
         super(instance, Material.GUNPOWDER, "item.gold_dust", 2);
@@ -38,10 +38,15 @@ public class GoldDust extends NewItem {
         switch (event.getPlayer().getInventory().getItemInMainHand().getType()) {
             case STONE_PICKAXE:
                 amount = random.nextInt(1);
+                break;
             case IRON_PICKAXE:
                 amount = 1 + random.nextInt(1);
+                break;
             case DIAMOND_PICKAXE:
                 amount = 1 + random.nextInt(2);
+                break;
+            default:
+                break;
         }
 
         if (amount == 0)
