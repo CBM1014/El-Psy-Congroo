@@ -33,9 +33,9 @@ public class IronDust extends NewItem {
 
     @EventHandler(ignoreCancelled = true)
     public void onIronOreBreak(BlockBreakEvent event) {
-        if (event.getBlock().getType() == Material.IRON_ORE) {
-            event.setDropItems(false);
-        }
+        if (event.getBlock().getType() != Material.IRON_ORE)
+            return;
+        event.setDropItems(false);
         
         int amount = 0;
         int rand = random.nextInt(9);
