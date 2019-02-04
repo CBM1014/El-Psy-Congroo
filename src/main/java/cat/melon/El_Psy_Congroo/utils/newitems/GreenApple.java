@@ -2,7 +2,6 @@ package cat.melon.el_psy_congroo.utils.newitems;
 
 import cat.melon.el_psy_congroo.Init;
 import cat.melon.el_psy_congroo.utils.NewItem;
-
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,6 +12,7 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class GreenApple extends NewItem implements Listener {
+    final ItemStack item = this.getItem();
     Random random = ThreadLocalRandom.current();
 
     public GreenApple(Init instance) {

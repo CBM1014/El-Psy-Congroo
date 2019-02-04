@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cat.melon.el_psy_congroo.utils.newitems.IronDust;
+import cat.melon.el_psy_congroo.utils.newitems.PreDiamondDust;
 import de.tr7zw.itemnbtapi.NBTItem;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -24,7 +25,7 @@ public class NewItemManager implements Listener{
     public NewItemManager(Init instance) {
         this.instance = instance;
         try {
-            this.registerNewItems(new GreenApple(instance),new IronDust(instance),new GoldDust(instance),new DiamondDust(instance));
+            this.registerNewItems(new GreenApple(instance),new IronDust(instance),new GoldDust(instance),new DiamondDust(instance),new PreDiamondDust(instance));
         } catch (DuplicateRegisterListenerException e) {
             e.printStackTrace();
         }
@@ -52,9 +53,11 @@ public class NewItemManager implements Listener{
         }
     }
 
-    @EventHandler(priority = EventPriority.LOW)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onCraft(CraftItemEvent event){
-        for(ItemStack x:event.getInventory().getMatrix()){
+        for(ItemStack x : event.getInventory().getMatrix()){
+            if (x == null)
+                return;
             NBTItem tmpni = new NBTItem(x);
             if(tmpni.getString("agendaItem")!=null){
                 event.setCancelled(true);

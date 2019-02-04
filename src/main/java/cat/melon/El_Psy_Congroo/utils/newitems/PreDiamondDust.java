@@ -9,44 +9,39 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.FurnaceRecipe;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.RecipeChoice.ExactChoice;
 
 import java.util.concurrent.ThreadLocalRandom;
 
 @SuppressWarnings("deprecation")
-public class GoldDust extends NewItem {
+public class PreDiamondDust extends NewItem {
     final ItemStack item = this.getItem();
+    ShapedRecipe diamond;
     ThreadLocalRandom random = ThreadLocalRandom.current();
 
-    public GoldDust(Init instance) {
-        super(instance, Material.GLOWSTONE_DUST, "§e金砂", 3);
+    public PreDiamondDust(Init instance) {
+        super(instance, Material.COAL, "§b钻石原矿", 5);
     }
 
     @Override
     public void onRegister() {
-        FurnaceRecipe furnaceRecipe = new FurnaceRecipe(new NamespacedKey(this.getInstance(), "gold_dust"), new ItemStack(Material.GOLD_NUGGET), new ExactChoice(item), 0.7F, 600);
+        FurnaceRecipe furnaceRecipe = new FurnaceRecipe(new NamespacedKey(this.getInstance(), "pre_diamond_dust"), new DiamondDust(getInstance()).getItem(), new ExactChoice(item), 0.7F, 2400);
         Bukkit.addRecipe(furnaceRecipe);
-        getInstance().getLogger().info("Recipe "+furnaceRecipe.getKey()+" has been loaded.");
-        FurnaceRecipe overrideRecipe = new FurnaceRecipe(new NamespacedKey(this.getInstance(),"gold_ore"),new ItemStack(Material.GOLD_NUGGET,3),Material.GOLD_ORE,0.7F,1800);
-        Bukkit.addRecipe(overrideRecipe);
-        getInstance().getLogger().info("Recipe "+overrideRecipe.getKey()+" has been loaded.");
     }
 
     @EventHandler
     public void onIronOreBreak(BlockBreakEvent event) {
-        if (event.getBlock().getType() != Material.GOLD_ORE)
+        if (event.getBlock().getType() != Material.DIAMOND_ORE)
             return;
         event.setDropItems(false);
         int amount = 0;
         switch (event.getPlayer().getInventory().getItemInMainHand().getType()) {
-            case STONE_PICKAXE:
-                amount = random.nextInt(1);
-                break;
             case IRON_PICKAXE:
-                amount = 1 + random.nextInt(1);
+                amount = 1 + random.nextInt(2);
                 break;
             case DIAMOND_PICKAXE:
-                amount = 1 + random.nextInt(2);
+                amount = 1 + random.nextInt(3);
                 break;
             default:
                 break;

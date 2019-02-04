@@ -35,7 +35,7 @@ public class Plus1s implements Listener {
                     new BukkitRunnable() {
                         @Override
                         public void run() {
-                            if (instance.getStatusManager().getPlayer(event.getEntity().getUniqueId()).isPlus1sMode()) {
+                            if (instance.getStatusManager().getPlayer(((Player) event.getEntity()).getUniqueId()).isPlus1sMode()) {
                                 ((Player) event.getEntity()).damage(10000);
                             }
                             ((Player) event.getEntity()).removePotionEffect(PotionEffectType.ABSORPTION);

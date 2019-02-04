@@ -6,31 +6,30 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
-import org.bukkit.block.Furnace;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.inventory.FurnaceBurnEvent;
-import org.bukkit.event.inventory.FurnaceSmeltEvent;
 import org.bukkit.inventory.FurnaceRecipe;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.RecipeChoice.ExactChoice;
 
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
+@SuppressWarnings("deprecation")
 public class IronDust extends NewItem {
     final ItemStack item = this.getItem();
     Random random = ThreadLocalRandom.current();
 
     public IronDust(Init instance) {
-        super(instance, Material.GUNPOWDER, "item.iron_dust", 2);
+        super(instance, Material.LIGHT_GRAY_DYE, "§7铁砂", 2);
     }
 
     @Override
     public void onRegister() {
-        FurnaceRecipe furnaceRecipe = new FurnaceRecipe(new NamespacedKey(this.getInstance(), "iron_dust"), new ItemStack(Material.IRON_NUGGET), Material.GUNPOWDER, 0.7F, 400);
+        FurnaceRecipe furnaceRecipe = new FurnaceRecipe(new NamespacedKey(this.getInstance(), "iron_dust"), new ItemStack(Material.IRON_NUGGET), new ExactChoice(item), 0.7F, 400);
         Bukkit.addRecipe(furnaceRecipe);
         getInstance().getLogger().info("Recipe "+furnaceRecipe.getKey()+" has been loaded.");
-        FurnaceRecipe overrideRecipe = new FurnaceRecipe(new NamespacedKey(this.getInstance(),"iron_ore"),new ItemStack(Material.IRON_NUGGET,3),Material.IRON_ORE,0.7F,1200);
+        FurnaceRecipe overrideRecipe = new FurnaceRecipe(new NamespacedKey(this.getInstance(),"iron_ore"),new ItemStack(Material.IRON_NUGGET,4),Material.IRON_ORE,0.7F,1200);
         Bukkit.addRecipe(overrideRecipe);
         getInstance().getLogger().info("Recipe "+overrideRecipe.getKey()+" has been loaded.");
     }
@@ -65,24 +64,5 @@ public class IronDust extends NewItem {
         }
 
         event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), this.getItem(amount));
-    }
-
-    @EventHandler
-    private void furnaceCanceller(FurnaceSmeltEvent event) {
-        if (event.getSource() != null)
-            if (event.getSource().getType() == item.getType())
-                if (!event.getSource().isSimilar(item))
-                    event.setCancelled(true);
-    }
-
-    @EventHandler
-    private void furnaceCanceller(FurnaceBurnEvent event) {
-        Furnace furnace = (Furnace) event.getBlock().getState();
-        if (furnace != null)
-            if (furnace.getInventory() != null)
-                if (furnace.getInventory().getSmelting() != null)
-                    if (furnace.getInventory().getSmelting().getType() == item.getType())
-                        if (!furnace.getInventory().getSmelting().isSimilar(item))
-                            event.setCancelled(true);
     }
 }

@@ -8,6 +8,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,6 +47,9 @@ public abstract class NewItem implements Listener {
 
     public ItemStack getItem(int amount) {
         ItemStack tmpis = new ItemStack(type, amount);
+        ItemMeta meta = tmpis.getItemMeta();
+        meta.setDisplayName(namePath);
+        tmpis.setItemMeta(meta);
         if(!basic){
             tmpis.setLore(lore);
             tmpis.addEnchantments(enchantments);
