@@ -3,6 +3,7 @@ package cat.melon.el_psy_congroo.utils.newitems;
 import cat.melon.el_psy_congroo.Init;
 import cat.melon.el_psy_congroo.utils.NewItem;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
@@ -36,6 +37,9 @@ public class IronDust extends NewItem {
 
     @EventHandler(ignoreCancelled = true)
     public void onIronOreBreak(BlockBreakEvent event) {
+        if (event.getPlayer().getGameMode() == GameMode.CREATIVE)
+            return;
+        
         if (event.getBlock().getType() != Material.IRON_ORE)
             return;
         event.setDropItems(false);

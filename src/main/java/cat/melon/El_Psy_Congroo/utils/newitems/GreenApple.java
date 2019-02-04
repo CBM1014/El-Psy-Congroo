@@ -2,6 +2,7 @@ package cat.melon.el_psy_congroo.utils.newitems;
 
 import cat.melon.el_psy_congroo.Init;
 import cat.melon.el_psy_congroo.utils.NewItem;
+
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
