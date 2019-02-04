@@ -27,8 +27,12 @@ public class IronDust extends NewItem {
 
     @Override
     public void onRegister() {
-        FurnaceRecipe furnaceRecipe = new FurnaceRecipe(new NamespacedKey(this.getInstance(), "iron_dust"), new ItemStack(Material.IRON_NUGGET), Material.GUNPOWDER, 0.7F, 220);
+        FurnaceRecipe furnaceRecipe = new FurnaceRecipe(new NamespacedKey(this.getInstance(), "iron_dust"), new ItemStack(Material.IRON_NUGGET), Material.GUNPOWDER, 0.7F, 400);
         Bukkit.addRecipe(furnaceRecipe);
+        getInstance().getLogger().info("Recipe "+furnaceRecipe.getKey()+" has been loaded.");
+        FurnaceRecipe overrideRecipe = new FurnaceRecipe(new NamespacedKey(this.getInstance(),"iron_ore"),new ItemStack(Material.IRON_NUGGET),Material.IRON_ORE,0.7F,1200);
+        Bukkit.addRecipe(overrideRecipe);
+        getInstance().getLogger().info("Recipe "+overrideRecipe.getKey()+" has been loaded.");
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -36,7 +40,6 @@ public class IronDust extends NewItem {
         if (event.getBlock().getType() != Material.IRON_ORE)
             return;
         event.setDropItems(false);
-        
         int amount = 0;
         int rand = random.nextInt(9);
         switch (event.getPlayer().getInventory().getItemInMainHand().getType()) {

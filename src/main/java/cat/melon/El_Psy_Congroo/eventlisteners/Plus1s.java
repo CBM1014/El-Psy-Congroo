@@ -10,7 +10,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -41,7 +40,7 @@ public class Plus1s implements Listener {
                             }
                             ((Player) event.getEntity()).removePotionEffect(PotionEffectType.ABSORPTION);
                         }
-                    }.runTaskLater(instance, 200L);
+                    }.runTaskLaterAsynchronously(instance, 200L);
                 }
             }
         }
@@ -53,10 +52,24 @@ public class Plus1s implements Listener {
     }
 
     @EventHandler
-    public void onPlayerEatGoldenApple(PlayerItemConsumeEvent event) {
-        if (event.getItem().getType() == Material.GOLDEN_APPLE || event.getItem().getType() == Material.ENCHANTED_GOLDEN_APPLE)
-            if (instance.getStatusManager().getPlayer(event.getPlayer().getUniqueId()).isPlus1sMode())
-                removePlus1sMode(event.getPlayer());
+    public void onPlayerEatGoldenApple(FoodLevelChangeEvent event) {
+        if(instance.getStatusManager().getPlayer(event.getEntity().getUniqueId()).isPlus1sMode()){
+            if (event.getFoodLevel() == 20) {
+                if (event.getEntity().getInventory().getItemInMainHand().getType() == Material.GOLDEN_APPLE || event.getEntity().getInventory().getItemInMainHand().getType() == Material.ENCHANTED_GOLDEN_APPLE) {
+                    removePlus1sMode(event.getEntity());
+                }
+            } else {
+                if (event.getEntity().getInventory().getItemInMainHand().getType() == Material.GOLDEN_APPLE || event.getEntity().getInventory().getItemInMainHand().getType() == Material.ENCHANTED_GOLDEN_APPLE) {
+                    removePlus1sMode(event.getEntity());
+                } else {
+                    if (!event.getEntity().getInventory().getItemInMainHand().getType().isEdible()) {
+                        if (event.getEntity().getInventory().getItemInOffHand().getType() == Material.GOLDEN_APPLE || event.getEntity().getInventory().getItemInOffHand().getType() == Material.ENCHANTED_GOLDEN_APPLE) {
+                            removePlus1sMode(event.getEntity());
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private void removePlus1sMode(HumanEntity player){

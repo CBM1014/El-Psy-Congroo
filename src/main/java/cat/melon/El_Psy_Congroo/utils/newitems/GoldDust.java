@@ -27,6 +27,10 @@ public class GoldDust extends NewItem {
     public void onRegister() {
         FurnaceRecipe furnaceRecipe = new FurnaceRecipe(new NamespacedKey(this.getInstance(), "gold_dust"), new ItemStack(Material.GOLD_NUGGET), Material.GLOWSTONE_DUST, 0.7F, 600);
         Bukkit.addRecipe(furnaceRecipe);
+        getInstance().getLogger().info("Recipe "+furnaceRecipe.getKey()+" has been loaded.");
+        FurnaceRecipe overrideRecipe = new FurnaceRecipe(new NamespacedKey(this.getInstance(),"gold_ore"),new ItemStack(Material.GOLD_NUGGET),Material.GOLD_ORE,0.7F,1800);
+        Bukkit.addRecipe(overrideRecipe);
+        getInstance().getLogger().info("Recipe "+overrideRecipe.getKey()+" has been loaded.");
     }
 
     @EventHandler
