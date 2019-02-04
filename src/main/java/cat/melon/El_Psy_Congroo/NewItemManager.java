@@ -1,6 +1,7 @@
 package cat.melon.el_psy_congroo;
 
 import cat.melon.el_psy_congroo.utils.NewItem;
+import cat.melon.el_psy_congroo.utils.newitems.DiamondDust;
 import cat.melon.el_psy_congroo.utils.newitems.GoldDust;
 import cat.melon.el_psy_congroo.utils.newitems.GreenApple;
 
@@ -23,7 +24,7 @@ public class NewItemManager implements Listener{
     public NewItemManager(Init instance) {
         this.instance = instance;
         try {
-            this.registerNewItems(new GreenApple(instance),new IronDust(instance),new GoldDust(instance));
+            this.registerNewItems(new GreenApple(instance),new IronDust(instance),new GoldDust(instance),new DiamondDust(instance));
         } catch (DuplicateRegisterListenerException e) {
             e.printStackTrace();
         }

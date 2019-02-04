@@ -20,7 +20,7 @@ public class GoldDust extends NewItem {
     ThreadLocalRandom random = ThreadLocalRandom.current();
 
     public GoldDust(Init instance) {
-        super(instance, Material.GUNPOWDER, "item.gold_dust", 2);
+        super(instance, Material.GLOWSTONE_DUST, "item.gold_dust", 3);
     }
 
     @Override
@@ -35,9 +35,9 @@ public class GoldDust extends NewItem {
 
     @EventHandler
     public void onIronOreBreak(BlockBreakEvent event) {
-        if (event.getBlock().getType() == Material.GOLD_ORE) {
-            event.setDropItems(false);
-        }
+        if (event.getBlock().getType() != Material.GOLD_ORE)
+            return;
+        event.setDropItems(false);
         int amount = 0;
         switch (event.getPlayer().getInventory().getItemInMainHand().getType()) {
             case STONE_PICKAXE:
