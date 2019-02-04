@@ -38,12 +38,18 @@ public class IronDust extends NewItem {
         switch (event.getPlayer().getInventory().getItemInMainHand().getType()) {
             case WOODEN_PICKAXE:
                 amount = random.nextInt(1);
+                break;
             case STONE_PICKAXE:
                 amount = 1 + random.nextInt(1);
+                break;
             case IRON_PICKAXE:
                 amount = 1 + random.nextInt(2);
+                break;
             case DIAMOND_PICKAXE:
                 amount = 2 + random.nextInt(1);
+                break;
+            default:
+                break;
         }
 
         if (amount == 0)

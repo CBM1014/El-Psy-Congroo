@@ -1,7 +1,7 @@
 name: El_Psy_Congroo
 version: ${project.version}
 build: ${project.buildNumber}
-authors: [cakoyo,cbm1014]
+authors: [cakoyo, cbm1014]
 depend: [ProtocolLib]
-main: cat.melon.El_Psy_Congroo.Init
+main: cat.melon.el_psy_congroo.Init
 api-version: 1.13
