@@ -37,7 +37,7 @@ public class Plus1s implements Listener {
                         public void run() {
                             ((Player) event.getEntity()).removePotionEffect(PotionEffectType.ABSORPTION);
                             if (instance.getStatusManager().getPlayer(((Player) event.getEntity()).getUniqueId()).isPlus1sMode()) {
-                                ((Player) event.getEntity()).damage(10000);
+                                ((Player) event.getEntity()).setHealth(0);
                             }
                         }
                     }.runTaskLater(instance, 200L);
