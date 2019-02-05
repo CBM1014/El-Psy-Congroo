@@ -23,10 +23,10 @@ public class GreenApple extends NewItem implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onAppleDrop(LeavesDecayEvent event) {
         int rand = random.nextInt(100);
-        if (rand >= 98) { // 2% + 0.5% (default)
+        if (rand >= 99) { // 2% + 0.5% (default)
             event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), new ItemStack(Material.APPLE));
         }
-        if (rand < 100) { // 3% (0 inclusive)
+        if (rand < 1) { // 1% (0 inclusive)
             event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), item.clone());
         }
     }
