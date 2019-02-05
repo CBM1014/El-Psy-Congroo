@@ -1,15 +1,16 @@
 package cat.melon.el_psy_congroo;
 
 import cat.melon.el_psy_congroo.utils.NewItem;
+import cat.melon.el_psy_congroo.utils.lib.CraftingUtil;
 import cat.melon.el_psy_congroo.utils.newitems.DiamondDust;
 import cat.melon.el_psy_congroo.utils.newitems.GoldDust;
 import cat.melon.el_psy_congroo.utils.newitems.GreenApple;
+import cat.melon.el_psy_congroo.utils.newitems.IronDust;
+import cat.melon.el_psy_congroo.utils.newitems.PreDiamondDust;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import cat.melon.el_psy_congroo.utils.newitems.IronDust;
-import cat.melon.el_psy_congroo.utils.newitems.PreDiamondDust;
 import de.tr7zw.itemnbtapi.NBTItem;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -19,32 +20,28 @@ import org.bukkit.inventory.ItemStack;
 
 public class NewItemManager implements Listener{
     //Happy New Year 2019!!!!!!!!!!!!!!!!!
-    Map<String, NewItem> newItemMap = new HashMap<>();
+    private static final Map<String, NewItem> newItemMap = new HashMap<>();
     Init instance;
 
     public NewItemManager(Init instance) {
         this.instance = instance;
+        CraftingUtil.initialize(instance);
+        
         try {
-            this.registerNewItems(new GreenApple(instance)/*,new IronDust(instance),new GoldDust(instance),new PreDiamondDust(instance),new DiamondDust(instance)*/);
-            //TODO NPE in PreDiamondDust
+            this.registerNewItems(new GreenApple(instance),
+                                     new IronDust(instance),
+                                     new GoldDust(instance),
+                                     new DiamondDust(instance), new PreDiamondDust(instance));
+            // do not forgot prefix! (item.)
+            // the order is important!
         } catch (DuplicateRegisterListenerException e) {
             e.printStackTrace();
         }
 
     }
 
-    public NewItem getItem(String key){
+    public static NewItem getItem(String key){
         return newItemMap.get(key);
-    }
-
-    private void registerNewItems(NewItem item) throws DuplicateRegisterListenerException {
-        if (item.register()) {
-            newItemMap.put(item.getNamePath(), item);
-            instance.getLogger().info("Custom item "+ item.getNamePath()+" loaded.");
-        } else {
-            throw new DuplicateRegisterListenerException("This item has been registered its EventListener.");
-        }
-
     }
 
     private void registerNewItems(NewItem... items) throws DuplicateRegisterListenerException {
@@ -60,6 +57,8 @@ public class NewItemManager implements Listener{
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onCraft(CraftItemEvent event){
+        // This is a basic protection in case of mistakes
+        // The proper way is to override the vanilla recipe
         for(ItemStack x : event.getInventory().getMatrix()){
             if (x == null)
                 return;
@@ -70,7 +69,9 @@ public class NewItemManager implements Listener{
         }
     }
 
-    class DuplicateRegisterListenerException extends Exception {
+    public class DuplicateRegisterListenerException extends Exception {
+        private static final long serialVersionUID = 1L;
+
         public DuplicateRegisterListenerException(String msg) {
             super(msg);
         }

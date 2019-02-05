@@ -35,12 +35,12 @@ public class Plus1s implements Listener {
                     new BukkitRunnable() {
                         @Override
                         public void run() {
+                            ((Player) event.getEntity()).removePotionEffect(PotionEffectType.ABSORPTION);
                             if (instance.getStatusManager().getPlayer(((Player) event.getEntity()).getUniqueId()).isPlus1sMode()) {
                                 ((Player) event.getEntity()).damage(10000);
                             }
-                            ((Player) event.getEntity()).removePotionEffect(PotionEffectType.ABSORPTION);
                         }
-                    }.runTaskLaterAsynchronously(instance, 200L);
+                    }.runTaskLater(instance, 200L);
                 }
             }
         }

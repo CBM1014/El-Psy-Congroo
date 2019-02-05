@@ -13,6 +13,7 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class GreenApple extends NewItem implements Listener {
+    final ItemStack item = this.getItemStack("§a青苹果");
     Random random = ThreadLocalRandom.current();
 
     public GreenApple(Init instance) {
@@ -26,7 +27,6 @@ public class GreenApple extends NewItem implements Listener {
             event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), new ItemStack(Material.APPLE));
         }
         if (rand < 100) { // 3% (0 inclusive)
-            ItemStack item = this.getItemStack();
             event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), item.clone());
         }
     }
@@ -38,4 +38,9 @@ public class GreenApple extends NewItem implements Listener {
             Bukkit.broadcastMessage("durability: " + event.getItem().getDurability());
         }
     }*/
+
+    @Override
+    public ItemStack getSampleItem() {
+        return item;
+    }
 }

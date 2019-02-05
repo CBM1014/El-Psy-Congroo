@@ -18,7 +18,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @SuppressWarnings("deprecation")
 public class IronDust extends NewItem {
-    final ItemStack item = this.getItemStack();
+    final ItemStack item = this.getItemStack("§7铁砂");
     Random random = ThreadLocalRandom.current();
 
     public IronDust(Init instance) {
@@ -27,6 +27,8 @@ public class IronDust extends NewItem {
 
     @Override
     public void onRegister() {
+        overrideVanillaExactly();
+        
         FurnaceRecipe furnaceRecipe = new FurnaceRecipe(new NamespacedKey(this.getInstance(), "iron_dust"), new ItemStack(Material.IRON_NUGGET), new ExactChoice(item), 0.7F, 400);
         Bukkit.addRecipe(furnaceRecipe);
         getInstance().getLogger().info("Recipe "+furnaceRecipe.getKey()+" has been loaded.");
@@ -36,7 +38,7 @@ public class IronDust extends NewItem {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onIronOreBreak(BlockBreakEvent event) {
+    public void onOreBreak(BlockBreakEvent event) {
         if (event.getPlayer().getGameMode() == GameMode.CREATIVE)
             return;
         
@@ -67,6 +69,11 @@ public class IronDust extends NewItem {
             return;
         }
 
-        event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), this.getItemStack(amount));
+        event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), this.getItemStack("§7铁砂", amount));
+    }
+
+    @Override
+    public ItemStack getSampleItem() {
+        return item;
     }
 }

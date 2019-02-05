@@ -16,7 +16,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @SuppressWarnings("deprecation")
 public class GoldDust extends NewItem {
-    final ItemStack item = this.getItemStack();
+    final ItemStack item = this.getItemStack("§e金砂");
     ThreadLocalRandom random = ThreadLocalRandom.current();
 
     public GoldDust(Init instance) {
@@ -25,6 +25,8 @@ public class GoldDust extends NewItem {
 
     @Override
     public void onRegister() {
+        overrideVanillaExactly();
+        
         FurnaceRecipe furnaceRecipe = new FurnaceRecipe(new NamespacedKey(this.getInstance(), "gold_dust"), new ItemStack(Material.GOLD_NUGGET), new ExactChoice(item), 0.7F, 600);
         Bukkit.addRecipe(furnaceRecipe);
         getInstance().getLogger().info("Recipe "+furnaceRecipe.getKey()+" has been loaded.");
@@ -33,8 +35,8 @@ public class GoldDust extends NewItem {
         getInstance().getLogger().info("Recipe "+overrideRecipe.getKey()+" has been loaded.");
     }
 
-    @EventHandler
-    public void onIronOreBreak(BlockBreakEvent event) {
+    @EventHandler(ignoreCancelled = true)
+    public void onOreBreak(BlockBreakEvent event) {
         if (event.getPlayer().getGameMode() == GameMode.CREATIVE)
             return;
         
@@ -59,6 +61,12 @@ public class GoldDust extends NewItem {
         if (amount == 0)
             return;
 
-        event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), this.getItemStack(amount));
+        event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), this.getItemStack("§e金砂", amount));
+    }
+    
+
+    @Override
+    public ItemStack getSampleItem() {
+        return item;
     }
 }

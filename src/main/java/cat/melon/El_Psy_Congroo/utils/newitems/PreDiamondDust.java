@@ -1,6 +1,7 @@
 package cat.melon.el_psy_congroo.utils.newitems;
 
 import cat.melon.el_psy_congroo.Init;
+import cat.melon.el_psy_congroo.NewItemManager;
 import cat.melon.el_psy_congroo.utils.NewItem;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -8,17 +9,16 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.inventory.FurnaceBurnEvent;
 import org.bukkit.inventory.FurnaceRecipe;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.RecipeChoice.ExactChoice;
 
 import java.util.concurrent.ThreadLocalRandom;
 
 @SuppressWarnings("deprecation")
 public class PreDiamondDust extends NewItem {
-    final ItemStack item = this.getItemStack();
-    ShapedRecipe diamond;
+    final ItemStack item = this.getItemStack("§6钻石原矿");
     ThreadLocalRandom random = ThreadLocalRandom.current();
 
     public PreDiamondDust(Init instance) {
@@ -27,12 +27,19 @@ public class PreDiamondDust extends NewItem {
 
     @Override
     public void onRegister() {
-        FurnaceRecipe furnaceRecipe = new FurnaceRecipe(new NamespacedKey(this.getInstance(), "pre_diamond_dust"), this.getInstance().getNewItemManager().getItem("diamond_dust").getItemStack(), new ExactChoice(item), 0.7F, 2400);
+        overrideVanillaExactly();
+        
+        NamespacedKey key = new NamespacedKey(this.getInstance(), "pre_diamond_dust");
+        ExactChoice choice = new ExactChoice(item);
+        NewItem newItemDust = NewItemManager.getItem("item.diamond_dust");
+        ItemStack itemDust = newItemDust.getItemStack("§b钻石砂");
+        FurnaceRecipe furnaceRecipe = new FurnaceRecipe(key, itemDust, choice, 0.7F, 2400);
         Bukkit.addRecipe(furnaceRecipe);
+        getInstance().getLogger().info("Recipe "+furnaceRecipe.getKey()+" has been loaded.");
     }
 
-    @EventHandler
-    public void onIronOreBreak(BlockBreakEvent event) {
+    @EventHandler(ignoreCancelled = true)
+    public void onOreBreak(BlockBreakEvent event) {
         if (event.getPlayer().getGameMode() == GameMode.CREATIVE)
             return;
         
@@ -54,6 +61,17 @@ public class PreDiamondDust extends NewItem {
         if (amount == 0)
             return;
 
-        event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), this.getItemStack(amount));
+        event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), this.getItemStack("§6钻石原矿", amount));
+    }
+    
+    @EventHandler(ignoreCancelled = true)
+    public void onBurn(FurnaceBurnEvent event) {
+        if (event.getFuel().isSimilar(item))
+            event.setCancelled(true);
+    }
+
+    @Override
+    public ItemStack getSampleItem() {
+        return item;
     }
 }
