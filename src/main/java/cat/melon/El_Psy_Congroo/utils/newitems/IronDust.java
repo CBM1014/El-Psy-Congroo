@@ -18,11 +18,11 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @SuppressWarnings("deprecation")
 public class IronDust extends NewItem {
-    final ItemStack item = this.getItem();
+    final ItemStack item = this.getItemStack();
     Random random = ThreadLocalRandom.current();
 
     public IronDust(Init instance) {
-        super(instance, Material.LIGHT_GRAY_DYE, "§7铁砂", 2);
+        super(instance, Material.LIGHT_GRAY_DYE, "item.iron_dust", 2);
     }
 
     @Override
@@ -67,6 +67,6 @@ public class IronDust extends NewItem {
             return;
         }
 
-        event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), this.getItem(amount));
+        event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), this.getItemStack(amount));
     }
 }

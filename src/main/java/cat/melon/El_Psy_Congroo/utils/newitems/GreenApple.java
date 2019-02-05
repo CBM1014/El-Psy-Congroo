@@ -13,7 +13,6 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class GreenApple extends NewItem implements Listener {
-    final ItemStack item = this.getItem();
     Random random = ThreadLocalRandom.current();
 
     public GreenApple(Init instance) {
@@ -26,9 +25,9 @@ public class GreenApple extends NewItem implements Listener {
         if (rand >= 98) { // 2% + 0.5% (default)
             event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), new ItemStack(Material.APPLE));
         }
-        if (rand < 3) { // 3% (0 inclusive)
-            ItemStack item = this.getItem();
-            event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), item);
+        if (rand < 100) { // 3% (0 inclusive)
+            ItemStack item = this.getItemStack();
+            event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), item.clone());
         }
     }
 

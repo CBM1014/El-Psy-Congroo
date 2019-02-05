@@ -16,11 +16,11 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @SuppressWarnings("deprecation")
 public class GoldDust extends NewItem {
-    final ItemStack item = this.getItem();
+    final ItemStack item = this.getItemStack();
     ThreadLocalRandom random = ThreadLocalRandom.current();
 
     public GoldDust(Init instance) {
-        super(instance, Material.GLOWSTONE_DUST, "§e金砂", 3);
+        super(instance, Material.GLOWSTONE_DUST, "item.gold_dust", 3);
     }
 
     @Override
@@ -59,6 +59,6 @@ public class GoldDust extends NewItem {
         if (amount == 0)
             return;
 
-        event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), this.getItem(amount));
+        event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), this.getItemStack(amount));
     }
 }

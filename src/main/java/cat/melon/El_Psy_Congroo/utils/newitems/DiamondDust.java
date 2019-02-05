@@ -16,12 +16,11 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @SuppressWarnings("deprecation")
 public class DiamondDust extends NewItem {
-    final ItemStack item = this.getItem();
+    final ItemStack item = this.getItemStack();
     ShapedRecipe diamond;
-    ThreadLocalRandom random = ThreadLocalRandom.current();
 
     public DiamondDust(Init instance) {
-        super(instance, Material.PRISMARINE_CRYSTALS, "§b钻石砂", 4);
+        super(instance, Material.PRISMARINE_CRYSTALS, "item.diamond_dust", 4);
     }
 
     @Override

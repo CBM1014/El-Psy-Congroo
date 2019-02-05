@@ -17,17 +17,17 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @SuppressWarnings("deprecation")
 public class PreDiamondDust extends NewItem {
-    final ItemStack item = this.getItem();
+    final ItemStack item = this.getItemStack();
     ShapedRecipe diamond;
     ThreadLocalRandom random = ThreadLocalRandom.current();
 
     public PreDiamondDust(Init instance) {
-        super(instance, Material.COAL, "§b钻石原矿", 5);
+        super(instance, Material.COAL, "item.pre_diamond_dust", 5);
     }
 
     @Override
     public void onRegister() {
-        FurnaceRecipe furnaceRecipe = new FurnaceRecipe(new NamespacedKey(this.getInstance(), "pre_diamond_dust"), new DiamondDust(getInstance()).getItem(), new ExactChoice(item), 0.7F, 2400);
+        FurnaceRecipe furnaceRecipe = new FurnaceRecipe(new NamespacedKey(this.getInstance(), "pre_diamond_dust"), this.getInstance().getNewItemManager().getItem("diamond_dust").getItemStack(), new ExactChoice(item), 0.7F, 2400);
         Bukkit.addRecipe(furnaceRecipe);
     }
 
@@ -54,6 +54,6 @@ public class PreDiamondDust extends NewItem {
         if (amount == 0)
             return;
 
-        event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), this.getItem(amount));
+        event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), this.getItemStack(amount));
     }
 }

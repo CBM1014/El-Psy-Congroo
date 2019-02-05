@@ -34,6 +34,10 @@ public class Init extends JavaPlugin {
     public SubtitleManager getSubtitleManager() {
         return subtitleManager;
     }
+
+    public NewItemManager getNewItemManager(){
+        return newItemManager;
+    }
     public StatusManager getStatusManager(){
         return statusManager;
     }

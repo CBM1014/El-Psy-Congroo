@@ -45,25 +45,27 @@ public abstract class NewItem implements Listener {
         this.itemFlags = itemFlags != null ? itemFlags : new ItemFlag[0];
     }
 
-    public ItemStack getItem(int amount) {
+    public ItemStack getItemStack(int amount) {
         ItemStack tmpis = new ItemStack(type, amount);
         ItemMeta meta = tmpis.getItemMeta();
-        meta.setDisplayName(namePath);
+
+        //meta.setDisplayName(namePath);
+        //meta.setLocalizedName("item.ghastTear.name"); //TODO set LocalizedName here(will provide in the resourcepack) //but idk how to do it((
         tmpis.setItemMeta(meta);
+
         if(!basic){
             tmpis.setLore(lore);
             tmpis.addEnchantments(enchantments);
             tmpis.addItemFlags(itemFlags);
         }
-        //TODO set item name here
         NBTItem tmpni = new NBTItem(tmpis);
         tmpni.setInteger("CustomModelData", modelNumber);
         tmpni.setString("agendaItem", namePath);
         return tmpni.getItem();
     }
 
-    public ItemStack getItem() {
-        return this.getItem(1);
+    public ItemStack getItemStack() {
+        return this.getItemStack(1);
     }
 
     public Material getType() {

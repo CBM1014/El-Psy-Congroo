@@ -25,11 +25,16 @@ public class NewItemManager implements Listener{
     public NewItemManager(Init instance) {
         this.instance = instance;
         try {
-            this.registerNewItems(new GreenApple(instance),new IronDust(instance),new GoldDust(instance),new DiamondDust(instance),new PreDiamondDust(instance));
+            this.registerNewItems(new GreenApple(instance)/*,new IronDust(instance),new GoldDust(instance),new PreDiamondDust(instance),new DiamondDust(instance)*/);
+            //TODO NPE in PreDiamondDust
         } catch (DuplicateRegisterListenerException e) {
             e.printStackTrace();
         }
 
+    }
+
+    public NewItem getItem(String key){
+        return newItemMap.get(key);
     }
 
     private void registerNewItems(NewItem item) throws DuplicateRegisterListenerException {
