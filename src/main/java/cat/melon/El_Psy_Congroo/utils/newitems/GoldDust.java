@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.Sound;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.FurnaceRecipe;
@@ -39,10 +40,16 @@ public class GoldDust extends NewItem {
     public void onOreBreak(BlockBreakEvent event) {
         if (event.getPlayer().getGameMode() == GameMode.CREATIVE)
             return;
-        
         if (event.getBlock().getType() != Material.GOLD_ORE)
             return;
+        
         event.setDropItems(false);
+        
+        if (random.nextInt(100) < 4) {
+            event.getBlock().getWorld().playSound(event.getBlock().getLocation(), Sound.ITEM_SHIELD_BREAK, 1F, 1F);
+            return;
+        }
+        
         int amount = 0;
         switch (event.getPlayer().getInventory().getItemInMainHand().getType()) {
             case STONE_PICKAXE:

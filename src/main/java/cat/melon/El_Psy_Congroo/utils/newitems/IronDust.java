@@ -41,10 +41,16 @@ public class IronDust extends NewItem {
     public void onOreBreak(BlockBreakEvent event) {
         if (event.getPlayer().getGameMode() == GameMode.CREATIVE)
             return;
-        
         if (event.getBlock().getType() != Material.IRON_ORE)
             return;
+        
         event.setDropItems(false);
+        
+        if (random.nextInt(100) < 3) {
+            event.getBlock().getWorld().playSound(event.getBlock().getLocation(), Sound.ITEM_SHIELD_BREAK, 1F, 1F);
+            return;
+        }
+        
         int amount = 0;
         int rand = random.nextInt(9);
         switch (event.getPlayer().getInventory().getItemInMainHand().getType()) {
