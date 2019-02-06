@@ -216,7 +216,17 @@ public abstract class NewItem implements Listener {
                 
                 continue;
             } else if (recipe instanceof MerchantRecipe) {
-                continue; // no need
+                MerchantRecipe merchantRecipe = ((MerchantRecipe) recipe);
+                Material material = merchantRecipe.getResult().getType();
+                switch (material) {
+                    case DIAMOND:
+                    case IRON_INGOT:
+                    case GOLD_INGOT:
+                    case EMERALD:
+                        it.remove();
+                    default:
+                        break;
+                }
             } else {
                 throw new UnsupportedOperationException("Unknown Recipe Type: " + recipe.getClass().getSimpleName());
             }
