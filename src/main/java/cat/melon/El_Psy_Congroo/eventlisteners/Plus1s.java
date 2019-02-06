@@ -36,7 +36,7 @@ public class Plus1s implements Listener {
                     ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 200, 0, true), true);
                     instance.getStatusManager().getPlayer(event.getEntity().getUniqueId()).setPlus1sMode(true);
                     // for soundpack
-                    Bukkit.getScheduler().runTask(instance, () ->((Player) event.getEntity()).playSound(((Player) event.getEntity()).getLocation(), "minecraft:agenda.dying", SoundCategory.MASTER, 300F, 1F));
+                    Bukkit.getScheduler().runTask(instance, () ->((Player) event.getEntity()).playSound(((Player) event.getEntity()).getLocation(), "minecraft:agenda.dying", SoundCategory.MASTER, 1000F, 1F));
                     new BukkitRunnable() {
                         @Override
                         public void run() {
