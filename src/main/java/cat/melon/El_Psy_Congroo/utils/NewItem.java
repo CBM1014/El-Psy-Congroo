@@ -123,9 +123,9 @@ public abstract class NewItem implements Listener {
     public void overrideVanillaExactly() {
         List<Recipe> exactRecipes = Lists.newArrayList();
         
-        org.bukkit.inventory.RecipeChoice.ExactChoice choiceExactVanilla = new org.bukkit.inventory.RecipeChoice.ExactChoice(new ItemStack(getType()));
+        //org.bukkit.inventory.RecipeChoice.ExactChoice choiceExactVanilla = new org.bukkit.inventory.RecipeChoice.ExactChoice(new ItemStack(getType()));
         
-        ItemStack dummyItem = getSampleItem();
+        //ItemStack dummyItem = getSampleItem();
         
         Iterator<Recipe> it = Bukkit.recipeIterator();
         while (it.hasNext()) {
