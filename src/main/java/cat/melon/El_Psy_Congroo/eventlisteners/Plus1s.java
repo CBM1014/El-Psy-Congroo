@@ -1,7 +1,10 @@
 package cat.melon.el_psy_congroo.eventlisteners;
 
 import cat.melon.el_psy_congroo.Init;
+
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
@@ -32,6 +35,8 @@ public class Plus1s implements Listener {
                     ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 200, 1, true), true);
                     ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 200, 0, true), true);
                     instance.getStatusManager().getPlayer(event.getEntity().getUniqueId()).setPlus1sMode(true);
+                    // for soundpack
+                    Bukkit.getScheduler().runTask(instance, () ->((Player) event.getEntity()).playSound(((Player) event.getEntity()).getLocation(), "minecraft:agenda.dying", SoundCategory.MASTER, 300F, 1F));
                     new BukkitRunnable() {
                         @Override
                         public void run() {
