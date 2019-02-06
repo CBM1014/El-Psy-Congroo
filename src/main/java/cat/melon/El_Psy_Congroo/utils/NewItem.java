@@ -161,6 +161,17 @@ public abstract class NewItem implements Listener {
                 });
                 
                 continue;
+            } else if (recipe.getResult().getType() == Material.GLOWSTONE) { // Bukkit bug?
+                it.remove();
+                
+                Bukkit.getScheduler().runTask(instance, () -> {
+                    ShapelessRecipe glowStone = new ShapelessRecipe(new NamespacedKey(getInstance(), "glowstone"), new ItemStack(Material.GLOWSTONE));
+                    glowStone.addIngredient(new org.bukkit.inventory.RecipeChoice.ExactChoice(new ItemStack(Material.GLOWSTONE_DUST)));
+                    glowStone.addIngredient(new org.bukkit.inventory.RecipeChoice.ExactChoice(new ItemStack(Material.GLOWSTONE_DUST)));
+                    glowStone.addIngredient(new org.bukkit.inventory.RecipeChoice.ExactChoice(new ItemStack(Material.GLOWSTONE_DUST)));
+                    glowStone.addIngredient(new org.bukkit.inventory.RecipeChoice.ExactChoice(new ItemStack(Material.GLOWSTONE_DUST)));
+                    Bukkit.addRecipe(glowStone);
+                });
             }
             
             if (recipe instanceof ShapedRecipe) {
