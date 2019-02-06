@@ -130,7 +130,7 @@ public abstract class NewItem implements Listener {
         Iterator<Recipe> it = Bukkit.recipeIterator();
         while (it.hasNext()) {
             Recipe recipe = it.next();
-            boolean changed = false;
+            //boolean changed = false;
             
             if (recipe.getResult().getType() == Material.COAL_BLOCK) { // Bukkit bug?
                 ShapedRecipe coalBlock = new ShapedRecipe(new NamespacedKey(getInstance(), "coal_block"), new ItemStack(Material.COAL_BLOCK));
@@ -172,8 +172,58 @@ public abstract class NewItem implements Listener {
                     glowStone.addIngredient(new org.bukkit.inventory.RecipeChoice.ExactChoice(new ItemStack(Material.GLOWSTONE_DUST)));
                     Bukkit.addRecipe(glowStone);
                 });
+                
+                continue;
+            } else if (recipe.getResult().getType() == Material.SEA_LANTERN) { // Bukkit bug?
+                ShapedRecipe coalBlock = new ShapedRecipe(new NamespacedKey(getInstance(), "sea_latern"), new ItemStack(Material.SEA_LANTERN));
+                coalBlock.shape("yxy","xxx","yxy");
+                coalBlock.setIngredient('x', Material.PRISMARINE_CRYSTALS);
+                coalBlock.setIngredient('y', Material.PRISMARINE_SHARD);
+                
+                ItemStack crystal = new ItemStack(Material.PRISMARINE_CRYSTALS);
+                ItemStack shard = new ItemStack(Material.PRISMARINE_SHARD);
+                CraftingUtil.addRecipe(coalBlock).setItemstack(0, shard)
+                                                 .setItemstack(1, crystal)
+                                                 .setItemstack(2, shard)
+                                                 .setItemstack(3, crystal)
+                                                 .setItemstack(4, crystal)
+                                                 .setItemstack(5, crystal)
+                                                 .setItemstack(6, shard)
+                                                 .setItemstack(7, crystal)
+                                                 .setItemstack(8, shard);
+                
+                continue;
+            } else if (recipe.getResult().getType() == Material.TORCH) { // Bukkit bug?
+                ShapedRecipe coalBlock = new ShapedRecipe(new NamespacedKey(getInstance(), "torch"), new ItemStack(Material.TORCH));
+                coalBlock.shape("   "," x "," y ");
+                coalBlock.setIngredient('x', Material.COAL);
+                coalBlock.setIngredient('y', Material.STICK);
+                
+                ItemStack crystal = new ItemStack(Material.COAL);
+                ItemStack shard = new ItemStack(Material.STICK);
+                CraftingUtil.addRecipe(coalBlock).setItemstack(4, crystal)
+                                                 .setItemstack(7, shard);
+                
+                continue;
+            } else if (recipe.getResult().getType() == Material.SPECTRAL_ARROW) { // Bukkit bug?
+                ShapedRecipe coalBlock = new ShapedRecipe(new NamespacedKey(getInstance(), "spectral_arrow"), new ItemStack(Material.SPECTRAL_ARROW));
+                coalBlock.shape(" x ","xyx"," x ");
+                coalBlock.setIngredient('x', Material.GLOWSTONE_DUST);
+                coalBlock.setIngredient('y', Material.ARROW);
+                
+                ItemStack crystal = new ItemStack(Material.GLOWSTONE_DUST);
+                ItemStack shard = new ItemStack(Material.ARROW);
+                CraftingUtil.addRecipe(coalBlock).setItemstack(1, crystal)
+                                                 .setItemstack(3, crystal)
+                                                 .setItemstack(5, crystal)
+                                                 .setItemstack(7, crystal)
+                                                 .setItemstack(4, shard);
+                
+                continue;
             }
             
+            // Bugggggggggggggggy
+            /*
             if (recipe instanceof ShapedRecipe) {
                 ShapedRecipe shapedRecipe = ((ShapedRecipe) recipe);
                 for (Entry<Character, RecipeChoice> entry : ((ShapedRecipe) recipe).getChoiceMap().entrySet()) {
@@ -240,7 +290,7 @@ public abstract class NewItem implements Listener {
                 }
             } else {
                 throw new UnsupportedOperationException("Unknown Recipe Type: " + recipe.getClass().getSimpleName());
-            }
+            }*/
         }
         
         for (Recipe override : exactRecipes)
