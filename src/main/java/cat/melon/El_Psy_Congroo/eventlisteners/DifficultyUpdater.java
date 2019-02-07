@@ -45,7 +45,7 @@ public class DifficultyUpdater implements Listener {
                             case SHULKER_BULLET:
                             case SHULKER:
                             case ENDERMITE:
-                                event.setDamage(event.getDamage() * 10);
+                                event.setDamage(event.getDamage() * 20);
                                 event.setDamage(DamageModifier.ARMOR, event.getDamage(DamageModifier.ARMOR) / 10);
                             default:
                                 event.setDamage(event.getDamage() * 2);
