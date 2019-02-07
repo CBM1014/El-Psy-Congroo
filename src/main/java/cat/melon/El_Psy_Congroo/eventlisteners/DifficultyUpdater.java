@@ -10,6 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockRedstoneEvent;
+import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageModifier;
 import org.bukkit.event.entity.EntityPotionEffectEvent;
@@ -17,7 +18,7 @@ import org.bukkit.event.entity.EntityPotionEffectEvent.Action;
 import org.bukkit.event.entity.EntityPotionEffectEvent.Cause;
 
 @SuppressWarnings("deprecation")
-public class HealthUpdater implements Listener {
+public class DifficultyUpdater implements Listener {
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onPlayerDamage(EntityDamageByEntityEvent event) {
         if (event.getEntityType() == EntityType.PLAYER) {
@@ -53,5 +54,11 @@ public class HealthUpdater implements Listener {
     public void onRedstone(BlockRedstoneEvent event) {
         if (event.getBlock().getWorld().getEnvironment() == Environment.THE_END)
             event.setNewCurrent(rand.nextBoolean() ? 0 : event.getNewCurrent());
+    }
+    
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onPrepare(PrepareItemEnchantEvent event) {
+        if (event.getItem().getDurability() != event.getItem().getType().getMaxDurability())
+            event.setCancelled(true);
     }
 }
