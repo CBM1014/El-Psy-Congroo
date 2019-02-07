@@ -13,27 +13,45 @@ import org.bukkit.event.block.BlockRedstoneEvent;
 import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageModifier;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityPotionEffectEvent;
 import org.bukkit.event.entity.EntityPotionEffectEvent.Action;
 import org.bukkit.event.entity.EntityPotionEffectEvent.Cause;
 
+import moe.kira.personal.PersonalAPI;
+
 @SuppressWarnings("deprecation")
 public class DifficultyUpdater implements Listener {
+    private static final String CONFIG_KEY = "AGENDA_EL_PSY_CONGROO_DIFFICULTY_CONFIG_FOR_USERNAME_LENGTH_LIMIT_THIS_MUST_BE_SO_LONG_";
+    
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onPlayerDamage(EntityDamageByEntityEvent event) {
         if (event.getEntityType() == EntityType.PLAYER) {
             switch (event.getEntity().getWorld().getEnvironment()) {
                 case NORMAL:
                     event.setDamage(event.getDamage() * 1.1);
-                    event.setDamage(DamageModifier.ARMOR, event.getDamage(DamageModifier.ARMOR) / 3);
+                    event.setDamage(DamageModifier.ARMOR, event.getDamage(DamageModifier.ARMOR) / 2);
                     break;
                 case NETHER:
                     event.setDamage(event.getDamage() * 1.5);
-                    event.setDamage(DamageModifier.ARMOR, event.getDamage(DamageModifier.ARMOR) / 3.5);
+                    event.setDamage(DamageModifier.ARMOR, event.getDamage(DamageModifier.ARMOR) / 3);
                     break;
                 case THE_END:
-                    event.setDamage(event.getDamage() * 3);
-                    event.setDamage(DamageModifier.ARMOR, event.getDamage(DamageModifier.ARMOR) / 5);
+                    if (PersonalAPI.of(CONFIG_KEY).getBoolean("dragon_death", false)) {
+                        event.setDamage(event.getDamage() * 2);
+                        event.setDamage(DamageModifier.ARMOR, event.getDamage(DamageModifier.ARMOR) / 4);
+                    } else {
+                        switch (event.getDamager().getType()) {
+                            case SHULKER_BULLET:
+                            case SHULKER:
+                            case ENDERMITE:
+                                event.setDamage(event.getDamage() * 10);
+                                event.setDamage(DamageModifier.ARMOR, event.getDamage(DamageModifier.ARMOR) / 10);
+                            default:
+                                event.setDamage(event.getDamage() * 2);
+                                event.setDamage(DamageModifier.ARMOR, event.getDamage(DamageModifier.ARMOR) / 4);
+                        }
+                    }
                     break;
             }
         }
@@ -60,5 +78,11 @@ public class DifficultyUpdater implements Listener {
     public void onPrepare(PrepareItemEnchantEvent event) {
         if (event.getItem().getDurability() != event.getItem().getType().getMaxDurability())
             event.setCancelled(true);
+    }
+    
+    @EventHandler(ignoreCancelled = true)
+    public void onPrepare(EntityDeathEvent event) {
+        if (event.getEntityType() == EntityType.ENDER_DRAGON)
+            PersonalAPI.of(CONFIG_KEY).set("dragon_death", true);
     }
 }
