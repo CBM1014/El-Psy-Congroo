@@ -3,6 +3,7 @@ package cat.melon.el_psy_congroo;
 import cat.melon.el_psy_congroo.utils.NewItem;
 import cat.melon.el_psy_congroo.utils.lib.CraftingUtil;
 import cat.melon.el_psy_congroo.utils.newitems.DiamondDust;
+import cat.melon.el_psy_congroo.utils.newitems.EnchantedBookSoulBind;
 import cat.melon.el_psy_congroo.utils.newitems.GoldDust;
 import cat.melon.el_psy_congroo.utils.newitems.GreenApple;
 import cat.melon.el_psy_congroo.utils.newitems.IronDust;
@@ -31,13 +32,14 @@ import org.bukkit.inventory.ShapelessRecipe;
 
 import com.google.common.collect.Lists;
 
-public class NewItemManager implements Listener{
+public class NewItemManager implements Listener {
     //Happy New Year 2019!!!!!!!!!!!!!!!!!
     private static final Map<String, NewItem> newItemMap = new HashMap<>();
     Init instance;
 
     public NewItemManager(Init instance) {
         this.instance = instance;
+        
         CraftingUtil.initialize(instance);
         
         try {
@@ -46,7 +48,8 @@ public class NewItemManager implements Listener{
                                      new QuartzDust(instance),
                                      new IronDust(instance),
                                      new GoldDust(instance),
-                                     new DiamondDust(instance), new PreDiamondDust(instance));
+                                     new DiamondDust(instance), new PreDiamondDust(instance),
+                                     new EnchantedBookSoulBind(instance));
             // do not forgot prefix! (item.)
             // the order is important!
         } catch (DuplicateRegisterListenerException e) {

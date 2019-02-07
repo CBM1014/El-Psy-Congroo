@@ -55,12 +55,14 @@ public abstract class NewItem implements Listener {
         this.itemFlags = itemFlags != null ? itemFlags : new ItemFlag[0];
     }
 
-    public ItemStack getItemStack(String displayName, int amount) {
+    public ItemStack getItemStack(String displayName, List<String> lore, int amount) {
         ItemStack tmpis = new ItemStack(type, amount);
         ItemMeta meta = tmpis.getItemMeta();
 
         meta.setDisplayName(displayName);
         meta.setLocalizedName(namePath); //TODO set LocalizedName here(will provide in the resourcepack) //but idk how to do it((
+        if (lore != null)
+            meta.setLore(lore);
         tmpis.setItemMeta(meta);
 
         if(!basic){
@@ -73,9 +75,13 @@ public abstract class NewItem implements Listener {
         tmpni.setString("agendaItem", namePath);
         return tmpni.getItem();
     }
+    
+    public ItemStack getItemStack(String displayName, int amount) {
+        return this.getItemStack(displayName, null, 1);
+    }
 
     public ItemStack getItemStack(String displayName) {
-        return this.getItemStack(displayName, 1);
+        return this.getItemStack(displayName, null, 1);
     }
 
     public Material getType() {
