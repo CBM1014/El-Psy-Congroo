@@ -22,12 +22,12 @@ public class QuartzDust extends NewItem {
     Random random = ThreadLocalRandom.current();
 
     public QuartzDust(Init instance) {
-        super(instance, Material.LIGHT_GRAY_DYE, "item.quartz_dust", 6);
+        super(instance, Material.CLAY_BALL, "item.quartz_dust", 6);
     }
 
     @Override
     public void onRegister() {
-        FurnaceRecipe furnaceRecipe = new FurnaceRecipe(new NamespacedKey(this.getInstance(), "diorite"), getItemStack("§7石英碎片", 3), Material.DIORITE, 0.7F, 600);
+        FurnaceRecipe furnaceRecipe = new FurnaceRecipe(new NamespacedKey(this.getInstance(), "diorite"), getItemStack("§7石英碎片", 8), Material.DIORITE, 0.7F, 600);
         Bukkit.addRecipe(furnaceRecipe);
         getInstance().getLogger().info("Recipe "+furnaceRecipe.getKey()+" has been loaded.");
         
@@ -45,7 +45,7 @@ public class QuartzDust extends NewItem {
     
     @EventHandler(ignoreCancelled = true)
     public void onBurn(FurnaceBurnEvent event) {
-        ItemStack itemStack = ((Furnace) event.getBlock()).getInventory().getSmelting();
+        ItemStack itemStack = ((Furnace) event.getBlock().getState()).getInventory().getSmelting();
         if (itemStack.isSimilar(item))
             event.setCancelled(true);
     }

@@ -24,11 +24,11 @@ public class StoneDust extends NewItem {
 
     @Override
     public void onRegister() {
-        FurnaceRecipe furnaceRecipe = new FurnaceRecipe(new NamespacedKey(this.getInstance(), "andesite"), getItemStack("§7碎石子", 3), Material.DIORITE, 0.7F, 300);
+        FurnaceRecipe furnaceRecipe = new FurnaceRecipe(new NamespacedKey(this.getInstance(), "andesite"), getItemStack("§7碎石子", 6), Material.ANDESITE, 0.7F, 300);
         Bukkit.addRecipe(furnaceRecipe);
         getInstance().getLogger().info("Recipe "+furnaceRecipe.getKey()+" has been loaded.");
         
-        ShapelessRecipe diamond = new ShapelessRecipe(new NamespacedKey(getInstance(), "cobb_stone"), new ItemStack(Material.STONE));
+        ShapelessRecipe diamond = new ShapelessRecipe(new NamespacedKey(getInstance(), "cobb_stone"), new ItemStack(Material.COBBLESTONE));
         ExactChoice choice = new ExactChoice(item);
         diamond.addIngredient(choice);
         diamond.addIngredient(choice);
