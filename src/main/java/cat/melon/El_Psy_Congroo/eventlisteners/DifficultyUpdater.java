@@ -76,7 +76,7 @@ public class DifficultyUpdater implements Listener {
     
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPrepare(PrepareItemEnchantEvent event) {
-        if (event.getItem().getDurability() != event.getItem().getType().getMaxDurability())
+        if (event.getItem().getDurability() != 0)
             event.setCancelled(true);
     }
     
