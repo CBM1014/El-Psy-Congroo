@@ -28,8 +28,6 @@ public class PreDiamondDust extends NewItem {
 
     @Override
     public void onRegister() {
-        overrideVanillaExactly();
-        
         NamespacedKey key = new NamespacedKey(this.getInstance(), "pre_diamond_dust");
         ExactChoice choice = new ExactChoice(item);
         NewItem newItemDust = NewItemManager.getItem("item.diamond_dust");
@@ -54,12 +52,15 @@ public class PreDiamondDust extends NewItem {
         }
         
         int amount = 0;
+        int stoneDustAmount = 1;
         switch (event.getPlayer().getInventory().getItemInMainHand().getType()) {
             case IRON_PICKAXE:
                 amount = 1 + random.nextInt(2);
+                stoneDustAmount = 2;
                 break;
             case DIAMOND_PICKAXE:
                 amount = 1 + random.nextInt(3);
+                stoneDustAmount = 1;
                 break;
             default:
                 break;
@@ -69,6 +70,7 @@ public class PreDiamondDust extends NewItem {
             return;
 
         event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), this.getItemStack("§6钻石原矿", amount));
+        event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), NewItemManager.getItem("item.stone_dust").getItemStack("§7碎石子", stoneDustAmount));
     }
     
     @EventHandler(ignoreCancelled = true)

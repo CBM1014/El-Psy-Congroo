@@ -1,6 +1,7 @@
 package cat.melon.el_psy_congroo.utils.newitems;
 
 import cat.melon.el_psy_congroo.Init;
+import cat.melon.el_psy_congroo.NewItemManager;
 import cat.melon.el_psy_congroo.utils.NewItem;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -27,8 +28,6 @@ public class IronDust extends NewItem {
 
     @Override
     public void onRegister() {
-        overrideVanillaExactly();
-        
         FurnaceRecipe furnaceRecipe = new FurnaceRecipe(new NamespacedKey(this.getInstance(), "iron_dust"), new ItemStack(Material.IRON_NUGGET), new ExactChoice(item), 0.7F, 400);
         Bukkit.addRecipe(furnaceRecipe);
         getInstance().getLogger().info("Recipe "+furnaceRecipe.getKey()+" has been loaded.");
@@ -53,18 +52,23 @@ public class IronDust extends NewItem {
         
         int amount = 0;
         int rand = random.nextInt(9);
+        int stoneDustAmount = 0;
         switch (event.getPlayer().getInventory().getItemInMainHand().getType()) {
             case WOODEN_PICKAXE:
-                amount =rand < 4 ? 0 : 1; // 40% nothing, 60% one
+                amount = rand < 4 ? 0 : 1; // 40% nothing, 60% one
+                stoneDustAmount = 1;
                 break;
             case STONE_PICKAXE:
                 amount = rand < 2 ? 0 : (rand > 7 ? 2 : 1); // 20% nothing, 60% one, 20% two
+                stoneDustAmount = 2;
                 break;
             case IRON_PICKAXE:
                 amount = 1 + rand < 6 ? 0 : 1; // 1 + 60% extra one
+                stoneDustAmount = 2;
                 break;
             case DIAMOND_PICKAXE:
                 amount = 2 + rand < 2 ? 0 : (rand > 7 ? 2 : 1); // 2 + 20% nothing, 60% one, 20% two
+                stoneDustAmount = 1;
                 break;
             default:
                 break;
@@ -76,6 +80,7 @@ public class IronDust extends NewItem {
         }
 
         event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), this.getItemStack("§7铁砂", amount));
+        event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), NewItemManager.getItem("item.stone_dust").getItemStack("§7碎石子", stoneDustAmount));
     }
 
     @Override

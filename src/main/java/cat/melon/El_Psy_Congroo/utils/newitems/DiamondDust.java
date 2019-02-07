@@ -21,8 +21,6 @@ public class DiamondDust extends NewItem {
 
     @Override
     public void onRegister() {
-        overrideVanillaExactly();
-        
         ShapedRecipe diamond = new ShapedRecipe(new NamespacedKey(getInstance(), "diamond_dust"),new ItemStack(Material.DIAMOND));
         diamond.shape(" y ","yyy","yyy");
         diamond.setIngredient('y', new ExactChoice(item));

@@ -1,6 +1,7 @@
 package cat.melon.el_psy_congroo.utils.newitems;
 
 import cat.melon.el_psy_congroo.Init;
+import cat.melon.el_psy_congroo.NewItemManager;
 import cat.melon.el_psy_congroo.utils.NewItem;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -26,8 +27,6 @@ public class GoldDust extends NewItem {
 
     @Override
     public void onRegister() {
-        overrideVanillaExactly();
-        
         FurnaceRecipe furnaceRecipe = new FurnaceRecipe(new NamespacedKey(this.getInstance(), "gold_dust"), new ItemStack(Material.GOLD_NUGGET), new ExactChoice(item), 0.7F, 600);
         Bukkit.addRecipe(furnaceRecipe);
         getInstance().getLogger().info("Recipe "+furnaceRecipe.getKey()+" has been loaded.");
@@ -51,15 +50,19 @@ public class GoldDust extends NewItem {
         }
         
         int amount = 0;
+        int stoneDustAmount = 1;
         switch (event.getPlayer().getInventory().getItemInMainHand().getType()) {
             case STONE_PICKAXE:
                 amount = random.nextInt(1);
+                stoneDustAmount = 2;
                 break;
             case IRON_PICKAXE:
                 amount = 1 + random.nextInt(1);
+                stoneDustAmount = 3;
                 break;
             case DIAMOND_PICKAXE:
                 amount = 1 + random.nextInt(2);
+                stoneDustAmount = 2;
                 break;
             default:
                 break;
@@ -69,6 +72,7 @@ public class GoldDust extends NewItem {
             return;
 
         event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), this.getItemStack("§e金砂", amount));
+        event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), NewItemManager.getItem("item.stone_dust").getItemStack("§7碎石子", stoneDustAmount));
     }
     
 
