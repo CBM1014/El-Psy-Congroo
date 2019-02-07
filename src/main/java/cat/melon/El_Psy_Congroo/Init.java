@@ -1,5 +1,6 @@
 package cat.melon.el_psy_congroo;
 
+import cat.melon.el_psy_congroo.eventlisteners.HealthUpdater;
 import cat.melon.el_psy_congroo.eventlisteners.Plus1s;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -29,6 +30,7 @@ public class Init extends JavaPlugin {
         Bukkit.getServer().getPluginManager().registerEvents(newItemManager,this);
         Bukkit.getServer().getPluginManager().registerEvents(statusManager,this);
         Bukkit.getServer().getPluginManager().registerEvents(new Plus1s(this),this);
+        Bukkit.getServer().getPluginManager().registerEvents(new HealthUpdater(),this);
     }
 
     public SubtitleManager getSubtitleManager() {
