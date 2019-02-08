@@ -74,7 +74,6 @@ public class GoldDust extends NewItem {
         event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), this.getItemStack("§e金砂", amount));
         event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), NewItemManager.getItem("item.stone_dust").getItemStack("§7碎石子", stoneDustAmount));
     }
-    
 
     @Override
     public ItemStack getSampleItem() {

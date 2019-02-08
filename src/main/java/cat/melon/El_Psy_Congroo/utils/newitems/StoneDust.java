@@ -2,18 +2,17 @@ package cat.melon.el_psy_congroo.utils.newitems;
 
 import cat.melon.el_psy_congroo.Init;
 import cat.melon.el_psy_congroo.utils.NewItem;
+import cat.melon.el_psy_congroo.utils.lib.CraftingUtil;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.FurnaceRecipe;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.ShapelessRecipe;
-import org.bukkit.inventory.RecipeChoice.ExactChoice;
-
+import org.bukkit.inventory.ShapedRecipe;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-@SuppressWarnings("deprecation")
 public class StoneDust extends NewItem {
     final ItemStack item = this.getItemStack("§7碎石子");
     Random random = ThreadLocalRandom.current();
@@ -28,12 +27,15 @@ public class StoneDust extends NewItem {
         Bukkit.addRecipe(furnaceRecipe);
         getInstance().getLogger().info("Recipe "+furnaceRecipe.getKey()+" has been loaded.");
         
-        ShapelessRecipe diamond = new ShapelessRecipe(new NamespacedKey(getInstance(), "cobb_stone"), new ItemStack(Material.COBBLESTONE));
-        ExactChoice choice = new ExactChoice(item);
-        diamond.addIngredient(choice);
-        diamond.addIngredient(choice);
-        diamond.addIngredient(choice);
-        diamond.addIngredient(choice);
+        ShapedRecipe diamond = new ShapedRecipe(new NamespacedKey(getInstance(), "cobb_stone"), new ItemStack(Material.COBBLESTONE));
+        diamond.shape("   ","xx ","xx ");
+        diamond.setIngredient('x', Material.IRON_NUGGET);
+        
+        ItemStack coal = item;
+        CraftingUtil.addRecipe(diamond).setItemstack(3, coal)
+                                       .setItemstack(4, coal)
+                                       .setItemstack(6, coal)
+                                       .setItemstack(7, coal);
         Bukkit.addRecipe(diamond);
         getInstance().getLogger().info("Recipe "+diamond.getKey()+" has been loaded.");
     }
