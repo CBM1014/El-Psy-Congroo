@@ -47,6 +47,7 @@ public class StoneDust extends NewItem {
                                        .setItemstack(4, coal);
         
         Bukkit.addRecipe(diamond);
+        Bukkit.addRecipe(diamond2);
         getInstance().getLogger().info("Recipe "+diamond.getKey()+" has been loaded.");
     }
     
