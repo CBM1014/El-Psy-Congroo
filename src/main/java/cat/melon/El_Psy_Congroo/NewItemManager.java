@@ -129,8 +129,6 @@ public class NewItemManager implements Listener {
                 
                 continue;
             } else if (recipe.getResult().getType() == Material.FIRE_CHARGE) { // Bukkit bug?
-                it.remove();
-                
                 ShapedRecipe coalBlock = new ShapedRecipe(new NamespacedKey(instance, "fire_charge"), new ItemStack(Material.FIRE_CHARGE));
                 coalBlock.shape("   ","xy "," z ");
                 coalBlock.setIngredient('x', Material.BLAZE_POWDER);
@@ -166,8 +164,6 @@ public class NewItemManager implements Listener {
                 
                 continue;
             } else if (recipe.getResult().getType() == Material.GLOWSTONE) { // Bukkit bug?
-                it.remove();
-                
                 ShapedRecipe coalBlock = new ShapedRecipe(new NamespacedKey(instance, "glowstone"), new ItemStack(Material.GLOWSTONE));
                 coalBlock.shape("   ","xx ","xx ");
                 coalBlock.setIngredient('x', Material.GLOWSTONE_DUST);
@@ -246,8 +242,6 @@ public class NewItemManager implements Listener {
                 
                 continue;
             } else if (recipe.getResult().getType() == Material.CLAY) { // Bukkit bug?
-                it.remove();
-                
                 ShapedRecipe coalBlock = new ShapedRecipe(new NamespacedKey(instance, "clay"), new ItemStack(Material.CLAY));
                 coalBlock.shape("   ","xx ","xx ");
                 coalBlock.setIngredient('x', Material.CLAY_BALL);
