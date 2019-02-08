@@ -42,11 +42,9 @@ public class DifficultyUpdater implements Listener {
                 case THE_END:
                     if (PersonalAPI.of(CONFIG_KEY).getBoolean("dragon_death", false)) {
                         event.setDamage(event.getDamage() * 2);
-                        event.setDamage(DamageModifier.ARMOR, event.getDamage(DamageModifier.ARMOR) / 4);
+                        event.setDamage(DamageModifier.ARMOR, event.getDamage(DamageModifier.ARMOR) / 3);
                     } else {
                         switch (event.getDamager().getType()) {
-                            case SHULKER_BULLET:
-                            case SHULKER:
                             default:
                                 event.setDamage(event.getDamage() * 2);
                                 event.setDamage(DamageModifier.ARMOR, event.getDamage(DamageModifier.ARMOR) / 4);
@@ -142,7 +140,8 @@ public class DifficultyUpdater implements Listener {
             TNTPrimed tnt = (TNTPrimed) event.getDamager().getWorld().spawnEntity(event.getDamager().getLocation(), EntityType.PRIMED_TNT);
             tnt.setFuseTicks(0);
         } else {
-            if (event.getDamager().getLocation().distance(endMainIslandLocation) > 300) {
+            if (event.getDamager().getLocation().getWorld().getName().equals(endMainIslandLocation.getWorld().getName())
+                    && event.getDamager().getLocation().distance(endMainIslandLocation) > 300) {
                 event.getDamager().getLocation().createExplosion(4.0F, true, true);
             }
             event.getDamager().getLocation().createExplosion(4.0F, true, false);
