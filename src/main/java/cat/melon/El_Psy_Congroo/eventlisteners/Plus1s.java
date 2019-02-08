@@ -28,15 +28,16 @@ public class Plus1s implements Listener {
     public void onPlayerNearDeath(EntityDamageByEntityEvent event) {
         if (event.getEntityType() == EntityType.PLAYER) {
             if (((Player) event.getEntity()).getHealth() - event.getFinalDamage() < 0) {
-                if(!instance.getStatusManager().getPlayer(event.getEntity().getUniqueId()).isPlus1sMode()){
+                if (!instance.getStatusManager().getPlayer(event.getEntity().getUniqueId()).isPlus1sMode()) {
                     event.setCancelled(true);
                     ((Player) event.getEntity()).setHealth(0.01);
                     ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 200, 0, true), true);
                     ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 200, 1, true), true);
                     ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 200, 0, true), true);
+                    ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 0, true), true);
                     instance.getStatusManager().getPlayer(event.getEntity().getUniqueId()).setPlus1sMode(true);
                     // for soundpack
-                    Bukkit.getScheduler().runTask(instance, () ->((Player) event.getEntity()).playSound(((Player) event.getEntity()).getLocation(), "minecraft:agenda.dying", SoundCategory.MASTER, 1000F, 1F));
+                    Bukkit.getScheduler().runTask(instance, () -> ((Player) event.getEntity()).playSound(((Player) event.getEntity()).getLocation(), "minecraft:agenda.dying", SoundCategory.MASTER, 1000F, 1F));
                     new BukkitRunnable() {
                         @Override
                         public void run() {
@@ -58,17 +59,17 @@ public class Plus1s implements Listener {
 
     @EventHandler
     public void onPlayerEatGoldenApple(FoodLevelChangeEvent event) {
-        if(instance.getStatusManager().getPlayer(event.getEntity().getUniqueId()).isPlus1sMode()){
+        if (instance.getStatusManager().getPlayer(event.getEntity().getUniqueId()).isPlus1sMode()) {
             if (event.getFoodLevel() == 20) {
-                if (event.getEntity().getInventory().getItemInMainHand().getType() == Material.GOLDEN_APPLE || event.getEntity().getInventory().getItemInMainHand().getType() == Material.ENCHANTED_GOLDEN_APPLE) {
+                if (event.getEntity().getInventory().getItemInMainHand().getType() == Material.GOLDEN_APPLE || event.getEntity().getInventory().getItemInMainHand().getType() == Material.ENCHANTED_GOLDEN_APPLE || event.getEntity().getInventory().getItemInMainHand().getType() == Material.GOLDEN_CARROT) {
                     removePlus1sMode(event.getEntity());
                 }
             } else {
-                if (event.getEntity().getInventory().getItemInMainHand().getType() == Material.GOLDEN_APPLE || event.getEntity().getInventory().getItemInMainHand().getType() == Material.ENCHANTED_GOLDEN_APPLE) {
+                if (event.getEntity().getInventory().getItemInMainHand().getType() == Material.GOLDEN_APPLE || event.getEntity().getInventory().getItemInMainHand().getType() == Material.ENCHANTED_GOLDEN_APPLE || event.getEntity().getInventory().getItemInMainHand().getType() == Material.GOLDEN_CARROT) {
                     removePlus1sMode(event.getEntity());
                 } else {
                     if (!event.getEntity().getInventory().getItemInMainHand().getType().isEdible()) {
-                        if (event.getEntity().getInventory().getItemInOffHand().getType() == Material.GOLDEN_APPLE || event.getEntity().getInventory().getItemInOffHand().getType() == Material.ENCHANTED_GOLDEN_APPLE) {
+                        if (event.getEntity().getInventory().getItemInOffHand().getType() == Material.GOLDEN_APPLE || event.getEntity().getInventory().getItemInOffHand().getType() == Material.ENCHANTED_GOLDEN_APPLE || event.getEntity().getInventory().getItemInMainHand().getType() == Material.GOLDEN_CARROT) {
                             removePlus1sMode(event.getEntity());
                         }
                     }
@@ -77,12 +78,13 @@ public class Plus1s implements Listener {
         }
     }
 
-    private void removePlus1sMode(HumanEntity player){
+    private void removePlus1sMode(HumanEntity player) {
         instance.getStatusManager().getPlayer(player.getUniqueId()).setPlus1sMode(false);
         player.removePotionEffect(PotionEffectType.BLINDNESS);
         player.removePotionEffect(PotionEffectType.ABSORPTION);
         player.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
-        player.setHealth(player.getHealth()+1);
+        player.removePotionEffect(PotionEffectType.SLOW);
+        player.setHealth(player.getHealth() + 1.5);
     }
 
 
