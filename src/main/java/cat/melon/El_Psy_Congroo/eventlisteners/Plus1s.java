@@ -1,7 +1,6 @@
 package cat.melon.el_psy_congroo.eventlisteners;
 
 import cat.melon.el_psy_congroo.Init;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
@@ -39,15 +38,17 @@ public class Plus1s implements Listener {
                     //    player.setPlayerTime(1000, false);
                     //    SkyChanger.getAPI().changeSky(player, 4F);
                     //} else {
-                        ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 200, 0, true), true);
+                    player.setPlayerTime(18000, false);
+                    ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 200, 0, true), true);
                     //}
                     player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 0, true), true);
                     instance.getStatusManager().getPlayer(event.getEntity().getUniqueId()).setPlus1sMode(true);
                     // for soundpack
-                    Bukkit.getScheduler().runTask(instance, () -> ((Player) event.getEntity()).playSound(((Player) event.getEntity()).getLocation(), "minecraft:agenda.dying", SoundCategory.MASTER, 1000F, 1F));
+                    ((Player) event.getEntity()).playSound(((Player) event.getEntity()).getLocation(), "minecraft:agenda.dying", SoundCategory.MASTER, 1000F, 1F);
                     new BukkitRunnable() {
                         @Override
                         public void run() {
+                            player.resetPlayerTime();
                             player.removePotionEffect(PotionEffectType.ABSORPTION);
                             player.playSound(player.getLocation(), Sound.ENTITY_GHAST_DEATH, 1F, 1F);
                             if (instance.getStatusManager().getPlayer(player.getUniqueId()).isPlus1sMode()) {
@@ -94,6 +95,7 @@ public class Plus1s implements Listener {
         //    player.resetPlayerTime();
         //    SkyChanger.getAPI().changeSky(player, player.getWorld().isThundering() ? 1 : 0);
         //}
+        player.resetPlayerTime();
         player.removePotionEffect(PotionEffectType.BLINDNESS);
         player.removePotionEffect(PotionEffectType.ABSORPTION);
         player.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
