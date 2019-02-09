@@ -26,6 +26,7 @@ public class DifficultyUpdater implements Listener {
     private static final String CONFIG_KEY = "AGENDA_EL_PSY_CONGROO_DIFFICULTY_CONFIG_FOR_USERNAME_LENGTH_LIMIT_THIS_MUST_BE_SO_LONG_";
     //hhhh what's this↑
     private Location endMainIslandLocation = new Location(Bukkit.getWorld("world_the_end"), 0D, 68D, 0D);
+    private final Random rand = ThreadLocalRandom.current();
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onPlayerDamage(EntityDamageByEntityEvent event) {
@@ -64,8 +65,6 @@ public class DifficultyUpdater implements Listener {
         }
     }
 
-    private final Random rand = ThreadLocalRandom.current();
-
     @EventHandler(ignoreCancelled = true)
     public void onRedstone(BlockRedstoneEvent event) {
         if (event.getBlock().getWorld().getEnvironment() == Environment.THE_END)
@@ -93,7 +92,7 @@ public class DifficultyUpdater implements Listener {
     public void onPhantomDeath(EntityDeathEvent event) {
         if (event.getEntityType() != EntityType.PHANTOM)
             return;
-        if (event.getEntity().getWorld().getName().equalsIgnoreCase("world_the_end"))
+        if (event.getEntity().getWorld().getEnvironment() != Environment.THE_END)
             return;
 
         event.getEntity().getWorld().spawnEntity(event.getEntity().getLocation(), EntityType.VEX);
@@ -152,14 +151,13 @@ public class DifficultyUpdater implements Listener {
     @EventHandler
     public void onBedExplode(BlockExplodeEvent event) {
         if (isBed(event.getBlock().getType())){
-           if(event.getBlock().getWorld().getName().equalsIgnoreCase("world_the_end")){
-               Random ran = new Random();
+           if(event.getBlock().getWorld().getEnvironment() == Environment.THE_END){
                Location loc = event.getBlock().getLocation().clone();
                for (int i = 0; i < 12; i++) {
                    Location loc1 = loc.clone();
-                   loc1.setX(loc.getBlockY() + (ran.nextInt(10) - 5));
-                   loc1.setZ(loc.getBlockY() + (ran.nextInt(10) - 5));
-                   loc1.setY(loc.getBlockY() + (ran.nextInt(10) - 5));
+                   loc1.setX(loc.getBlockY() + (rand.nextInt(10) - 5));
+                   loc1.setZ(loc.getBlockY() + (rand.nextInt(10) - 5));
+                   loc1.setY(loc.getBlockY() + (rand.nextInt(10) - 5));
                    event.getBlock().getWorld().spawnEntity(loc1, EntityType.PHANTOM);
                }
            }
