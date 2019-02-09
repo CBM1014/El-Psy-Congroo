@@ -4,6 +4,7 @@ import cat.melon.el_psy_congroo.Init;
 import moe.kira.personal.PersonalAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.WeatherType;
 import org.bukkit.entity.EntityType;
@@ -41,21 +42,22 @@ public class Plus1s implements Listener {
                     if (skyChanger) {
                         player.setPlayerTime(1000, false);
                         player.setPlayerWeather(WeatherType.CLEAR);
-                        SkyChanger.getAPI().changeSky(player, 3F);
+                        SkyChanger.getAPI().changeSky(player, 5F);
                     } else {
                         //((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 200, 0, true), true);
                     }
-                    ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 0, true), true);
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 0, true), true);
                     instance.getStatusManager().getPlayer(event.getEntity().getUniqueId()).setPlus1sMode(true);
                     // for soundpack
                     Bukkit.getScheduler().runTask(instance, () -> ((Player) event.getEntity()).playSound(((Player) event.getEntity()).getLocation(), "minecraft:agenda.dying", SoundCategory.MASTER, 1000F, 1F));
                     new BukkitRunnable() {
                         @Override
                         public void run() {
-                            ((Player) event.getEntity()).removePotionEffect(PotionEffectType.ABSORPTION);
-                            if (instance.getStatusManager().getPlayer(((Player) event.getEntity()).getUniqueId()).isPlus1sMode()) {
-                                ((Player) event.getEntity()).setHealth(0);
-                                ((Player) event.getEntity()).damage(999);
+                            player.removePotionEffect(PotionEffectType.ABSORPTION);
+                            player.playSound(player.getLocation(), Sound.ENTITY_GHAST_DEATH, 1F, 1F);
+                            if (instance.getStatusManager().getPlayer(player.getUniqueId()).isPlus1sMode()) {
+                                player.setHealth(0);
+                                player.damage(999);
                             }
                         }
                     }.runTaskLater(instance, 200L);
