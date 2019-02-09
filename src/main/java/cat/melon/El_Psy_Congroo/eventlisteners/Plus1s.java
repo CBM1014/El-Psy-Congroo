@@ -50,8 +50,8 @@ public class Plus1s implements Listener {
                         public void run() {
                             player.resetPlayerTime();
                             player.removePotionEffect(PotionEffectType.ABSORPTION);
-                            player.playSound(player.getLocation(), Sound.ENTITY_GHAST_DEATH, 1F, 1F);
                             if (instance.getStatusManager().getPlayer(player.getUniqueId()).isPlus1sMode()) {
+                                player.playSound(player.getLocation(), Sound.ENTITY_GHAST_DEATH, 1F, 1F);
                                 player.setHealth(0);
                                 player.damage(999);
                             }
