@@ -1,9 +1,13 @@
 package cat.melon.el_psy_congroo.eventlisteners;
 
+import java.util.Collection;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
+import com.destroystokyo.paper.event.entity.EnderDragonFireballHitEvent;
+import com.destroystokyo.paper.event.entity.EnderDragonShootFireballEvent;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World.Environment;
@@ -20,12 +24,15 @@ import org.bukkit.event.entity.EntityPotionEffectEvent.Action;
 import org.bukkit.event.entity.EntityPotionEffectEvent.Cause;
 
 import moe.kira.personal.PersonalAPI;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 @SuppressWarnings("deprecation")
 public class DifficultyUpdater implements Listener {
     private static final String CONFIG_KEY = "AGENDA_EL_PSY_CONGROO_DIFFICULTY_CONFIG_FOR_USERNAME_LENGTH_LIMIT_THIS_MUST_BE_SO_LONG_";
     //hhhh what's this↑
     private Location endMainIslandLocation = new Location(Bukkit.getWorld("world_the_end"), 0D, 68D, 0D);
+    Random ran = new Random();
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onPlayerDamage(EntityDamageByEntityEvent event) {
@@ -109,17 +116,58 @@ public class DifficultyUpdater implements Listener {
             event.setCancelled(true);
     }
 
+
+
+    @EventHandler
+    public void onDragonFireballHit(EnderDragonFireballHitEvent event){
+        event.getAreaEffectCloud().addCustomEffect(new PotionEffect(PotionEffectType.BLINDNESS,40,0),false);
+        event.getAreaEffectCloud().addCustomEffect(new PotionEffect(PotionEffectType.SLOW,40,2),false);
+        Collection<LivingEntity> col= event.getTargets();
+        if(col!=null&&!col.isEmpty()){
+            for(LivingEntity x:col){
+                if(x.getType()== EntityType.PLAYER){
+                    Location loc = x.getLocation().clone();
+                    loc.setY(loc.getY()+3);
+                    loc.setX(loc.getBlockY() + (ran.nextInt(10) - 5));
+                    loc.setZ(loc.getBlockY() + (ran.nextInt(10) - 5));
+                    x.getWorld().spawnEntity(loc,EntityType.VEX);
+                    x.setFireTicks(200);
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onDragonFireballShoot(EnderDragonShootFireballEvent event){
+        for(int i=0;i<4;i++){
+            Location loc = event.getEntity().getLocation().clone();
+            loc.setY(loc.getY()-5);
+            loc.setX(loc.getBlockY() + (ran.nextInt(20) - 10));
+            loc.setZ(loc.getBlockY() + (ran.nextInt(20) - 10));
+            Entity fireball = event.getEntity().getWorld().spawnEntity(loc,EntityType.DRAGON_FIREBALL);
+            fireball.setVelocity(event.getFireball().getVelocity());
+        }
+    }
+
     @EventHandler
     public void onDragonChangePhase(EnderDragonChangePhaseEvent event) {
-        if (event.getNewPhase() == EnderDragon.Phase.LAND_ON_PORTAL) {
-            Random ran = new Random();
+        if (event.getNewPhase() == EnderDragon.Phase.SEARCH_FOR_BREATH_ATTACK_TARGET) {
             Location loc = event.getEntity().getLocation().clone();
-            loc.setY(loc.getBlockY() + 8);
-            for (int i = 0; i < 12; i++) {
+            loc.setY(loc.getBlockY() + 10);
+            for (int i = 0; i < 8; i++) {
                 Location loc1 = loc.clone();
                 loc1.setX(loc.getBlockY() + (ran.nextInt(10) - 5));
                 loc1.setZ(loc.getBlockY() + (ran.nextInt(10) - 5));
                 loc1.setY(loc.getBlockY() + (ran.nextInt(6) - 3));
+                event.getEntity().getWorld().spawnEntity(loc1, EntityType.PHANTOM);
+            }
+        }if(event.getNewPhase()== EnderDragon.Phase.STRAFING){
+            Location loc = event.getEntity().getLocation().clone();
+            for (int i = 0; i < 8; i++) {
+                Location loc1 = loc.clone();
+                loc1.setX(loc.getBlockY() + (ran.nextInt(60) - 30));
+                loc1.setZ(loc.getBlockY() + (ran.nextInt(60) - 30));
+                loc1.setY(loc.getBlockY() + (ran.nextInt(10) - 5));
                 event.getEntity().getWorld().spawnEntity(loc1, EntityType.PHANTOM);
             }
         }
