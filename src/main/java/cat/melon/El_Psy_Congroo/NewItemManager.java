@@ -99,7 +99,6 @@ public class NewItemManager implements Listener {
     /**
      * Override vanilla recipes with exact choices
      */
-    @SuppressWarnings("deprecation")
     public void overrideVanillaExactly() {
         List<Recipe> exactRecipes = Lists.newArrayList();
         
@@ -130,8 +129,30 @@ public class NewItemManager implements Listener {
                 
                 continue;
             } else if (recipe.getResult().getType() == Material.FIRE_CHARGE) { // Bukkit bug?
-                it.remove();
+                ShapedRecipe coalBlock = new ShapedRecipe(new NamespacedKey(instance, "fire_charge"), new ItemStack(Material.FIRE_CHARGE));
+                coalBlock.shape("   ","xy "," z ");
+                coalBlock.setIngredient('x', Material.BLAZE_POWDER);
+                coalBlock.setIngredient('y', Material.COAL);
+                coalBlock.setIngredient('z', Material.GUNPOWDER);
                 
+                ItemStack coal = new ItemStack(Material.BLAZE_POWDER);
+                ItemStack coal_ = new ItemStack(Material.COAL);
+                ItemStack coal__ = new ItemStack(Material.GUNPOWDER);
+                CraftingUtil.addRecipe(coalBlock).setItemstack(3, coal)
+                                                 .setItemstack(4, coal_)
+                                                 .setItemstack(7, coal__);
+                
+                ShapedRecipe coalBlock2 = new ShapedRecipe(new NamespacedKey(instance, "fire_charge2"), new ItemStack(Material.FIRE_CHARGE));
+                coalBlock2.shape("xy "," z ","   ");
+                coalBlock2.setIngredient('x', Material.BLAZE_POWDER);
+                coalBlock2.setIngredient('y', Material.COAL);
+                coalBlock2.setIngredient('z', Material.GUNPOWDER);
+                
+                CraftingUtil.addRecipe(coalBlock).setItemstack(0, coal)
+                                                 .setItemstack(1, coal_)
+                                                 .setItemstack(4, coal__);
+                
+                /* Bugggggggggy
                 Bukkit.getScheduler().runTask(instance, () -> {
                     ShapelessRecipe coalBlock = new ShapelessRecipe(new NamespacedKey(instance, "fire_charge"), new ItemStack(Material.FIRE_CHARGE));
                     coalBlock.addIngredient(new org.bukkit.inventory.RecipeChoice.ExactChoice(new ItemStack(Material.COAL)));
@@ -139,11 +160,30 @@ public class NewItemManager implements Listener {
                     coalBlock.addIngredient(Material.GUNPOWDER);
                     Bukkit.addRecipe(coalBlock);
                 });
+                */
                 
                 continue;
             } else if (recipe.getResult().getType() == Material.GLOWSTONE) { // Bukkit bug?
-                it.remove();
+                ShapedRecipe coalBlock = new ShapedRecipe(new NamespacedKey(instance, "glowstone"), new ItemStack(Material.GLOWSTONE));
+                coalBlock.shape("   ","xx ","xx ");
+                coalBlock.setIngredient('x', Material.GLOWSTONE_DUST);
                 
+                ItemStack coal = new ItemStack(Material.GLOWSTONE_DUST);
+                CraftingUtil.addRecipe(coalBlock).setItemstack(3, coal)
+                                                 .setItemstack(4, coal)
+                                                 .setItemstack(6, coal)
+                                                 .setItemstack(7, coal);
+                
+                ShapedRecipe coalBlock2 = new ShapedRecipe(new NamespacedKey(instance, "glowstone2"), new ItemStack(Material.GLOWSTONE));
+                coalBlock2.shape("xx ","xx ","   ");
+                coalBlock2.setIngredient('x', Material.GLOWSTONE_DUST);
+                
+                CraftingUtil.addRecipe(coalBlock2).setItemstack(0, coal)
+                                                  .setItemstack(1, coal)
+                                                  .setItemstack(3, coal)
+                                                  .setItemstack(4, coal);
+                
+                /* Bugggggggggy
                 Bukkit.getScheduler().runTask(instance, () -> {
                     ShapelessRecipe glowStone = new ShapelessRecipe(new NamespacedKey(instance, "glowstone"), new ItemStack(Material.GLOWSTONE));
                     glowStone.addIngredient(new org.bukkit.inventory.RecipeChoice.ExactChoice(new ItemStack(Material.GLOWSTONE_DUST)));
@@ -152,6 +192,7 @@ public class NewItemManager implements Listener {
                     glowStone.addIngredient(new org.bukkit.inventory.RecipeChoice.ExactChoice(new ItemStack(Material.GLOWSTONE_DUST)));
                     Bukkit.addRecipe(glowStone);
                 });
+                */
                 
                 continue;
             } else if (recipe.getResult().getType() == Material.SEA_LANTERN) { // Bukkit bug?
@@ -201,8 +242,26 @@ public class NewItemManager implements Listener {
                 
                 continue;
             } else if (recipe.getResult().getType() == Material.CLAY) { // Bukkit bug?
-                it.remove();
+                ShapedRecipe coalBlock = new ShapedRecipe(new NamespacedKey(instance, "clay"), new ItemStack(Material.CLAY));
+                coalBlock.shape("   ","xx ","xx ");
+                coalBlock.setIngredient('x', Material.CLAY_BALL);
                 
+                ItemStack coal = new ItemStack(Material.CLAY_BALL);
+                CraftingUtil.addRecipe(coalBlock).setItemstack(3, coal)
+                                                 .setItemstack(4, coal)
+                                                 .setItemstack(6, coal)
+                                                 .setItemstack(7, coal);
+                
+                ShapedRecipe coalBlock2 = new ShapedRecipe(new NamespacedKey(instance, "clay2"), new ItemStack(Material.CLAY));
+                coalBlock2.shape("xx ","xx ","   ");
+                coalBlock2.setIngredient('x', Material.CLAY_BALL);
+                
+                CraftingUtil.addRecipe(coalBlock2).setItemstack(0, coal)
+                                                  .setItemstack(1, coal)
+                                                  .setItemstack(3, coal)
+                                                  .setItemstack(4, coal);
+                
+                /* Bugggggggggy
                 Bukkit.getScheduler().runTask(instance, () -> {
                     ShapelessRecipe glowStone = new ShapelessRecipe(new NamespacedKey(instance, "clay"), new ItemStack(Material.CLAY));
                     glowStone.addIngredient(new org.bukkit.inventory.RecipeChoice.ExactChoice(new ItemStack(Material.CLAY_BALL)));
@@ -211,6 +270,7 @@ public class NewItemManager implements Listener {
                     glowStone.addIngredient(new org.bukkit.inventory.RecipeChoice.ExactChoice(new ItemStack(Material.CLAY_BALL)));
                     Bukkit.addRecipe(glowStone);
                 });
+                */
                 
                 continue;
             } if (recipe.getResult().getType() == Material.IRON_INGOT) { // Bukkit bug?

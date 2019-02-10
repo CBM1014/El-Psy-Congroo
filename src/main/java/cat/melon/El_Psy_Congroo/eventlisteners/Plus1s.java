@@ -1,12 +1,10 @@
 package cat.melon.el_psy_congroo.eventlisteners;
 
 import cat.melon.el_psy_congroo.Init;
-
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -27,23 +25,35 @@ public class Plus1s implements Listener {
     @EventHandler
     public void onPlayerNearDeath(EntityDamageByEntityEvent event) {
         if (event.getEntityType() == EntityType.PLAYER) {
-            if (((Player) event.getEntity()).getHealth() - event.getFinalDamage() < 0) {
+            Player player = ((Player) event.getEntity());
+            if (player.getHealth() - event.getFinalDamage() < 0) {
                 if (!instance.getStatusManager().getPlayer(event.getEntity().getUniqueId()).isPlus1sMode()) {
                     event.setCancelled(true);
-                    ((Player) event.getEntity()).setHealth(0.01);
-                    ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 200, 0, true), true);
-                    ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 200, 1, true), true);
+                    player.setHealth(0.01);
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 200, 0, true), true);
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 200, 1, true), true);
+                    
+                    //boolean skyChanger = PersonalAPI.of(player).getBoolean("recreator.weather.sandstorm.enable", true);
+                    //if (skyChanger) {
+                    //    player.setPlayerTime(1000, false);
+                    //    SkyChanger.getAPI().changeSky(player, 4F);
+                    //} else {
+                    player.setPlayerTime(18000, false);
                     ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 200, 0, true), true);
-                    ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 0, true), true);
+                    //}
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 0, true), true);
                     instance.getStatusManager().getPlayer(event.getEntity().getUniqueId()).setPlus1sMode(true);
                     // for soundpack
-                    Bukkit.getScheduler().runTask(instance, () -> ((Player) event.getEntity()).playSound(((Player) event.getEntity()).getLocation(), "minecraft:agenda.dying", SoundCategory.MASTER, 1000F, 1F));
+                    ((Player) event.getEntity()).playSound(((Player) event.getEntity()).getLocation(), "minecraft:agenda.dying", SoundCategory.MASTER, 1000F, 1F);
                     new BukkitRunnable() {
                         @Override
                         public void run() {
-                            ((Player) event.getEntity()).removePotionEffect(PotionEffectType.ABSORPTION);
-                            if (instance.getStatusManager().getPlayer(((Player) event.getEntity()).getUniqueId()).isPlus1sMode()) {
-                                ((Player) event.getEntity()).setHealth(0);
+                            player.resetPlayerTime();
+                            player.removePotionEffect(PotionEffectType.ABSORPTION);
+                            if (instance.getStatusManager().getPlayer(player.getUniqueId()).isPlus1sMode()) {
+                                player.playSound(player.getLocation(), Sound.ENTITY_GHAST_DEATH, 1F, 1F);
+                                player.setHealth(0);
+                                player.damage(999);
                             }
                         }
                     }.runTaskLater(instance, 200L);
@@ -62,15 +72,15 @@ public class Plus1s implements Listener {
         if (instance.getStatusManager().getPlayer(event.getEntity().getUniqueId()).isPlus1sMode()) {
             if (event.getFoodLevel() == 20) {
                 if (event.getEntity().getInventory().getItemInMainHand().getType() == Material.GOLDEN_APPLE || event.getEntity().getInventory().getItemInMainHand().getType() == Material.ENCHANTED_GOLDEN_APPLE || event.getEntity().getInventory().getItemInMainHand().getType() == Material.GOLDEN_CARROT) {
-                    removePlus1sMode(event.getEntity());
+                    removePlus1sMode((Player) event.getEntity());
                 }
             } else {
                 if (event.getEntity().getInventory().getItemInMainHand().getType() == Material.GOLDEN_APPLE || event.getEntity().getInventory().getItemInMainHand().getType() == Material.ENCHANTED_GOLDEN_APPLE || event.getEntity().getInventory().getItemInMainHand().getType() == Material.GOLDEN_CARROT) {
-                    removePlus1sMode(event.getEntity());
+                    removePlus1sMode((Player) event.getEntity());
                 } else {
                     if (!event.getEntity().getInventory().getItemInMainHand().getType().isEdible()) {
                         if (event.getEntity().getInventory().getItemInOffHand().getType() == Material.GOLDEN_APPLE || event.getEntity().getInventory().getItemInOffHand().getType() == Material.ENCHANTED_GOLDEN_APPLE || event.getEntity().getInventory().getItemInMainHand().getType() == Material.GOLDEN_CARROT) {
-                            removePlus1sMode(event.getEntity());
+                            removePlus1sMode((Player) event.getEntity());
                         }
                     }
                 }
@@ -78,17 +88,20 @@ public class Plus1s implements Listener {
         }
     }
 
-    private void removePlus1sMode(HumanEntity player) {
+    private void removePlus1sMode(Player player) {
         instance.getStatusManager().getPlayer(player.getUniqueId()).setPlus1sMode(false);
+        //boolean skyChanger = PersonalAPI.of(player).getBoolean("recreator.weather.sandstorm.enable", true);
+        //if (skyChanger) {
+        //    player.resetPlayerTime();
+        //    SkyChanger.getAPI().changeSky(player, player.getWorld().isThundering() ? 1 : 0);
+        //}
+        player.resetPlayerTime();
         player.removePotionEffect(PotionEffectType.BLINDNESS);
         player.removePotionEffect(PotionEffectType.ABSORPTION);
         player.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
         player.removePotionEffect(PotionEffectType.SLOW);
         player.setHealth(player.getHealth() + 1.5);
     }
-
-
-
 
 
     /*public boolean isFood(Material material) {

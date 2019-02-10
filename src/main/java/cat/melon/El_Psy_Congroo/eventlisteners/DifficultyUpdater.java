@@ -33,6 +33,7 @@ public class DifficultyUpdater implements Listener {
     //hhhh what's this↑
     private Location endMainIslandLocation = new Location(Bukkit.getWorld("world_the_end"), 0D, 68D, 0D);
     Random ran = new Random();
+    private final Random rand = ThreadLocalRandom.current();
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onPlayerDamage(EntityDamageByEntityEvent event) {
@@ -49,11 +50,9 @@ public class DifficultyUpdater implements Listener {
                 case THE_END:
                     if (PersonalAPI.of(CONFIG_KEY).getBoolean("dragon_death", false)) {
                         event.setDamage(event.getDamage() * 2);
-                        event.setDamage(DamageModifier.ARMOR, event.getDamage(DamageModifier.ARMOR) / 4);
+                        event.setDamage(DamageModifier.ARMOR, event.getDamage(DamageModifier.ARMOR) / 3);
                     } else {
                         switch (event.getDamager().getType()) {
-                            case SHULKER_BULLET:
-                            case SHULKER:
                             default:
                                 event.setDamage(event.getDamage() * 2);
                                 event.setDamage(DamageModifier.ARMOR, event.getDamage(DamageModifier.ARMOR) / 4);
@@ -72,8 +71,6 @@ public class DifficultyUpdater implements Listener {
                     ((Player) event.getEntity()).addPotionEffect(event.getNewEffect().withDuration(event.getNewEffect().getDuration() * 2), true);
         }
     }
-
-    private final Random rand = ThreadLocalRandom.current();
 
     @EventHandler(ignoreCancelled = true)
     public void onRedstone(BlockRedstoneEvent event) {
@@ -102,7 +99,7 @@ public class DifficultyUpdater implements Listener {
     public void onPhantomDeath(EntityDeathEvent event) {
         if (event.getEntityType() != EntityType.PHANTOM)
             return;
-        if (event.getEntity().getWorld().getName().equalsIgnoreCase("world_the_end"))
+        if (event.getEntity().getWorld().getEnvironment() != Environment.THE_END)
             return;
 
         event.getEntity().getWorld().spawnEntity(event.getEntity().getLocation(), EntityType.VEX);
@@ -190,7 +187,8 @@ public class DifficultyUpdater implements Listener {
             TNTPrimed tnt = (TNTPrimed) event.getDamager().getWorld().spawnEntity(event.getDamager().getLocation(), EntityType.PRIMED_TNT);
             tnt.setFuseTicks(0);
         } else {
-            if (event.getDamager().getLocation().distance(endMainIslandLocation) > 300) {
+            if (event.getDamager().getLocation().getWorld().getName().equals(endMainIslandLocation.getWorld().getName())
+                    && event.getDamager().getLocation().distance(endMainIslandLocation) > 300) {
                 event.getDamager().getLocation().createExplosion(4.0F, true, true);
             }
             event.getDamager().getLocation().createExplosion(4.0F, true, false);
@@ -201,14 +199,13 @@ public class DifficultyUpdater implements Listener {
     @EventHandler
     public void onBedExplode(BlockExplodeEvent event) {
         if (isBed(event.getBlock().getType())){
-           if(event.getBlock().getWorld().getName().equalsIgnoreCase("world_the_end")){
-               Random ran = new Random();
+           if(event.getBlock().getWorld().getEnvironment() == Environment.THE_END){
                Location loc = event.getBlock().getLocation().clone();
                for (int i = 0; i < 12; i++) {
                    Location loc1 = loc.clone();
-                   loc1.setX(loc.getBlockY() + (ran.nextInt(10) - 5));
-                   loc1.setZ(loc.getBlockY() + (ran.nextInt(10) - 5));
-                   loc1.setY(loc.getBlockY() + (ran.nextInt(10) - 5));
+                   loc1.setX(loc.getBlockY() + (rand.nextInt(10) - 5));
+                   loc1.setZ(loc.getBlockY() + (rand.nextInt(10) - 5));
+                   loc1.setY(loc.getBlockY() + (rand.nextInt(10) - 5));
                    event.getBlock().getWorld().spawnEntity(loc1, EntityType.PHANTOM);
                }
            }

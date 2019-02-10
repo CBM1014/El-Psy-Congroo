@@ -48,10 +48,22 @@
             <id>akarin-repo</id>
             <url>https://raw.githubusercontent.com/Akarin-project/akarin-repo/master/repository</url>
         </repository>
+        
+        <repository>
+            <id>jcenter</id>
+            <name>jcenter-bintray</name>
+            <url>http://jcenter.bintray.com</url>
+        </repository>
 
     </repositories>
 
     <dependencies>
+        <dependency>
+            <groupId>com.dscalzi</groupId>
+            <artifactId>SkyChanger-Bukkit</artifactId>
+            <version>2.0.1</version>
+        </dependency>
+
         <dependency>
             <groupId>com.comphenix.protocol</groupId>
             <artifactId>ProtocolLib-API</artifactId>
