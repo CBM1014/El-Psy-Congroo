@@ -11,6 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -65,6 +66,14 @@ public class Plus1s implements Listener {
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {
         instance.getStatusManager().getPlayer(event.getEntity().getUniqueId()).setPlus1sMode(false);
+    }
+    
+    @EventHandler
+    public void onPlayerQuit(PlayerQuitEvent event) {
+        if (instance.getStatusManager().getPlayer(event.getPlayer().getUniqueId()).isPlus1sMode()) {
+            event.getPlayer().setHealth(0);
+            event.getPlayer().damage(999);
+        }
     }
 
     @EventHandler
