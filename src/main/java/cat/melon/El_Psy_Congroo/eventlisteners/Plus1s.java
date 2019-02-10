@@ -67,15 +67,6 @@ public class Plus1s implements Listener {
     public void onPlayerDeath(PlayerDeathEvent event) {
         instance.getStatusManager().getPlayer(event.getEntity().getUniqueId()).setPlus1sMode(false);
     }
-    
-    @EventHandler
-    public void onPlayerQuit(PlayerQuitEvent event) {
-        cat.melon.el_psy_congroo.player.Player data = instance.getStatusManager().getPlayer(event.getPlayer().getUniqueId());
-        if (data != null && data.isPlus1sMode()) {
-            event.getPlayer().setHealth(0);
-            event.getPlayer().damage(999);
-        }
-    }
 
     @EventHandler
     public void onPlayerEatGoldenApple(FoodLevelChangeEvent event) {
