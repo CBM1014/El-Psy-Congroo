@@ -7,7 +7,6 @@ import java.util.concurrent.ThreadLocalRandom;
 import com.destroystokyo.paper.event.entity.EnderDragonFireballHitEvent;
 import com.destroystokyo.paper.event.entity.EnderDragonShootFireballEvent;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World.Environment;
@@ -32,7 +31,6 @@ public class DifficultyUpdater implements Listener {
     private static final String CONFIG_KEY = "AGENDA_EL_PSY_CONGROO_DIFFICULTY_CONFIG_FOR_USERNAME_LENGTH_LIMIT_THIS_MUST_BE_SO_LONG_";
     //hhhh what's this↑
     private Location endMainIslandLocation = new Location(Bukkit.getWorld("world_the_end"), 0D, 68D, 0D);
-    Random ran = new Random();
     private final Random rand = ThreadLocalRandom.current();
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
@@ -125,8 +123,8 @@ public class DifficultyUpdater implements Listener {
                 if(x.getType()== EntityType.PLAYER){
                     Location loc = x.getLocation().clone();
                     loc.setY(loc.getY()+3);
-                    loc.setX(loc.getBlockY() + (ran.nextInt(10) - 5));
-                    loc.setZ(loc.getBlockY() + (ran.nextInt(10) - 5));
+                    loc.setX(loc.getBlockY() + (rand.nextInt(10) - 5));
+                    loc.setZ(loc.getBlockY() + (rand.nextInt(10) - 5));
                     x.getWorld().spawnEntity(loc,EntityType.VEX);
                     x.setFireTicks(200);
                 }
@@ -139,8 +137,8 @@ public class DifficultyUpdater implements Listener {
         for(int i=0;i<4;i++){
             Location loc = event.getEntity().getLocation().clone();
             loc.setY(loc.getY()-5);
-            loc.setX(loc.getBlockY() + (ran.nextInt(20) - 10));
-            loc.setZ(loc.getBlockY() + (ran.nextInt(20) - 10));
+            loc.setX(loc.getBlockY() + (rand.nextInt(20) - 10));
+            loc.setZ(loc.getBlockY() + (rand.nextInt(20) - 10));
             Entity fireball = event.getEntity().getWorld().spawnEntity(loc,EntityType.DRAGON_FIREBALL);
             fireball.setVelocity(event.getFireball().getVelocity());
         }
@@ -153,18 +151,18 @@ public class DifficultyUpdater implements Listener {
             loc.setY(loc.getBlockY() + 10);
             for (int i = 0; i < 8; i++) {
                 Location loc1 = loc.clone();
-                loc1.setX(loc.getBlockY() + (ran.nextInt(10) - 5));
-                loc1.setZ(loc.getBlockY() + (ran.nextInt(10) - 5));
-                loc1.setY(loc.getBlockY() + (ran.nextInt(6) - 3));
+                loc1.setX(loc.getBlockY() + (rand.nextInt(10) - 5));
+                loc1.setZ(loc.getBlockY() + (rand.nextInt(10) - 5));
+                loc1.setY(loc.getBlockY() + (rand.nextInt(6) - 3));
                 event.getEntity().getWorld().spawnEntity(loc1, EntityType.PHANTOM);
             }
         }if(event.getNewPhase()== EnderDragon.Phase.STRAFING){
             Location loc = event.getEntity().getLocation().clone();
             for (int i = 0; i < 8; i++) {
                 Location loc1 = loc.clone();
-                loc1.setX(loc.getBlockY() + (ran.nextInt(60) - 30));
-                loc1.setZ(loc.getBlockY() + (ran.nextInt(60) - 30));
-                loc1.setY(loc.getBlockY() + (ran.nextInt(10) - 5));
+                loc1.setX(loc.getBlockY() + (rand.nextInt(60) - 30));
+                loc1.setZ(loc.getBlockY() + (rand.nextInt(60) - 30));
+                loc1.setY(loc.getBlockY() + (rand.nextInt(10) - 5));
                 event.getEntity().getWorld().spawnEntity(loc1, EntityType.PHANTOM);
             }
         }
