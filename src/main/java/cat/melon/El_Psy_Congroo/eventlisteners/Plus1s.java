@@ -70,7 +70,8 @@ public class Plus1s implements Listener {
     
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
-        if (instance.getStatusManager().getPlayer(event.getPlayer().getUniqueId()).isPlus1sMode()) {
+        cat.melon.el_psy_congroo.player.Player data = instance.getStatusManager().getPlayer(event.getPlayer().getUniqueId());
+        if (data != null && data.isPlus1sMode()) {
             event.getPlayer().setHealth(0);
             event.getPlayer().damage(999);
         }
