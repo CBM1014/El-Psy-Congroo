@@ -114,20 +114,19 @@ public class DifficultyUpdater implements Listener {
     }
 
 
-
     @EventHandler
-    public void onDragonFireballHit(EnderDragonFireballHitEvent event){
-        event.getAreaEffectCloud().addCustomEffect(new PotionEffect(PotionEffectType.BLINDNESS,40,0),false);
-        event.getAreaEffectCloud().addCustomEffect(new PotionEffect(PotionEffectType.SLOW,40,2),false);
-        Collection<LivingEntity> col= event.getTargets();
-        if(col!=null&&!col.isEmpty()){
-            for(LivingEntity x:col){
-                if(x.getType()== EntityType.PLAYER){
+    public void onDragonFireballHit(EnderDragonFireballHitEvent event) {
+        event.getAreaEffectCloud().addCustomEffect(new PotionEffect(PotionEffectType.BLINDNESS, 40, 0), false);
+        event.getAreaEffectCloud().addCustomEffect(new PotionEffect(PotionEffectType.SLOW, 40, 2), false);
+        Collection<LivingEntity> col = event.getTargets();
+        if (col != null && !col.isEmpty()) {
+            for (LivingEntity x : col) {
+                if (x.getType() == EntityType.PLAYER) {
                     Location loc = x.getLocation().clone();
-                    loc.setY(loc.getY()+3);
+                    loc.setY(loc.getY() + 3);
                     loc.setX(loc.getBlockY() + (ran.nextInt(10) - 5));
                     loc.setZ(loc.getBlockY() + (ran.nextInt(10) - 5));
-                    x.getWorld().spawnEntity(loc,EntityType.VEX);
+                    x.getWorld().spawnEntity(loc, EntityType.VEX);
                     x.setFireTicks(200);
                 }
             }
@@ -135,13 +134,13 @@ public class DifficultyUpdater implements Listener {
     }
 
     @EventHandler
-    public void onDragonFireballShoot(EnderDragonShootFireballEvent event){
-        for(int i=0;i<4;i++){
+    public void onDragonFireballShoot(EnderDragonShootFireballEvent event) {
+        for (int i = 0; i < 4; i++) {
             Location loc = event.getEntity().getLocation().clone();
-            loc.setY(loc.getY()-5);
+            loc.setY(loc.getY() - 5);
             loc.setX(loc.getBlockY() + (ran.nextInt(20) - 10));
             loc.setZ(loc.getBlockY() + (ran.nextInt(20) - 10));
-            Entity fireball = event.getEntity().getWorld().spawnEntity(loc,EntityType.DRAGON_FIREBALL);
+            Entity fireball = event.getEntity().getWorld().spawnEntity(loc, EntityType.DRAGON_FIREBALL);
             fireball.setVelocity(event.getFireball().getVelocity());
         }
     }
@@ -158,7 +157,8 @@ public class DifficultyUpdater implements Listener {
                 loc1.setY(loc.getBlockY() + (ran.nextInt(6) - 3));
                 event.getEntity().getWorld().spawnEntity(loc1, EntityType.PHANTOM);
             }
-        }if(event.getNewPhase()== EnderDragon.Phase.STRAFING){
+        }
+        if (event.getNewPhase() == EnderDragon.Phase.STRAFING) {
             Location loc = event.getEntity().getLocation().clone();
             for (int i = 0; i < 8; i++) {
                 Location loc1 = loc.clone();
@@ -167,6 +167,13 @@ public class DifficultyUpdater implements Listener {
                 loc1.setY(loc.getBlockY() + (ran.nextInt(10) - 5));
                 event.getEntity().getWorld().spawnEntity(loc1, EntityType.PHANTOM);
             }
+        }
+    }
+
+    @EventHandler
+    public void noDamageTickCanceller(EntityDamageEvent event) {
+        if(event.getEntity() instanceof LivingEntity){
+            ((LivingEntity)(event.getEntity())).setNoDamageTicks(0);
         }
     }
 
@@ -198,17 +205,17 @@ public class DifficultyUpdater implements Listener {
 
     @EventHandler
     public void onBedExplode(BlockExplodeEvent event) {
-        if (isBed(event.getBlock().getType())){
-           if(event.getBlock().getWorld().getEnvironment() == Environment.THE_END){
-               Location loc = event.getBlock().getLocation().clone();
-               for (int i = 0; i < 12; i++) {
-                   Location loc1 = loc.clone();
-                   loc1.setX(loc.getBlockY() + (rand.nextInt(10) - 5));
-                   loc1.setZ(loc.getBlockY() + (rand.nextInt(10) - 5));
-                   loc1.setY(loc.getBlockY() + (rand.nextInt(10) - 5));
-                   event.getBlock().getWorld().spawnEntity(loc1, EntityType.PHANTOM);
-               }
-           }
+        if (isBed(event.getBlock().getType())) {
+            if (event.getBlock().getWorld().getEnvironment() == Environment.THE_END) {
+                Location loc = event.getBlock().getLocation().clone();
+                for (int i = 0; i < 12; i++) {
+                    Location loc1 = loc.clone();
+                    loc1.setX(loc.getBlockY() + (rand.nextInt(10) - 5));
+                    loc1.setZ(loc.getBlockY() + (rand.nextInt(10) - 5));
+                    loc1.setY(loc.getBlockY() + (rand.nextInt(10) - 5));
+                    event.getBlock().getWorld().spawnEntity(loc1, EntityType.PHANTOM);
+                }
+            }
         }
     }
 
