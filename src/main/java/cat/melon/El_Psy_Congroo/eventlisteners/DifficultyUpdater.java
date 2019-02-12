@@ -4,9 +4,11 @@ import java.util.Collection;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
+import cat.melon.el_psy_congroo.Init;
 import com.destroystokyo.paper.event.entity.EnderDragonFireballHitEvent;
 import com.destroystokyo.paper.event.entity.EnderDragonShootFireballEvent;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World.Environment;
@@ -25,13 +27,19 @@ import org.bukkit.event.entity.EntityPotionEffectEvent.Cause;
 import moe.kira.personal.PersonalAPI;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 @SuppressWarnings("deprecation")
 public class DifficultyUpdater implements Listener {
+    Init instance;
     private static final String CONFIG_KEY = "AGENDA_EL_PSY_CONGROO_DIFFICULTY_CONFIG_FOR_USERNAME_LENGTH_LIMIT_THIS_MUST_BE_SO_LONG_";
     //hhhh what's this↑
     private Location endMainIslandLocation = new Location(Bukkit.getWorld("world_the_end"), 0D, 68D, 0D);
     private final Random rand = ThreadLocalRandom.current();
+
+    public DifficultyUpdater(Init instance) {
+        this.instance = instance;
+    }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onPlayerDamage(EntityDamageByEntityEvent event) {
@@ -145,25 +153,35 @@ public class DifficultyUpdater implements Listener {
 
     @EventHandler
     public void onDragonChangePhase(EnderDragonChangePhaseEvent event) {
+        //silly mistake here.
+        //before programming, please ensure that you can see XYZ clearly. It almost take me an hour to find the issue.
+        //Bukkit.broadcastMessage(ChatColor.DARK_PURPLE+"[EnderDragonChangePhaseEvent]"+event.getCurrentPhase().name()+" -> "+event.getNewPhase().name());
         if (event.getNewPhase() == EnderDragon.Phase.SEARCH_FOR_BREATH_ATTACK_TARGET) {
-            Location loc = event.getEntity().getLocation().clone();
-            loc.setY(loc.getBlockY() + 10);
+            //Bukkit.broadcastMessage("run into on SEARCH_FOR_BREATH_ATTACK_TARGET");
+            Location loc = new Location(event.getEntity().getWorld(),0,81,0);
             for (int i = 0; i < 8; i++) {
                 Location loc1 = loc.clone();
-                loc1.setX(loc.getBlockY() + (rand.nextInt(10) - 5));
-                loc1.setZ(loc.getBlockY() + (rand.nextInt(10) - 5));
-                loc1.setY(loc.getBlockY() + (rand.nextInt(6) - 3));
-                event.getEntity().getWorld().spawnEntity(loc1, EntityType.PHANTOM);
+                int ran = rand.nextInt(10);
+                //Bukkit.broadcastMessage("random number: "+ran);
+                //Bukkit.broadcastMessage(ChatColor.GOLD+loc1.toString());
+                loc1.setX(loc1.getBlockX() + (ran - 5));
+                loc1.setZ(loc1.getBlockZ() + (ran - 5));
+                loc1.setY(loc1.getBlockY() + (ran - 3));
+                //Bukkit.broadcastMessage(ChatColor.RED+loc1.toString());
+                Entity pan = event.getEntity().getWorld().spawnEntity(loc1, EntityType.PHANTOM);
+                //Bukkit.broadcastMessage("Entity "+pan.getType().name()+" "+pan.getUniqueId()+" spawned at: "+loc1.toString());
             }
         }
         if (event.getNewPhase() == EnderDragon.Phase.STRAFING) {
-            Location loc = event.getEntity().getLocation().clone();
+            //Bukkit.broadcastMessage("run into on STRAFING");
+            Location loc = event.getEntity().getLocation();
+            //Bukkit.broadcastMessage(loc.toString());
             for (int i = 0; i < 8; i++) {
                 Location loc1 = loc.clone();
-                loc1.setX(loc.getBlockY() + (rand.nextInt(60) - 30));
-                loc1.setZ(loc.getBlockY() + (rand.nextInt(60) - 30));
+                loc1.setX(loc.getBlockX() + (rand.nextInt(60) - 30));
+                loc1.setZ(loc.getBlockZ() + (rand.nextInt(60) - 30));
                 loc1.setY(loc.getBlockY() + (rand.nextInt(10) - 5));
-                event.getEntity().getWorld().spawnEntity(loc1, EntityType.PHANTOM);
+                Entity pan = event.getEntity().getWorld().spawnEntity(loc1, EntityType.PHANTOM);
             }
         }
     }
@@ -179,7 +197,7 @@ public class DifficultyUpdater implements Listener {
     public void onPhantomAttack(EntityDamageByEntityEvent event) {
         if (event.getDamager().getType() != EntityType.PHANTOM)
             return;
-        if (event.getDamager().getWorld().getName().equalsIgnoreCase("world_the_end"))
+        if (!event.getDamager().getWorld().getName().equalsIgnoreCase("world_the_end"))
             return;
 
         /*boolean isNeatEnderCristal = false;
@@ -194,25 +212,33 @@ public class DifficultyUpdater implements Listener {
         } else {
             if (event.getDamager().getLocation().getWorld().getName().equals(endMainIslandLocation.getWorld().getName())
                     && event.getDamager().getLocation().distance(endMainIslandLocation) > 300) {
-                event.getDamager().getLocation().createExplosion(4.0F, true, true);
+                event.getDamager().getLocation().createExplosion(1.1F, true, true);
             }
-            event.getDamager().getLocation().createExplosion(4.0F, true, false);
+            event.getDamager().getLocation().createExplosion(1.1F, true, false);
         }
         event.getDamager().remove();
     }
 
     @EventHandler
     public void onBedExplode(BlockExplodeEvent event) {
+        //Bukkit.broadcastMessage(ChatColor.DARK_AQUA+"[BlockExplodeEvent] Block:"+event.getBlock().getType().name());
+        //TODO event.getBlock().getType() is AIR here.
         if (isBed(event.getBlock().getType())) {
             if (event.getBlock().getWorld().getEnvironment() == Environment.THE_END) {
                 Location loc = event.getBlock().getLocation().clone();
-                for (int i = 0; i < 12; i++) {
-                    Location loc1 = loc.clone();
-                    loc1.setX(loc.getBlockY() + (rand.nextInt(10) - 5));
-                    loc1.setZ(loc.getBlockY() + (rand.nextInt(10) - 5));
-                    loc1.setY(loc.getBlockY() + (rand.nextInt(10) - 5));
-                    event.getBlock().getWorld().spawnEntity(loc1, EntityType.PHANTOM);
-                }
+
+                new BukkitRunnable(){
+                    @Override
+                    public void run() {
+                        for (int i = 0; i < 12; i++) {
+                            Location loc1 = loc.clone();
+                            loc1.setX(loc.getBlockX() + (rand.nextInt(10) - 5));
+                            loc1.setZ(loc.getBlockZ() + (rand.nextInt(10) - 5));
+                            loc1.setY(loc.getBlockY() + (rand.nextInt(10) - 5));
+                            event.getBlock().getWorld().spawnEntity(loc1, EntityType.VEX);
+                        }
+                    }
+                }.runTaskLater(instance,1);
             }
         }
     }
