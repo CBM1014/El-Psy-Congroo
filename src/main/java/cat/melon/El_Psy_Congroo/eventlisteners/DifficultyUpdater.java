@@ -28,8 +28,6 @@ import org.bukkit.potion.PotionEffectType;
 
 @SuppressWarnings("deprecation")
 public class DifficultyUpdater implements Listener {
-    private static final String CONFIG_KEY = "AGENDA_EL_PSY_CONGROO_DIFFICULTY_CONFIG_FOR_USERNAME_LENGTH_LIMIT_THIS_MUST_BE_SO_LONG_";
-    //hhhh what's this↑
     private Location endMainIslandLocation = new Location(Bukkit.getWorld("world_the_end"), 0D, 68D, 0D);
     private final Random rand = ThreadLocalRandom.current();
 
@@ -46,7 +44,7 @@ public class DifficultyUpdater implements Listener {
                     event.setDamage(DamageModifier.ARMOR, event.getDamage(DamageModifier.ARMOR) / 3);
                     break;
                 case THE_END:
-                    if (PersonalAPI.of(CONFIG_KEY).getBoolean("dragon_death", false)) {
+                    if (PersonalAPI.of("ElPsyCongroo", "dragon").getBoolean("dragon_death", false)) {
                         event.setDamage(event.getDamage() * 2);
                         event.setDamage(DamageModifier.ARMOR, event.getDamage(DamageModifier.ARMOR) / 3);
                     } else {
@@ -85,12 +83,12 @@ public class DifficultyUpdater implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onPrepare(EntityDeathEvent event) {
         if (event.getEntityType() == EntityType.ENDER_DRAGON)
-            PersonalAPI.of(CONFIG_KEY).set("dragon_death", true);
+            PersonalAPI.of("ElPsyCongroo", "dragon").set("dragon_death", true);
     }
 
     @EventHandler
     public void onDragonRespwan(EnderDragonChangePhaseEvent event) {
-        PersonalAPI.of(CONFIG_KEY).set("dragon_death", false);
+        PersonalAPI.of("ElPsyCongroo", "dragon").set("dragon_death", false);
     }
 
     @EventHandler
