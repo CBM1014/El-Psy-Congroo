@@ -39,7 +39,7 @@ public class Plus1s implements Listener {
                     //    SkyChanger.getAPI().changeSky(player, 4F);
                     //} else {
                     player.setPlayerTime(18000, false);
-                    ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 200, 0, true), true);
+                    ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 202, 0, true), true);
                     //}
                     player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 0, true), true);
                     instance.getStatusManager().getPlayer(event.getEntity().getUniqueId()).setPlus1sMode(true);
