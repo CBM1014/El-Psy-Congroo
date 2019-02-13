@@ -48,7 +48,7 @@ public class Init extends JavaPlugin {
         Bukkit.getServer().getPluginManager().registerEvents(newItemManager,this);
         Bukkit.getServer().getPluginManager().registerEvents(statusManager,this);
         Bukkit.getServer().getPluginManager().registerEvents(new Plus1s(this),this);
-        Bukkit.getServer().getPluginManager().registerEvents(new DifficultyUpdater(),this);
+        Bukkit.getServer().getPluginManager().registerEvents(new DifficultyUpdater(this),this);
     }
 
     public SubtitleManager getSubtitleManager() {
