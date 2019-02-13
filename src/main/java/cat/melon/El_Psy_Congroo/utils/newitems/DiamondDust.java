@@ -2,7 +2,7 @@ package cat.melon.el_psy_congroo.utils.newitems;
 
 import cat.melon.el_psy_congroo.Init;
 import cat.melon.el_psy_congroo.utils.NewItem;
-import cat.melon.el_psy_congroo.utils.recipe.RecipesOverwriter;
+import cat.melon.el_psy_congroo.utils.lib.RecipesOverwriter;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -24,7 +24,7 @@ public class DiamondDust extends NewItem {
     public void onRegister() {
         ShapedRecipe diamond = new ShapedRecipe(new NamespacedKey(getInstance(), "diamond_dust"),new ItemStack(Material.DIAMOND));
         diamond.shape(" y ","yyy","yyy");
-        diamond.setIngredient('y', item.getType());
+        diamond.setIngredient('y', new ExactChoice(item));
         Bukkit.addRecipe(diamond);
         getInstance().getLogger().info("Recipe "+diamond.getKey()+" has been loaded.");
     }

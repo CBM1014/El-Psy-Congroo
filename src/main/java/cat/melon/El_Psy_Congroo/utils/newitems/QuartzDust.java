@@ -33,7 +33,7 @@ public class QuartzDust extends NewItem {
         
         ShapedRecipe diamond = new ShapedRecipe(new NamespacedKey(getInstance(), "quartz_dust"),new ItemStack(Material.QUARTZ_BLOCK));
         diamond.shape("  x","xxx"," x ");
-        diamond.setIngredient('x', item.getType());
+        diamond.setIngredient('x', new ExactChoice(item));
         Bukkit.addRecipe(diamond);
         getInstance().getLogger().info("Recipe "+diamond.getKey()+" has been loaded.");
     }
