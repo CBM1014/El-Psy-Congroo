@@ -29,10 +29,9 @@ public class PreDiamondDust extends NewItem {
     @Override
     public void onRegister() {
         NamespacedKey key = new NamespacedKey(this.getInstance(), "pre_diamond_dust");
-        ExactChoice choice = new ExactChoice(item);
         NewItem newItemDust = NewItemManager.getItem("item.diamond_dust");
         ItemStack itemDust = newItemDust.getItemStack("§b钻石砂");
-        FurnaceRecipe furnaceRecipe = new FurnaceRecipe(key, itemDust, choice, 0.7F, 2400);
+        FurnaceRecipe furnaceRecipe = new FurnaceRecipe(key, itemDust, item.getType(), 0.7F, 2400);
         Bukkit.addRecipe(furnaceRecipe);
         getInstance().getLogger().info("Recipe "+furnaceRecipe.getKey()+" has been loaded.");
     }

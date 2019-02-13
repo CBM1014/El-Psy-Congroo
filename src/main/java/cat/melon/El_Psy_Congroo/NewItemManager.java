@@ -10,6 +10,7 @@ import cat.melon.el_psy_congroo.utils.newitems.IronDust;
 import cat.melon.el_psy_congroo.utils.newitems.PreDiamondDust;
 import cat.melon.el_psy_congroo.utils.newitems.QuartzDust;
 import cat.melon.el_psy_congroo.utils.newitems.StoneDust;
+import cat.melon.el_psy_congroo.utils.recipe.RecipesOverwriter;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -38,7 +39,8 @@ public class NewItemManager implements Listener {
     public NewItemManager(Init instance) {
         this.instance = instance;
         
-        CraftingUtil.initialize(instance);
+        //CraftingUtil.initialize(instance);
+        RecipesOverwriter overwriter = new RecipesOverwriter(instance);
         
         try {
             this.registerNewItems(new GreenApple(instance),
@@ -54,7 +56,11 @@ public class NewItemManager implements Listener {
             e.printStackTrace();
         }
         
-        overrideVanillaExactly();
+        List<ItemStack> sampleItems = Lists.newArrayList();
+        for (NewItem item : newItemMap.values())
+            sampleItems.add(item.getSampleItem());
+        overwriter.overwriteVanillaRecipes(sampleItems.toArray(new ItemStack[sampleItems.size()]));
+        //overrideVanillaExactly();
     }
 
     public static NewItem getItem(String key){

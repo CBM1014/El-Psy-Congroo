@@ -1,7 +1,11 @@
-package cat.melon.el_psy_congroo.utils;
+package cat.melon.el_psy_congroo.utils.recipe;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,10 +20,52 @@ import com.google.common.collect.Lists;
 
 public class RecipesOverwriter implements Listener {
     private final Plugin pluginInstance;
-    private final List<ExactRecipe> recipes = Lists.newArrayList();
+    private final List<OverwriteRecipe> recipes = Lists.newArrayList();
     
     public RecipesOverwriter(Plugin plugin) {
         pluginInstance = plugin;
+    }
+    
+    public static OverwriteRecipe overwriteRecipe(Recipe bukkitRecipe) {
+        if (bukkitRecipe instanceof ShapedRecipe) {
+            OverwriteShapedRecipe shapedRecipe = new OverwriteShapedRecipe(((ShapedRecipe) bukkitRecipe).getKey(), bukkitRecipe.getResult());
+            
+            shapedRecipe.shape(((ShapedRecipe) bukkitRecipe).getShape());
+            shapedRecipe.setGroup(((ShapedRecipe) bukkitRecipe).getGroup());
+            for (Entry<Character, ItemStack> entry : ((ShapedRecipe) bukkitRecipe).getIngredientMap().entrySet()) {
+                shapedRecipe.setIngredient(entry.getKey(), entry.getValue());
+            }
+            
+            return shapedRecipe;
+        } else if (bukkitRecipe instanceof ShapelessRecipe) {
+            OverwriteShapelessRecipe shapelessRecipe = new OverwriteShapelessRecipe(((ShapelessRecipe) bukkitRecipe).getKey(), bukkitRecipe.getResult());
+            
+            shapelessRecipe.setGroup(((ShapelessRecipe) bukkitRecipe).getGroup());
+            for (ItemStack ingredient : ((ShapelessRecipe) bukkitRecipe).getIngredientList()) {
+                shapelessRecipe.addIngredient(ingredient);
+            }
+            
+            return shapelessRecipe;
+        }
+        throw new UnsupportedOperationException("Recipe Type: " + bukkitRecipe.getClass().getSimpleName());
+    }
+    
+    public void overwriteVanillaRecipes(ItemStack... ingrendients) {
+        Iterator<Recipe> it = Bukkit.recipeIterator();
+        
+        $recipe:
+        while (it.hasNext()) {
+            Recipe vanillaRecipe = it.next();
+            
+            for (ItemStack vanillaIngredient : ((ShapedRecipe) vanillaRecipe).getIngredientMap().values()) {
+                for (ItemStack ingrendient : ingrendients) {
+                    if (vanillaIngredient.getType() == ingrendient.getType() && !vanillaIngredient.isSimilar(ingrendient)) {
+                        recipes.add(overwriteRecipe(vanillaRecipe));
+                        continue $recipe;
+                    }
+                }
+            }
+        }
     }
 
     @EventHandler
@@ -30,7 +76,7 @@ public class RecipesOverwriter implements Listener {
             ShapedRecipe shapedPrepareRecipe = (ShapedRecipe) prepareRecipe;
             
             $recipe:
-            for (ExactRecipe recipe : recipes) {
+            for (OverwriteRecipe recipe : recipes) {
                 // as type
                 if (!(recipe instanceof ShapedRecipe))
                     continue;

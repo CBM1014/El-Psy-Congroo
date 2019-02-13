@@ -31,20 +31,24 @@ public class StoneDust extends NewItem {
         diamond.shape("   ","xx ","xx ");
         diamond.setIngredient('x', Material.IRON_NUGGET);
         
+        /*
         ItemStack coal = item;
         CraftingUtil.addRecipe(diamond).setItemstack(3, coal)
                                        .setItemstack(4, coal)
                                        .setItemstack(6, coal)
                                        .setItemstack(7, coal);
+        */
         
         ShapedRecipe diamond2 = new ShapedRecipe(new NamespacedKey(getInstance(), "cobb_stone2"), new ItemStack(Material.COBBLESTONE));
         diamond2.shape("xx ", "xx ", "   ");
         diamond2.setIngredient('x', Material.IRON_NUGGET);
         
+        /*
         CraftingUtil.addRecipe(diamond).setItemstack(0, coal)
                                        .setItemstack(1, coal)
                                        .setItemstack(3, coal)
                                        .setItemstack(4, coal);
+        */
         
         Bukkit.addRecipe(diamond);
         Bukkit.addRecipe(diamond2);
