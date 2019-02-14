@@ -10,12 +10,12 @@ import moe.kira.poi.Poi;
 public class CommandLocale implements Command, PlayerOnly {
     @Override
     public void run(CommandSender sender, String... labels) {
-        if (labels.length == 0)
+        if (labels.length == 0 || !(sender instanceof Player))
             return;
         // Update locale setting
         YamlConfiguration personal = PersonalAPI.of(sender);
         personal.set("el_psy_congroo.locale", labels[0]);
         // Notify by playing sound
-        ((Player) sender).playSound(((Player) sender).getEyeLocation(), Poi.get(personal).secretCode(), 10F, 1F);
+        Poi.get(personal).play((Player) sender);
     }
 }
