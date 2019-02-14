@@ -2,6 +2,8 @@ package cat.melon.el_psy_congroo.utils.newitems;
 
 import cat.melon.el_psy_congroo.Init;
 import cat.melon.el_psy_congroo.utils.NewItem;
+import cat.melon.el_psy_congroo.utils.lib.RecipesOverwriter;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -11,12 +13,9 @@ import org.bukkit.event.inventory.FurnaceBurnEvent;
 import org.bukkit.inventory.FurnaceRecipe;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.RecipeChoice.ExactChoice;
-
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-@SuppressWarnings("deprecation")
 public class QuartzDust extends NewItem {
     final ItemStack item = this.getItemStack("§7石英碎片");
     Random random = ThreadLocalRandom.current();
@@ -31,9 +30,9 @@ public class QuartzDust extends NewItem {
         Bukkit.addRecipe(furnaceRecipe);
         getInstance().getLogger().info("Recipe "+furnaceRecipe.getKey()+" has been loaded.");
         
-        ShapedRecipe diamond = new ShapedRecipe(new NamespacedKey(getInstance(), "quartz_dust"),new ItemStack(Material.QUARTZ_BLOCK));
+        ShapedRecipe diamond = new ShapedRecipe(new NamespacedKey(getInstance(), "quartz_dust"), new ItemStack(Material.QUARTZ_BLOCK));
         diamond.shape("  x","xxx"," x ");
-        diamond.setIngredient('x', new ExactChoice(item));
+        diamond.setIngredient('x', RecipesOverwriter.overwriteIngredient(item));
         Bukkit.addRecipe(diamond);
         getInstance().getLogger().info("Recipe "+diamond.getKey()+" has been loaded.");
     }

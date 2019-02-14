@@ -3,6 +3,8 @@ package cat.melon.el_psy_congroo.utils.newitems;
 import cat.melon.el_psy_congroo.Init;
 import cat.melon.el_psy_congroo.NewItemManager;
 import cat.melon.el_psy_congroo.utils.NewItem;
+import cat.melon.el_psy_congroo.utils.lib.RecipesOverwriter;
+
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -13,11 +15,9 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.inventory.FurnaceBurnEvent;
 import org.bukkit.inventory.FurnaceRecipe;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.RecipeChoice.ExactChoice;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-@SuppressWarnings("deprecation")
 public class PreDiamondDust extends NewItem {
     final ItemStack item = this.getItemStack("§6钻石原矿");
     ThreadLocalRandom random = ThreadLocalRandom.current();
@@ -31,7 +31,7 @@ public class PreDiamondDust extends NewItem {
         NamespacedKey key = new NamespacedKey(this.getInstance(), "pre_diamond_dust");
         NewItem newItemDust = NewItemManager.getItem("item.diamond_dust");
         ItemStack itemDust = newItemDust.getItemStack("§b钻石砂");
-        FurnaceRecipe furnaceRecipe = new FurnaceRecipe(key, itemDust, new ExactChoice(item), 0.7F, 2400);
+        FurnaceRecipe furnaceRecipe = new FurnaceRecipe(key, itemDust, RecipesOverwriter.overwriteIngredient(item), 0.7F, 2400);
         Bukkit.addRecipe(furnaceRecipe);
         getInstance().getLogger().info("Recipe "+furnaceRecipe.getKey()+" has been loaded.");
     }

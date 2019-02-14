@@ -12,6 +12,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
+import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.plugin.Plugin;
 
 import com.google.common.collect.Lists;
@@ -26,6 +27,16 @@ public class RecipesOverwriter implements Listener {
     
     public void overwriteVanillaRecipes(Collection<ItemStack> ingrendients) {
         items.addAll(ingrendients);
+    }
+    
+    /**
+     * <b>Not valid for shapeless recipes</b>
+     * @param itemStack
+     * @return
+     */
+    @SuppressWarnings("deprecation")
+    public static RecipeChoice overwriteIngredient(ItemStack itemStack) {
+        return new RecipeChoice.ExactChoice(itemStack);
     }
     
     /*

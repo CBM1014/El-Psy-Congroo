@@ -2,6 +2,7 @@ package cat.melon.el_psy_congroo.utils.newitems;
 
 import cat.melon.el_psy_congroo.Init;
 import cat.melon.el_psy_congroo.utils.NewItem;
+import cat.melon.el_psy_congroo.utils.lib.RecipesOverwriter;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -9,12 +10,10 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.FurnaceRecipe;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.RecipeChoice.ExactChoice;
 
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-@SuppressWarnings("deprecation")
 public class StoneDust extends NewItem {
     final ItemStack item = this.getItemStack("§7碎石子");
     Random random = ThreadLocalRandom.current();
@@ -31,29 +30,24 @@ public class StoneDust extends NewItem {
         
         ShapedRecipe diamond = new ShapedRecipe(new NamespacedKey(getInstance(), "cobb_stone"), new ItemStack(Material.COBBLESTONE));
         diamond.shape("   ","xx ","xx ");
-        diamond.setIngredient('x', new ExactChoice(item));
-        
-        /*
-        ItemStack coal = item;
-        CraftingUtil.addRecipe(diamond).setItemstack(3, coal)
-                                       .setItemstack(4, coal)
-                                       .setItemstack(6, coal)
-                                       .setItemstack(7, coal);
-        */
+        diamond.setIngredient('x', RecipesOverwriter.overwriteIngredient(item));
         
         ShapedRecipe diamond2 = new ShapedRecipe(new NamespacedKey(getInstance(), "cobb_stone2"), new ItemStack(Material.COBBLESTONE));
         diamond2.shape("xx ", "xx ", "   ");
-        diamond2.setIngredient('x', new ExactChoice(item));
+        diamond2.setIngredient('x', RecipesOverwriter.overwriteIngredient(item));
         
-        /*
-        CraftingUtil.addRecipe(diamond).setItemstack(0, coal)
-                                       .setItemstack(1, coal)
-                                       .setItemstack(3, coal)
-                                       .setItemstack(4, coal);
-        */
+        ShapedRecipe diamond3 = new ShapedRecipe(new NamespacedKey(getInstance(), "cobb_stone3"), new ItemStack(Material.COBBLESTONE));
+        diamond2.shape(" xx", " xx", "   ");
+        diamond2.setIngredient('x', RecipesOverwriter.overwriteIngredient(item));
+        
+        ShapedRecipe diamond4 = new ShapedRecipe(new NamespacedKey(getInstance(), "cobb_stone4"), new ItemStack(Material.COBBLESTONE));
+        diamond2.shape("   ", " xx", " xx");
+        diamond2.setIngredient('x', RecipesOverwriter.overwriteIngredient(item));
         
         Bukkit.addRecipe(diamond);
         Bukkit.addRecipe(diamond2);
+        Bukkit.addRecipe(diamond3);
+        Bukkit.addRecipe(diamond4);
         getInstance().getLogger().info("Recipe "+diamond.getKey()+" has been loaded.");
     }
     

@@ -8,11 +8,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.RecipeChoice.ExactChoice;
-
 import org.bukkit.inventory.ShapedRecipe;
 
-@SuppressWarnings("deprecation")
 public class DiamondDust extends NewItem {
     final ItemStack item = this.getItemStack("§b钻石砂");
 
@@ -24,7 +21,7 @@ public class DiamondDust extends NewItem {
     public void onRegister() {
         ShapedRecipe diamond = new ShapedRecipe(new NamespacedKey(getInstance(), "diamond_dust"),new ItemStack(Material.DIAMOND));
         diamond.shape(" y ","yyy","yyy");
-        diamond.setIngredient('y', new ExactChoice(item));
+        diamond.setIngredient('y', RecipesOverwriter.overwriteIngredient(item));
         Bukkit.addRecipe(diamond);
         getInstance().getLogger().info("Recipe "+diamond.getKey()+" has been loaded.");
     }
