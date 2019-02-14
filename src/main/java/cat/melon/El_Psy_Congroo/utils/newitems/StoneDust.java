@@ -37,12 +37,12 @@ public class StoneDust extends NewItem {
         diamond2.setIngredient('x', RecipesOverwriter.overwriteIngredient(item));
         
         ShapedRecipe diamond3 = new ShapedRecipe(new NamespacedKey(getInstance(), "cobb_stone3"), new ItemStack(Material.COBBLESTONE));
-        diamond2.shape(" xx", " xx", "   ");
-        diamond2.setIngredient('x', RecipesOverwriter.overwriteIngredient(item));
+        diamond3.shape(" xx", " xx", "   ");
+        diamond3.setIngredient('x', RecipesOverwriter.overwriteIngredient(item));
         
         ShapedRecipe diamond4 = new ShapedRecipe(new NamespacedKey(getInstance(), "cobb_stone4"), new ItemStack(Material.COBBLESTONE));
-        diamond2.shape("   ", " xx", " xx");
-        diamond2.setIngredient('x', RecipesOverwriter.overwriteIngredient(item));
+        diamond4.shape("   ", " xx", " xx");
+        diamond4.setIngredient('x', RecipesOverwriter.overwriteIngredient(item));
         
         Bukkit.addRecipe(diamond);
         Bukkit.addRecipe(diamond2);
