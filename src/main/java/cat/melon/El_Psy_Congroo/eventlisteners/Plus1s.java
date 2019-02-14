@@ -30,8 +30,8 @@ public class Plus1s implements Listener {
                 if (!instance.getStatusManager().getPlayer(event.getEntity().getUniqueId()).isPlus1sMode()) {
                     event.setCancelled(true);
                     player.setHealth(0.01);
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 200, 0, true), true);
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 200, 1, true), true);
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 180, 0, true), true);
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 180, 1, true), true);
                     
                     //boolean skyChanger = PersonalAPI.of(player).getBoolean("recreator.weather.sandstorm.enable", true);
                     //if (skyChanger) {
@@ -39,9 +39,9 @@ public class Plus1s implements Listener {
                     //    SkyChanger.getAPI().changeSky(player, 4F);
                     //} else {
                     player.setPlayerTime(18000, false);
-                    ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 202, 0, true), true);
+                    ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 182, 0, true), true);
                     //}
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 0, true), true);
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 182, 0, true), true);
                     instance.getStatusManager().getPlayer(event.getEntity().getUniqueId()).setPlus1sMode(true);
                     // for soundpack
                     ((Player) event.getEntity()).playSound(((Player) event.getEntity()).getLocation(), "minecraft:agenda.dying", SoundCategory.MASTER, 1000F, 1F);
@@ -56,7 +56,7 @@ public class Plus1s implements Listener {
                                 player.damage(999);
                             }
                         }
-                    }.runTaskLater(instance, 200L);
+                    }.runTaskLater(instance, 180L);
                 }
             }
         }
