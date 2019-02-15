@@ -25,6 +25,7 @@ import org.bukkit.event.entity.EntityPotionEffectEvent.Action;
 import org.bukkit.event.entity.EntityPotionEffectEvent.Cause;
 
 import moe.kira.personal.PersonalAPI;
+import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -114,10 +115,18 @@ public class DifficultyUpdater implements Listener {
     public void antiFallDamageForPhantomAndVexes(EntityDamageEvent event) {
         if (event.getEntityType() != EntityType.PHANTOM && event.getEntityType() != EntityType.VEX)
             return;
-        if (event.getCause() == EntityDamageEvent.DamageCause.FALL || event.getCause() == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION || event.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION)
+        if (event.getCause() == EntityDamageEvent.DamageCause.FIRE || event.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK || event.getCause() == EntityDamageEvent.DamageCause.FALL || event.getCause() == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION || event.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION)
             event.setCancelled(true);
     }
 
+    @EventHandler
+    public void onSkeletonShoot(EntityShootBowEvent event) {
+        if (event.getEntityType() != EntityType.SKELETON)
+            return;
+        if ((event.getProjectile().getType() != EntityType.ARROW) && (event.getProjectile().getType() != EntityType.TIPPED_ARROW))
+            return;
+        ((TippedArrow) (event.getProjectile())).addCustomEffect(randomNegativeEffect(), false);
+    }
 
     @EventHandler
     public void onDragonFireballHit(EnderDragonFireballHitEvent event) {
@@ -128,10 +137,10 @@ public class DifficultyUpdater implements Listener {
             for (LivingEntity x : col) {
                 if (x.getType() == EntityType.PLAYER) {
                     Location loc = x.getLocation().clone();
-                    loc.setY(loc.getY()+3);
+                    loc.setY(loc.getY() + 3);
                     loc.setX(loc.getBlockY() + (rand.nextInt(10) - 5));
                     loc.setZ(loc.getBlockY() + (rand.nextInt(10) - 5));
-                    x.getWorld().spawnEntity(loc,EntityType.VEX);
+                    x.getWorld().spawnEntity(loc, EntityType.VEX);
                     x.setFireTicks(200);
                 }
             }
@@ -140,12 +149,12 @@ public class DifficultyUpdater implements Listener {
 
     @EventHandler
     public void onDragonFireballShoot(EnderDragonShootFireballEvent event) {
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 8; i++) {
             Location loc = event.getEntity().getLocation().clone();
-            loc.setY(loc.getY()-5);
-            loc.setX(loc.getBlockY() + (rand.nextInt(20) - 10));
-            loc.setZ(loc.getBlockY() + (rand.nextInt(20) - 10));
-            Entity fireball = event.getEntity().getWorld().spawnEntity(loc,EntityType.DRAGON_FIREBALL);
+            loc.setY(loc.getY() - 5);
+            loc.setX(loc.getBlockX() + (rand.nextInt(20) - 10));
+            loc.setZ(loc.getBlockZ() + (rand.nextInt(20) - 10));
+            Entity fireball = event.getEntity().getWorld().spawnEntity(loc, EntityType.DRAGON_FIREBALL);
             fireball.setVelocity(event.getFireball().getVelocity());
         }
     }
@@ -157,8 +166,8 @@ public class DifficultyUpdater implements Listener {
         //Bukkit.broadcastMessage(ChatColor.DARK_PURPLE+"[EnderDragonChangePhaseEvent]"+event.getCurrentPhase().name()+" -> "+event.getNewPhase().name());
         if (event.getNewPhase() == EnderDragon.Phase.SEARCH_FOR_BREATH_ATTACK_TARGET) {
             //Bukkit.broadcastMessage("run into on SEARCH_FOR_BREATH_ATTACK_TARGET");
-            Location loc = new Location(event.getEntity().getWorld(),0,81,0);
-            for (int i = 0; i < 8; i++) {
+            Location loc = event.getEntity().getLocation();
+            for (int i = 0; i < 6; i++) {
                 Location loc1 = loc.clone();
                 int ran = rand.nextInt(10);
                 //Bukkit.broadcastMessage("random number: "+ran);
@@ -175,7 +184,7 @@ public class DifficultyUpdater implements Listener {
             //Bukkit.broadcastMessage("run into on STRAFING");
             Location loc = event.getEntity().getLocation();
             //Bukkit.broadcastMessage(loc.toString());
-            for (int i = 0; i < 8; i++) {
+            for (int i = 0; i < 3; i++) {
                 Location loc1 = loc.clone();
                 loc1.setX(loc.getBlockX() + (rand.nextInt(60) - 30));
                 loc1.setZ(loc.getBlockZ() + (rand.nextInt(60) - 30));
@@ -187,8 +196,8 @@ public class DifficultyUpdater implements Listener {
 
     @EventHandler
     public void noDamageTickCanceller(EntityDamageEvent event) {
-        if(event.getEntity() instanceof LivingEntity){
-            ((LivingEntity)(event.getEntity())).setNoDamageTicks(0);
+        if (event.getEntity() instanceof LivingEntity) {
+            ((LivingEntity) (event.getEntity())).setNoDamageTicks(0);
         }
     }
 
@@ -218,18 +227,42 @@ public class DifficultyUpdater implements Listener {
         event.getDamager().remove();
     }
 
+    /*
+    @EventHandler
+    public void onFrameBreak(HangingBreakByEntityEvent event) {
+        //Do nothing if not a player
+        if (event.getEntity().getType() == EntityType.ITEM_FRAME) {
+            if (event.getEntity().getWorld().getName().equalsIgnoreCase("world_the_end")) {
+                if((((ItemFrame)(event.getEntity())).getItem().getType()==Material.ELYTRA)){
+                    if (!PersonalAPI.of("ElPsyCongroo", "dragon").getBoolean("dragon_death", false)){
+                        event.setCancelled(true);
+                    }
+                }
+            }
+        }
+
+    }
+
+    @EventHandler
+    public  void  onElytraDrop(EntityDamageByEntityEvent event){
+        if(event.getEntityType()!=EntityType.ITEM_FRAME)
+            return;
+        if(!PersonalAPI.of("ElPsyCongroo", "dragon").getBoolean("dragon_death", false)){
+
+        }
+    }*/
+
     @EventHandler
     public void onBedExplode(BlockExplodeEvent event) {
         //Bukkit.broadcastMessage(ChatColor.DARK_AQUA+"[BlockExplodeEvent] Block:"+event.getBlock().getType().name());
         //TODO event.getBlock().getType() is AIR here.
-        if (isBed(event.getBlock().getType())) {
+        if (event.getBlock().getType() == Material.AIR) {
             if (event.getBlock().getWorld().getEnvironment() == Environment.THE_END) {
                 Location loc = event.getBlock().getLocation().clone();
-
-                new BukkitRunnable(){
+                new BukkitRunnable() {
                     @Override
                     public void run() {
-                        for (int i = 0; i < 12; i++) {
+                        for (int i = 0; i < 15; i++) {
                             Location loc1 = loc.clone();
                             loc1.setX(loc.getBlockX() + (rand.nextInt(10) - 5));
                             loc1.setZ(loc.getBlockZ() + (rand.nextInt(10) - 5));
@@ -237,9 +270,15 @@ public class DifficultyUpdater implements Listener {
                             event.getBlock().getWorld().spawnEntity(loc1, EntityType.VEX);
                         }
                     }
-                }.runTaskLater(instance,1);
+                }.runTaskLater(instance, 1);
             }
         }
+    }
+
+    private PotionEffect randomNegativeEffect() {
+        int i = rand.nextInt(5);
+        PotionEffectType type = i == 0 ? PotionEffectType.BLINDNESS : i == 1 ? PotionEffectType.SLOW : i == 2 ? PotionEffectType.POISON : i == 3 ? PotionEffectType.HUNGER : i == 4 ? PotionEffectType.WEAKNESS : PotionEffectType.WITHER;
+        return new PotionEffect(type, 30, 0, false, false, false);
     }
 
     private boolean isBed(Material material) {
