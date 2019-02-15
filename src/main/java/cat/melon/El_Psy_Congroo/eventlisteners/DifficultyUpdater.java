@@ -8,7 +8,6 @@ import cat.melon.el_psy_congroo.Init;
 import com.destroystokyo.paper.event.entity.EnderDragonFireballHitEvent;
 import com.destroystokyo.paper.event.entity.EnderDragonShootFireballEvent;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World.Environment;

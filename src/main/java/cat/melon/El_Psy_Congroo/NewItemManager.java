@@ -12,22 +12,17 @@ import cat.melon.el_psy_congroo.utils.newitems.QuartzDust;
 import cat.melon.el_psy_congroo.utils.newitems.StoneDust;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import de.tr7zw.itemnbtapi.NBTItem;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.Recipe;
-import org.bukkit.inventory.ShapedRecipe;
 import com.google.common.collect.Lists;
 
 public class NewItemManager implements Listener {
