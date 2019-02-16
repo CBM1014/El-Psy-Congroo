@@ -215,14 +215,13 @@ public class DifficultyUpdater implements Listener {
         }
     }
 
+
     @EventHandler
     public void noDamageTickCanceller(EntityDamageEvent event) {
         if (event.getEntity() instanceof LivingEntity) {
             if (event.getCause() == EntityDamageEvent.DamageCause.LAVA || event.getCause() == EntityDamageEvent.DamageCause.FIRE) {
-                ((LivingEntity) (event.getEntity())).setNoDamageTicks(7);
+                ((LivingEntity) (event.getEntity())).setNoDamageTicks(12);
             } else {
-                if (event.getEntity() instanceof Player)
-                    Bukkit.broadcastMessage("DamageCause: " + event.getCause().name());
                 ((LivingEntity) (event.getEntity())).setNoDamageTicks(0);
             }
         }
