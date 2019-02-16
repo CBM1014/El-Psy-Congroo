@@ -137,6 +137,19 @@ public class DifficultyUpdater implements Listener {
 
     @EventHandler
     public void onDragonFireballHit(EnderDragonFireballHitEvent event) {
+        /*Collection<LivingEntity> collection = event.getTargets();
+        boolean isHitAC = true;
+        if (collection != null && !collection.isEmpty()) {
+            for (LivingEntity x : collection) {
+                if(x.getType()!=EntityType.AREA_EFFECT_CLOUD)
+                    isHitAC=false;
+            }
+        }
+        if(isHitAC){
+            event.setCancelled(true);
+            return;
+        }*/
+
         event.getAreaEffectCloud().addCustomEffect(new PotionEffect(PotionEffectType.BLINDNESS, 40, 0), false);
         event.getAreaEffectCloud().addCustomEffect(new PotionEffect(PotionEffectType.SLOW, 40, 2), false);
         Collection<LivingEntity> col = event.getTargets();
@@ -157,12 +170,12 @@ public class DifficultyUpdater implements Listener {
     @EventHandler
     public void onDragonFireballShoot(EnderDragonShootFireballEvent event) {
         for (int i = 0; i < 8; i++) {
-            Location loc = event.getEntity().getLocation().clone();
-            loc.setY(loc.getY() - 5);
-            loc.setX(loc.getBlockX() + (rand.nextInt(20) - 10));
-            loc.setZ(loc.getBlockZ() + (rand.nextInt(20) - 10));
-            Entity fireball = event.getEntity().getWorld().spawnEntity(loc, EntityType.DRAGON_FIREBALL);
-            fireball.setVelocity(event.getFireball().getVelocity());
+            Location loc = event.getFireball().getLocation().clone();
+            loc.setY(loc.getY() - rand.nextInt(10));
+            loc.setX(loc.getBlockX() + (rand.nextInt(70) - 35));
+            loc.setZ(loc.getBlockZ() + (rand.nextInt(70) - 35));
+            DragonFireball fireball = (DragonFireball) event.getEntity().getWorld().spawnEntity(loc, EntityType.DRAGON_FIREBALL);
+            fireball.setDirection(event.getFireball().getDirection());
         }
     }
 
@@ -176,12 +189,13 @@ public class DifficultyUpdater implements Listener {
             Location loc = event.getEntity().getLocation();
             for (int i = 0; i < 6; i++) {
                 Location loc1 = loc.clone();
-                int ran = rand.nextInt(10);
+                loc1.setY(loc1.getY()+15);
+                int ran = rand.nextInt(20);
                 //Bukkit.broadcastMessage("random number: "+ran);
                 //Bukkit.broadcastMessage(ChatColor.GOLD+loc1.toString());
-                loc1.setX(loc1.getBlockX() + (ran - 5));
-                loc1.setZ(loc1.getBlockZ() + (ran - 5));
-                loc1.setY(loc1.getBlockY() + (ran - 3));
+                loc1.setX(loc1.getBlockX() + (ran - 10));
+                loc1.setZ(loc1.getBlockZ() + (ran - 10));
+                loc1.setY(loc1.getBlockY() + (ran - 10));
                 //Bukkit.broadcastMessage(ChatColor.RED+loc1.toString());
                 Entity pan = event.getEntity().getWorld().spawnEntity(loc1, EntityType.PHANTOM);
                 //Bukkit.broadcastMessage("Entity "+pan.getType().name()+" "+pan.getUniqueId()+" spawned at: "+loc1.toString());
@@ -204,7 +218,12 @@ public class DifficultyUpdater implements Listener {
     @EventHandler
     public void noDamageTickCanceller(EntityDamageEvent event) {
         if (event.getEntity() instanceof LivingEntity) {
-            ((LivingEntity) (event.getEntity())).setNoDamageTicks(0);
+            if (event.getCause() == EntityDamageEvent.DamageCause.LAVA||event.getCause()== EntityDamageEvent.DamageCause.FIRE)
+                ((LivingEntity) (event.getEntity())).setNoDamageTicks(7);
+            else
+                if(event.getEntity() instanceof Player)
+                Bukkit.broadcastMessage("DamageCause: "+event.getCause().name());
+                ((LivingEntity) (event.getEntity())).setNoDamageTicks(0);
         }
     }
 
@@ -227,9 +246,9 @@ public class DifficultyUpdater implements Listener {
         } else {
             if (event.getDamager().getLocation().getWorld().getName().equals(endMainIslandLocation.getWorld().getName())
                     && event.getDamager().getLocation().distance(endMainIslandLocation) > 300) {
-                event.getDamager().getLocation().createExplosion(1.1F, true, true);
+                event.getDamager().getLocation().createExplosion(2.2F, true, true);
             }
-            event.getDamager().getLocation().createExplosion(1.1F, true, false);
+            event.getDamager().getLocation().createExplosion(2.2F, true, false);
         }
         event.getDamager().remove();
     }
