@@ -28,6 +28,7 @@ import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 @SuppressWarnings("deprecation")
 public class DifficultyUpdater implements Listener {
@@ -122,9 +123,16 @@ public class DifficultyUpdater implements Listener {
     public void onSkeletonShoot(EntityShootBowEvent event) {
         if (event.getEntityType() != EntityType.SKELETON)
             return;
-        if ((event.getProjectile().getType() != EntityType.ARROW) && (event.getProjectile().getType() != EntityType.TIPPED_ARROW))
-            return;
-        ((TippedArrow) (event.getProjectile())).addCustomEffect(randomNegativeEffect(), false);
+        if ((event.getProjectile().getType() == EntityType.ARROW)) {
+            Vector v = event.getProjectile().getVelocity();
+            TippedArrow e = (TippedArrow) (event.getProjectile().getWorld().spawnEntity(event.getEntity().getLocation(), EntityType.TIPPED_ARROW));
+            e.addCustomEffect(randomNegativeEffect(), false);
+            e.setVelocity(v);
+            event.getProjectile().remove();
+        } else if ((event.getProjectile().getType() == EntityType.TIPPED_ARROW)) {
+            ((TippedArrow) (event.getProjectile())).addCustomEffect(randomNegativeEffect(), false);
+        }
+
     }
 
     @EventHandler
