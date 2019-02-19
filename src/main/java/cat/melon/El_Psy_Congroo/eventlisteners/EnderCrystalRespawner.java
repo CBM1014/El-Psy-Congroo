@@ -26,7 +26,7 @@ import java.util.Map;
 public class EnderCrystalRespawner implements Listener {
     private Init instance;
     private Map<MelonLocationLite, Integer> deadCrystalMap = new HashMap<>();
-    private final int RESPAWN_DELAY = 100;
+    private final int RESPAWN_DELAY = 1000;
 
     public EnderCrystalRespawner(Init instance) {
         this.instance = instance;
@@ -107,7 +107,8 @@ public class EnderCrystalRespawner implements Listener {
             tryPutLocationinMap(loc);
         }
     }
-    /* //It didn't work.
+
+    /* //It doesn't work.
     public void crystalKeeper(EntityRemoveFromWorldEvent event){
         if(event.getEntityType()!=EntityType.ENDER_CRYSTAL)
             return;
@@ -120,7 +121,6 @@ public class EnderCrystalRespawner implements Listener {
             return;
         deadCrystalMap.put(new MelonLocationLite(event.getEntity().getLocation()),RESPAWN_DELAY);
     }*/
-
 
     private void tryPutLocationinMap(Location location) {
         MelonLocationLite loc = new MelonLocationLite(location);
