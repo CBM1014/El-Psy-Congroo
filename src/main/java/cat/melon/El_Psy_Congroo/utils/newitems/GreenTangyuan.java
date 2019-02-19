@@ -2,6 +2,7 @@ package cat.melon.el_psy_congroo.utils.newitems;
 
 import cat.melon.el_psy_congroo.Init;
 import cat.melon.el_psy_congroo.utils.NewItem;
+
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.EventHandler;
@@ -9,6 +10,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class GreenTangyuan extends NewItem {
     final ItemStack item = this.getItemStack("§a糖心元宵", 1, true);
@@ -22,7 +25,7 @@ public class GreenTangyuan extends NewItem {
         
     }
     
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = false)
     public void onEat(PlayerInteractEvent event) {
         if (event.getAction() != Action.RIGHT_CLICK_AIR)
             return;
@@ -31,8 +34,21 @@ public class GreenTangyuan extends NewItem {
             return;
         
         if (event.getItem().isSimilar(item)) {
-            event.getPlayer().getInventory().remove(item);
+            for (ItemStack itemStack : event.getPlayer().getInventory())
+                if (itemStack != null && itemStack.isSimilar(item))
+                    if (itemStack.getAmount() < 2)
+                        event.getPlayer().getInventory().remove(item);
+                    else
+                        itemStack.setAmount(itemStack.getAmount() - 1);
+            
             event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ENTITY_PLAYER_BURP, 2F, 1F);
+            event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ENTITY_PLAYER_BURP, 2F, 1F);
+            event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 7 * 20, 1));
+            event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 5 * 20, 0));
+            event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.HEALTH_BOOST, 7 * 20, 0));
+            event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 7 * 20, 1));
+            event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 12 * 20, 0));
+            event.getPlayer().setFoodLevel(event.getPlayer().getFoodLevel() + 1);
         }
     }
     
