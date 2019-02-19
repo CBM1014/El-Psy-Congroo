@@ -1,6 +1,7 @@
 package cat.melon.el_psy_congroo;
 
-import cat.melon.el_psy_congroo.eventlisteners.DifficultyUpdater;
+import cat.melon.el_psy_congroo.eventlisteners.EndUpdater;
+import cat.melon.el_psy_congroo.eventlisteners.EnderCrystalRespawner;
 import cat.melon.el_psy_congroo.eventlisteners.Plus1s;
 import cat.melon.el_psy_congroo.utils.lib.AgendaGlow;
 
@@ -48,7 +49,8 @@ public class Init extends JavaPlugin {
         Bukkit.getServer().getPluginManager().registerEvents(newItemManager,this);
         Bukkit.getServer().getPluginManager().registerEvents(statusManager,this);
         Bukkit.getServer().getPluginManager().registerEvents(new Plus1s(this),this);
-        Bukkit.getServer().getPluginManager().registerEvents(new DifficultyUpdater(this),this);
+        Bukkit.getServer().getPluginManager().registerEvents(new EndUpdater(this),this);
+        Bukkit.getServer().getPluginManager().registerEvents(new EnderCrystalRespawner(this),this);
     }
 
     public SubtitleManager getSubtitleManager() {
