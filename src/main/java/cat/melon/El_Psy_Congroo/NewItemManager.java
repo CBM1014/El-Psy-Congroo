@@ -54,6 +54,7 @@ public class NewItemManager implements Listener {
         for (NewItem item : newItemMap.values())
             sampleItems.add(item.getSampleItem());
         overwriter.overwriteVanillaRecipes(sampleItems);
+        overwriter.overwriteVanillaRecipes(sampleItems);
         
         Bukkit.getPluginManager().registerEvents(overwriter, instance);
         //overrideVanillaExactly();
