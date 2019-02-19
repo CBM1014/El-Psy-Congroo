@@ -36,10 +36,13 @@ public class GreenTangyuan extends NewItem {
         if (event.getItem().isSimilar(item)) {
             for (ItemStack itemStack : event.getPlayer().getInventory())
                 if (itemStack != null && itemStack.isSimilar(item))
-                    if (itemStack.getAmount() < 2)
+                    if (itemStack.getAmount() < 2) {
                         event.getPlayer().getInventory().remove(item);
-                    else
+                        break;
+                    } else {
                         itemStack.setAmount(itemStack.getAmount() - 1);
+                        break;
+                    }
             
             event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ENTITY_PLAYER_BURP, 2F, 1F);
             event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ENTITY_PLAYER_BURP, 2F, 1F);

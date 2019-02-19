@@ -37,15 +37,19 @@ public class WhiteTangyuan extends NewItem {
             event.setCancelled(true);
             for (ItemStack itemStack : event.getPlayer().getInventory())
                 if (itemStack != null && itemStack.isSimilar(item))
-                    if (itemStack.getAmount() < 2)
+                    if (itemStack.getAmount() < 2) {
                         event.getPlayer().getInventory().remove(item);
-                    else
+                        break;
+                    } else {
                         itemStack.setAmount(itemStack.getAmount() - 1);
+                        break;
+                    }
             
             event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ENTITY_PLAYER_BURP, 2F, 1F);
             event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 7 * 20, 0));
             event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 5 * 20, 1));
             event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.HEALTH_BOOST, 5 * 20, 0));
+            event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 5 * 20, 0));
             event.getPlayer().setFoodLevel(event.getPlayer().getFoodLevel() + 2);
         }
     }
