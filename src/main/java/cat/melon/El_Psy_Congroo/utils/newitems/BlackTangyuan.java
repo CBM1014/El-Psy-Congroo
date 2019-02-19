@@ -10,7 +10,7 @@ import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class BlackTangyuan extends NewItem {
-    final ItemStack item = this.getItemStack("§c可颂元宵");
+    final ItemStack item = this.getItemStack("§c可颂元宵", 1, true);
 
     public BlackTangyuan(Init instance) {
         super(instance, Material.CHORUS_FRUIT, "item.black_tangyuan", 10);

@@ -11,7 +11,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class RedTangyuan extends NewItem {
-    final ItemStack item = this.getItemStack("§c团圆元宵");
+    final ItemStack item = this.getItemStack("§c团圆元宵", 1, true);
 
     public RedTangyuan(Init instance) {
         super(instance, Material.MAGMA_CREAM, "item.red_tangyuan", 8);

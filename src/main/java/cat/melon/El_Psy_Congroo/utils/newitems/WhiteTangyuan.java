@@ -12,7 +12,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public class WhiteTangyuan extends NewItem {
-    final ItemStack item = this.getItemStack("§6白元宵");
+    final ItemStack item = this.getItemStack("§6白元宵", 1, true);
 
     public WhiteTangyuan(Init instance) {
         super(instance, Material.SNOWBALL, "item.white_tangyuan", 9);
