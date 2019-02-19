@@ -34,6 +34,7 @@ public class WhiteTangyuan extends NewItem {
             return;
         
         if (event.getItem().isSimilar(item)) {
+            event.setCancelled(true);
             for (ItemStack itemStack : event.getPlayer().getInventory())
                 if (itemStack != null && itemStack.isSimilar(item))
                     if (itemStack.getAmount() < 2)
