@@ -2,14 +2,18 @@ package cat.melon.el_psy_congroo;
 
 import cat.melon.el_psy_congroo.utils.NewItem;
 import cat.melon.el_psy_congroo.utils.lib.RecipesOverwriter;
+import cat.melon.el_psy_congroo.utils.newitems.BlackTangyuan;
 import cat.melon.el_psy_congroo.utils.newitems.DiamondDust;
 import cat.melon.el_psy_congroo.utils.newitems.EnchantedBookSoulBind;
 import cat.melon.el_psy_congroo.utils.newitems.GoldDust;
 import cat.melon.el_psy_congroo.utils.newitems.GreenApple;
+import cat.melon.el_psy_congroo.utils.newitems.GreenTangyuan;
 import cat.melon.el_psy_congroo.utils.newitems.IronDust;
 import cat.melon.el_psy_congroo.utils.newitems.PreDiamondDust;
 import cat.melon.el_psy_congroo.utils.newitems.QuartzDust;
+import cat.melon.el_psy_congroo.utils.newitems.RedTangyuan;
 import cat.melon.el_psy_congroo.utils.newitems.StoneDust;
+import cat.melon.el_psy_congroo.utils.newitems.WhiteTangyuan;
 
 import java.util.HashMap;
 import java.util.List;
@@ -43,7 +47,11 @@ public class NewItemManager implements Listener {
                                      new IronDust(instance),
                                      new GoldDust(instance),
                                      new DiamondDust(instance), new PreDiamondDust(instance),
-                                     new EnchantedBookSoulBind(instance));
+                                     new EnchantedBookSoulBind(instance),
+                                     new WhiteTangyuan(instance),
+                                     new GreenTangyuan(instance),
+                                     new BlackTangyuan(instance),
+                                     new RedTangyuan(instance));
             // do not forgot prefix! (item.)
             // the order is important!
         } catch (DuplicateRegisterListenerException e) {
