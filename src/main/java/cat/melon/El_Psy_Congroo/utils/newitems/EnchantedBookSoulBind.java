@@ -11,7 +11,7 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class EnchantedBookSoulBind extends NewItem {
-    final ItemStack item = this.getItemStack("§e附魔书", Lists.newArrayList("§7灵魂绑定 I"), 1);
+    final ItemStack item = this.getItemStack("§e附魔书", Lists.newArrayList("§7灵魂绑定 I"), 1, false);
     Random random = ThreadLocalRandom.current();
 
     public EnchantedBookSoulBind(Init instance) {

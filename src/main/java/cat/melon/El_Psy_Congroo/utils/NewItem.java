@@ -1,9 +1,11 @@
 package cat.melon.el_psy_congroo.utils;
 
 import cat.melon.el_psy_congroo.Init;
+import cat.melon.el_psy_congroo.utils.lib.AgendaGlow;
 import de.tr7zw.itemnbtapi.NBTItem;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemFlag;
@@ -47,7 +49,7 @@ public abstract class NewItem implements Listener {
         this.itemFlags = itemFlags != null ? itemFlags : new ItemFlag[0];
     }
 
-    public ItemStack getItemStack(String displayName, List<String> lore, int amount) {
+    public ItemStack getItemStack(String displayName, List<String> lore, int amount, boolean glow) {
         ItemStack tmpis = new ItemStack(type, amount);
         ItemMeta meta = tmpis.getItemMeta();
 
@@ -55,6 +57,8 @@ public abstract class NewItem implements Listener {
         meta.setLocalizedName(namePath); //TODO set LocalizedName here(will provide in the resourcepack) //but idk how to do it((
         if (lore != null)
             meta.setLore(lore);
+        if (glow)
+            meta.addEnchant(instance.getAgendaGlow(), 0, true);
         tmpis.setItemMeta(meta);
 
         if(!basic){
@@ -69,11 +73,15 @@ public abstract class NewItem implements Listener {
     }
     
     public ItemStack getItemStack(String displayName, int amount) {
-        return this.getItemStack(displayName, null, 1);
+        return this.getItemStack(displayName, null, amount, false);
+    }
+    
+    public ItemStack getItemStack(String displayName, int amount, boolean glow) {
+        return this.getItemStack(displayName, null, amount, glow);
     }
 
     public ItemStack getItemStack(String displayName) {
-        return this.getItemStack(displayName, null, 1);
+        return this.getItemStack(displayName, null, 1, false);
     }
 
     public Material getType() {

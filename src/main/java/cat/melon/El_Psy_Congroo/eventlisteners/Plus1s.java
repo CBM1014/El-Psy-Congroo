@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -52,8 +53,10 @@ public class Plus1s implements Listener {
                             player.removePotionEffect(PotionEffectType.ABSORPTION);
                             if (instance.getStatusManager().getPlayer(player.getUniqueId()).isPlus1sMode()) {
                                 player.playSound(player.getLocation(), Sound.ENTITY_GHAST_DEATH, 1F, 1F);
+                                if (event.getDamager() instanceof Monster && event.getDamager().getCustomName() != null && event.getDamager().getCustomName().startsWith("§7△ "))
+                                    event.getDamager().setCustomName("");
                                 player.setHealth(0);
-                                player.damage(999);
+                                player.damage(999, event.getDamager());
                             }
                         }
                     }.runTaskLater(instance, 180L);
