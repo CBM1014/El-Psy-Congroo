@@ -39,10 +39,10 @@ public class BlackTangyuan extends NewItem {
                     }
             
             event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ENTITY_PLAYER_BURP, 2F, 1F);
-            event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 7 * 20, 1));
-            event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 7 * 20, 1));
-            event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 19 * 20, 1));
-            event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 5 * 20, 0));
+            event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 10 * 20, 1));
+            event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 10 * 20, 1));
+            event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 22 * 20, 1));
+            event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 8 * 20, 0));
             event.getPlayer().setFoodLevel(event.getPlayer().getFoodLevel() + 2);
         }
     }

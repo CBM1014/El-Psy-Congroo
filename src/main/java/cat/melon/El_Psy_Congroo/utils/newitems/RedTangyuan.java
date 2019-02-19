@@ -44,11 +44,11 @@ public class RedTangyuan extends NewItem {
                     }
             
             event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ENTITY_PLAYER_BURP, 2F, 1F);
-            event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 7 * 20, 0));
-            event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 9 * 20, 1));
-            event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 12 * 20, 1));
-            event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.HEALTH_BOOST, 12 * 20, 1));
-            event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 19 * 20, 1));
+            event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 20 * 20, 0));
+            event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 22 * 20, 1));
+            event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 25 * 20, 1));
+            event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.HEALTH_BOOST, 25 * 20, 1));
+            event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 32 * 20, 1));
             event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.LUCK, 64 * 20, 1));
             event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.DOLPHINS_GRACE, 64 * 20, 1));
             event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.CONDUIT_POWER, 64 * 20, 1));
