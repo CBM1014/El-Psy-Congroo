@@ -27,7 +27,7 @@ public class WhiteTangyuan extends NewItem {
     
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = false)
     public void onEat(PlayerInteractEvent event) {
-        if (event.getAction() != Action.RIGHT_CLICK_AIR)
+        if (event.getAction() != Action.RIGHT_CLICK_AIR && event.getAction() != Action.RIGHT_CLICK_BLOCK)
             return;
         
         if (event.getItem() == null)

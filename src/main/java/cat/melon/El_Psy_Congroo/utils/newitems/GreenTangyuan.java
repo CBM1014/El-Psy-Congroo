@@ -47,8 +47,8 @@ public class GreenTangyuan extends NewItem {
             event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ENTITY_PLAYER_BURP, 2F, 1F);
             event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ENTITY_PLAYER_BURP, 2F, 1F);
             event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 11 * 20, 1));
-            event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 8 * 20, 0));
-            event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.HEALTH_BOOST, 11 * 20, 0));
+            event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 11 * 20, 0));
+            event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.HEALTH_BOOST, 8 * 20, 0));
             event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 11 * 20, 1));
             event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 15 * 20, 0));
             event.getPlayer().setFoodLevel(event.getPlayer().getFoodLevel() + 1);
