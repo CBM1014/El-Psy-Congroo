@@ -24,18 +24,15 @@ import org.bukkit.event.entity.EntityPotionEffectEvent.Action;
 import org.bukkit.event.entity.EntityPotionEffectEvent.Cause;
 
 import moe.kira.personal.PersonalAPI;
-import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
 
 @SuppressWarnings("deprecation")
 public class EndUpdater implements Listener {
     Init instance;
     private Location endMainIslandLocation = new Location(Bukkit.getWorld("world_the_end"), 0D, 68D, 0D);
     private final Random rand = ThreadLocalRandom.current();
-    //TODO  Compilation failure: no suitable method found for of(java.lang.String,java.lang.String) in line 56,95,100.
 
     public EndUpdater(Init instance) {
         this.instance = instance;
@@ -47,21 +44,21 @@ public class EndUpdater implements Listener {
             switch (event.getEntity().getWorld().getEnvironment()) {
                 case NORMAL:
                     event.setDamage(event.getDamage() * 1.1);
-                    event.setDamage(DamageModifier.ARMOR, event.getDamage(DamageModifier.ARMOR) / 2);
+                    event.setDamage(DamageModifier.ARMOR, event.getDamage(DamageModifier.ARMOR) / 1.8);
                     break;
                 case NETHER:
-                    event.setDamage(event.getDamage() * 1.5);
-                    event.setDamage(DamageModifier.ARMOR, event.getDamage(DamageModifier.ARMOR) / 3);
+                    event.setDamage(event.getDamage() * 1.4);
+                    event.setDamage(DamageModifier.ARMOR, event.getDamage(DamageModifier.ARMOR) / 2.2);
                     break;
                 case THE_END:
                     if (PersonalAPI.of("ElPsyCongroo", "dragon").getBoolean("dragon_death", false)) {
                         event.setDamage(event.getDamage() * 2);
-                        event.setDamage(DamageModifier.ARMOR, event.getDamage(DamageModifier.ARMOR) / 3);
+                        event.setDamage(DamageModifier.ARMOR, event.getDamage(DamageModifier.ARMOR) / 2.6);
                     } else {
                         switch (event.getDamager().getType()) {
                             default:
-                                event.setDamage(event.getDamage() * 2);
-                                event.setDamage(DamageModifier.ARMOR, event.getDamage(DamageModifier.ARMOR) / 4);
+                                event.setDamage(event.getDamage() * 1.8);
+                                event.setDamage(DamageModifier.ARMOR, event.getDamage(DamageModifier.ARMOR) / 2.4);
                         }
                     }
                     break;
