@@ -39,22 +39,22 @@ public class Plus1s implements Listener {
                     //    player.setPlayerTime(1000, false);
                     //    SkyChanger.getAPI().changeSky(player, 4F);
                     //} else {
-                    player.setPlayerTime(18000, false);
-                    ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 182, 0, true), true);
+                    //player.setPlayerTime(18000, false);
+                    ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 200, 0, true), true);
                     //}
                     player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 182, 0, true), true);
                     instance.getStatusManager().getPlayer(event.getEntity().getUniqueId()).setPlus1sMode(true);
                     // for soundpack
                     ((Player) event.getEntity()).playSound(((Player) event.getEntity()).getLocation(), "minecraft:agenda.dying", SoundCategory.MASTER, 1000F, 1F);
+                    if (event.getDamager() instanceof Monster && event.getDamager().getCustomName() != null && event.getDamager().getCustomName().startsWith("§7△ "))
+                        event.getDamager().setCustomName("");
                     new BukkitRunnable() {
                         @Override
                         public void run() {
-                            player.resetPlayerTime();
+                            //player.resetPlayerTime();
                             player.removePotionEffect(PotionEffectType.ABSORPTION);
                             if (instance.getStatusManager().getPlayer(player.getUniqueId()).isPlus1sMode()) {
                                 player.playSound(player.getLocation(), Sound.ENTITY_GHAST_DEATH, 1F, 1F);
-                                if (event.getDamager() instanceof Monster && event.getDamager().getCustomName() != null && event.getDamager().getCustomName().startsWith("§7△ "))
-                                    event.getDamager().setCustomName("");
                                 player.setHealth(0);
                                 player.damage(999, event.getDamager());
                             }
@@ -98,7 +98,7 @@ public class Plus1s implements Listener {
         //    player.resetPlayerTime();
         //    SkyChanger.getAPI().changeSky(player, player.getWorld().isThundering() ? 1 : 0);
         //}
-        player.resetPlayerTime();
+        //player.resetPlayerTime();
         player.removePotionEffect(PotionEffectType.BLINDNESS);
         player.removePotionEffect(PotionEffectType.ABSORPTION);
         player.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
