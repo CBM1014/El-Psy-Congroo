@@ -3,6 +3,7 @@ package cat.melon.el_psy_congroo;
 import cat.melon.el_psy_congroo.eventlisteners.EndUpdater;
 import cat.melon.el_psy_congroo.eventlisteners.EnderCrystalRespawner;
 import cat.melon.el_psy_congroo.eventlisteners.Plus1s;
+import cat.melon.el_psy_congroo.eventlisteners.SeasonalBiome;
 import cat.melon.el_psy_congroo.utils.lib.AgendaGlow;
 
 import java.lang.reflect.Field;
@@ -45,6 +46,8 @@ public class Init extends JavaPlugin {
             e.printStackTrace();
         }
         newItemManager = new NewItemManager(this);
+        
+        //SeasonalBiome.registerAsListener(this);
         
         Bukkit.getServer().getPluginManager().registerEvents(newItemManager,this);
         Bukkit.getServer().getPluginManager().registerEvents(statusManager,this);
