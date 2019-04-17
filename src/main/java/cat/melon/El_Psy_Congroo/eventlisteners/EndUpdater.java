@@ -112,7 +112,7 @@ public class EndUpdater implements Listener {
     public void antiFallDamageForPhantomAndVexes(EntityDamageEvent event) {
         if (event.getEntityType() != EntityType.PHANTOM && event.getEntityType() != EntityType.VEX)
             return;
-        if(!event.getEntity().getWorld().getName().equalsIgnoreCase("world_the_end"))
+        if (event.getEntity().getWorld().getEnvironment() != Environment.THE_END)
             return;
 
         if (event.getCause() == EntityDamageEvent.DamageCause.FIRE || event.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK || event.getCause() == EntityDamageEvent.DamageCause.FALL || event.getCause() == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION || event.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION)
@@ -121,6 +121,8 @@ public class EndUpdater implements Listener {
 
     @EventHandler
     public void onDragonFireballHit(EnderDragonFireballHitEvent event) {
+        if (event.getEntity().getWorld().getEnvironment() != Environment.THE_END)
+            return;
         /*Collection<LivingEntity> collection = event.getTargets();
         boolean isHitAC = true;
         if (collection != null && !collection.isEmpty()) {
@@ -264,6 +266,9 @@ public class EndUpdater implements Listener {
 
     @EventHandler
     public void onBedExplode(BlockExplodeEvent event) {
+        if (event.getBlock().getWorld().getEnvironment() != Environment.THE_END)
+            return;
+        
         //Bukkit.broadcastMessage(ChatColor.DARK_AQUA+"[BlockExplodeEvent] Block:"+event.getBlock().getType().name());
         //TODO event.getBlock().getType() is AIR here.
         if (event.getBlock().getType() == Material.AIR) {
